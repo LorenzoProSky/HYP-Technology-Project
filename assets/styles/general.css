@@ -1,0 +1,151 @@
+/* Reset some default styles */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+figcaption,
+pre,
+code,
+#__nuxt,
+#__layout {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  background-color: lightpink;
+  margin: 0;
+  padding: 0;
+}
+
+/* Set a base font size and line height for better readability */
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Basic styling for headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin-bottom: 1.5em;
+}
+
+/* Basic styling for paragraphs */
+p {
+  margin-bottom: 1em;
+}
+
+/* Basic styling for lists */
+ul,
+ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+/* Basic styling for links */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Basic styling for images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container for content */
+container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Basic styling for buttons */
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Basic styling for forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Basic styling for form elements */
+label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+/* Basic styling for form validation */
+error {
+  color: #dc3545;
+}
+
+/* Basic styling for success messages */
+success {
+  color: #28a745;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
