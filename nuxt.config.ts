@@ -9,5 +9,5 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/general.css'],
 
-  // modules: ['@nuxtjs/supabase']
+  modules: ['@nuxtjs/supabase']
 })
