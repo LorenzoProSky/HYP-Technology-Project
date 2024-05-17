@@ -51,3 +51,8 @@ npm run build
 # yarn
 yarn build
 ```
+
+## Environment variables
+Create a file app.env, in which there must be the following environment variables, which value are handed separately (env var and pwd must not be published):
+SUPABASE_URL=""
+SUPABASE_KEY=""
