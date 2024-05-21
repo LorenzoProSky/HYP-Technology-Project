@@ -1,59 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+:root{
+  --purple: #5E389A;
+  --lilac: #E0D6F2;
+  --seashell: #FFF8EB;
+  --accent: #FF7960;
+  --white: #FFFFFF;
+  --light-grey: #D8D7D7;
+  --grey: #A9A9A9;
+  --dark-grey: #646464;
+  --black: #000000;
+
+  --header-height: 70px;
+
+  --h1: 96pt;
+  --h2: 64pt;
+  --h3: 40pt;
+  --h4: 32pt;
+  --body1: 16pt;
+  --body2: 18pt;
+  --body3: 20pt;
+  --body4: 24pt;
+}
+
+
 /* Reset some default styles */
 html,
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-blockquote,
-figure,
-figcaption,
-pre,
-code,
-#__nuxt,
-#__layout {
+body{
   height: 100% !important;
   width: 100% !important;
   margin: 0;
   padding: 0;
 }
 
-#__nuxt {
+#__nuxt{
   display: flex;
   flex-direction: column;
-  align-content: space-between;
-  background-color: lightpink;
+  justify-content: space-between;
+  align-items: center;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  background-color: var(--purple);
 }
 
-/* Set a base font size and line height for better readability */
 body {
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
+  font-family: "Montserrat", serif;
+  color: var(--black);
+  font-weight: normal;
 }
 
-/* Basic styling for headings */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  margin-bottom: 1.5em;
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", serif;
+  color: var(--black);
+  font-weight: bold;
+  font-size: var(--h4);
 }
+
+header {
+  background-color: var(--white);
+  text-align: center;
+}
+
+footer {
+  background-color: var(--white);
+  text-align: center;
+  padding: 20px 0;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
 
 /* Basic styling for paragraphs */
 p {
@@ -81,13 +104,6 @@ a:hover {
 img {
   max-width: 100%;
   height: auto;
-}
-
-/* Container for content */
-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
 }
 
 /* Basic styling for buttons */
@@ -131,21 +147,4 @@ error {
 /* Basic styling for success messages */
 success {
   color: #28a745;
-}
-
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }
