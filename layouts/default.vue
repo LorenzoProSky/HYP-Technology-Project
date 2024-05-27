@@ -1,12 +1,21 @@
 <template >
   <header>
-    <NuxtLink to="/index.vue"><h1>NAME</h1></NuxtLink>
+    <NuxtLink to="/" id="logo"><h4>Centro MiLA</h4></NuxtLink>
     <nav>
-      <NuxtLink to="/about">About Us</NuxtLink>
-      <NuxtLink to="/people">People</NuxtLink>
+      <div class="menu-container">
+        <NuxtLink to="/activities/activities">About Us</NuxtLink>
+        <ul class="dropdown-menu">
+          <li>
+            <NuxtLink to="/activities/projects">Our Location</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/activities/services">Our People</NuxtLink>
+          </li>
+        </ul>   
+      </div>
 
-      <div class="menu-container" id="activities-container">
-        <NuxtLink to="/activities/activities">Activities</NuxtLink>
+      <div class="menu-container">
+        <NuxtLink to="/activities/activities">Our Activities</NuxtLink>
         <ul class="dropdown-menu">
           <li>
             <NuxtLink to="/activities/projects">Projects</NuxtLink>
@@ -15,27 +24,26 @@
             <NuxtLink to="/activities/services">Services</NuxtLink>
           </li>
         </ul>   
-      </div> 
-
-      <div class="menu-container" id="groups-container">
-        <NuxtLink to="/groups">Groups</NuxtLink>
+      </div>
+      
+      <div class="menu-container">
+        <NuxtLink to="/activities/activities">What You Can Do</NuxtLink>
         <ul class="dropdown-menu">
           <li>
-            <NuxtLink to="/groups/persons">All Persons</NuxtLink>
+            <NuxtLink to="/activities/projects">Volunteering</NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/groups/projects">All Projects</NuxtLink>
+            <NuxtLink to="/activities/services">Donate</NuxtLink>
           </li>
-          <li>
-            <NuxtLink to="/groups/services">All Services</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/groups/activities">All Activities</NuxtLink>
-          </li>
-        </ul>    
-      </div>  
+        </ul>   
+      </div>
 
-      <NuxtLink to="/contact">Contact Us</NuxtLink>      
+      <NuxtLink to="/contact" id="contactUs">Contact Us</NuxtLink>  
+
+      <button id="exitB" onclick="location.href='https://www.google.com'">
+        <div>Icon</div>
+        <div>Exit</div>
+      </button>    
     </nav>
   </header>
 
@@ -44,18 +52,48 @@
   </main>
 
   <footer>
-    <div class="greyColor">The Centre</div>
-    <div class="greyColor">
-      <NuxtLink to="/about">Homepage</NuxtLink>
-      <NuxtLink to="/about">About Us</NuxtLink>
-      <NuxtLink to="/about">Our Activities</NuxtLink>
-      <NuxtLink to="/about">What You Can Do</NuxtLink>
-      <NuxtLink to="/about">Contact Us</NuxtLink>
+    <div id="info">
+      <h4>Centro MiLA</h4>
+      <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
+      <button>Donate</button>
     </div>
-    <p>&copy; 2024 Domestic Violence Support Center. All rights reserved.</p>
+
+    <nav>
+      <div style="border-width: 0px;">
+        <NuxtLink to="/activities/activities" class="boldText">About Us</NuxtLink>
+        <NuxtLink to="/activities/activities">Our Location</NuxtLink>
+        <NuxtLink to="/activities/activities">Our People</NuxtLink>
+      </div>
+      <div>
+        <NuxtLink to="/activities/activities" class="boldText">Our Activities</NuxtLink>
+        <NuxtLink to="/activities/activities">Our Services</NuxtLink>
+        <NuxtLink to="/activities/activities">Our Projects</NuxtLink>
+      </div>
+      <div>
+        <NuxtLink to="/activities/activities" class="boldText">What You Can Do</NuxtLink>
+        <NuxtLink to="/activities/activities">Volunteering</NuxtLink>
+        <NuxtLink to="/activities/activities">Donate</NuxtLink>
+      </div>
+    </nav>
+
+    <div id="contacts">
+      <div class="boldText" style="font-size: var(--body2)">Contact Us</div>
+      <div>
+        <p class="boldText">Phone</p>
+        <p>Call us everyday, at every hour</p>
+        <p class="boldText" style="font-size: var(--body2); color: var(--purple);">0521.248886</p>
+      </div>
+      <div>
+        <p class="boldText">Location</p>
+        <p>Via Valtellina 20, Milan 20159</p>
+        <hr style="width: 100%; border-top: 2px dashed var(--light-grey); border-bottom: 0px;">
+        <p>Via Candiani 72, Milan 20158</p>
+      </div>
+    </div>
   </footer>
 </template>
  
+
 <script>
 export default {
   // Any layout-specific JavaScript goes here
@@ -63,31 +101,63 @@ export default {
 </script>
  
 
-
 <style scoped>
-/* HEADER *************/
+/* HEADER **************************************************************************/
 header{
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   position: fixed;
-  width: 100%;
   height: var(--header-height);
 }
 
-header h1{ /* da cambiare con il logo */
-  margin: 0;
-  padding-left: 5px
+#logo{
+  text-decoration: none;
+  margin-left: 100px;
 }
 
-nav{ /**Il nav è da cambiare */
+/* Navigation Bar */
+nav{
   display: flex;
   flex-direction: row;
   justify-content: right;
-  gap: 20px;
-  padding-right: 20px;
+  align-items: center;
+  gap: 48px;
+  margin-right: 80px;
+  font-size: var(--body2);
+  line-height: var(--l-height2);
 }
+
+nav a{
+  color: var(--black);
+}
+
+#contactUs{
+  color: var(--purple);
+  font-weight: var(--bold);
+}
+
+/* Exit Button */
+#exitB{
+  margin-left: 52px;
+  width: 132px;
+  height: 120px;
+  border-radius: 0%;
+  background-color: var(--orange);
+  font-size: var(--body2);
+  font-weight: var(--semibold);
+}
+
+#exitB:hover{
+  background-color:color-mix(in srgb, var(--orange) 80%, var(--white));
+}
+
+#exitB:active{
+  background-color:color-mix(in srgb, var(--orange) 80%, var(--black));
+}
+
+
 
 main{
   margin-top: var(--header-height);
@@ -95,67 +165,100 @@ main{
 
 
 
-/* DROPDOWN MENU ***********/
+/* DROPDOWN MENU ********************************************************/
+/*modificare*/
 .menu-container{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Style the dropdown menu */
-.dropdown-menu {
+.dropdown-menu { 
   display: none;
   position: absolute;
+  margin-top: var(--l-height2);
   padding: 0%;
-  margin-top: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--white);
   width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
-/* Style the dropdown menu items */
+/* Dropdown Menu Items */
 .dropdown-menu li {
   padding: 12px 16px;
   display: block;
 }
 
 .dropdown-menu li:hover {
-  background-color: #f1f1f1;
+  background-color: var(--dirty-white);
 }
 
 /* Show the dropdown menu on hover */
-#activities-container:hover .dropdown-menu,
-#groups-container:hover .dropdown-menu {
+.menu-container:hover .dropdown-menu {
   display: block;
 }
 
 
-/* FOOTER *************/
+
+/* FOOTER ************************************************************/
 footer{
   display: flex;
-  flex-direction: column;
-  justify-content: baseline;
-  align-items:baseline;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
 }
 
-footer div{
-  padding-left: 10%;
+footer #info{
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: start;
+  gap: 20px;
+  margin-left: 110px;
+  max-width: 15%;
+}
+
+footer #info button{
+  margin-top: 50px;
+}
+
+footer nav{
   display: flex;
   flex-direction: row;
-  align-content: baseline;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
+
+footer nav div{
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: start;
+  padding: 20px 50px;
+  border-width: 0 0 0 2px;
+  border-style: dashed;
+  border-color: var(--light-grey);
+}
+
+footer #contacts{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  align-content: space-between;
   gap: 20px;
-  margin-bottom: 10px;
-}
-
-footer p{
-  width: 100%;
-  text-align: center;
-}
-
-.greyColor, a{
-  color: var(--grey);
+  font-size: var(--body1);
+  margin-right: 200px;
 }
 
 
+
+.boldText{
+  font-weight: 550;
+}
+
+p{
+  margin: 0px;
+}
 </style>
