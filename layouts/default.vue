@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import MainButton from '@/components/MainButton.vue';
-import SecondaryButton from '@/components/SecondaryButton.vue';
-import ExitButton from '@/components/ExitButton.vue';
+import MainButton from '~/components/buttons/MainButton.vue';
+import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
+import ExitButton from '~/components/buttons/ExitButton.vue';
 
 export default defineComponent({
   components: {

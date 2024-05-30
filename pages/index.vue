@@ -1,9 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import BackwardButton from '@/components/BackwardButton.vue';
-import ForwardButton from '@/components/ForwardButton.vue';
-import TextButton from '@/components/TextButton.vue';
-import LinkButton from '@/components/LinkButton.vue';
+import BackwardButton from '~/components/buttons/BackwardButton.vue';
+import ForwardButton from '~/components/buttons/ForwardButton.vue';
+import TextButton from '~/components/buttons/TextButton.vue';
+import LinkButton from '~/components/buttons/LinkButton.vue';
 
 export default defineComponent({
   components: {
