@@ -1,6 +1,23 @@
-<template >
+<script lang="ts">
+import { defineComponent } from 'vue';
+import MainButton from '@/components/MainButton.vue';
+import SecondaryButton from '@/components/SecondaryButton.vue';
+import ExitButton from '@/components/ExitButton.vue';
+
+export default defineComponent({
+  components: {
+    MainButton,
+    SecondaryButton,
+    ExitButton
+  },
+});
+</script>
+
+<template>
   <header>
-    <NuxtLink to="/" id="logo"><h4>Centro MiLA</h4></NuxtLink>
+    <NuxtLink to="/" id="logo">
+      <h4>Centro MiLA</h4>
+    </NuxtLink>
     <nav>
       <div class="menu-container">
         <NuxtLink to="/activities/activities">About Us</NuxtLink>
@@ -11,7 +28,7 @@
           <li>
             <NuxtLink to="/activities/services">Our People</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
 
       <div class="menu-container">
@@ -23,9 +40,9 @@
           <li>
             <NuxtLink to="/activities/services">Services</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
-      
+
       <div class="menu-container">
         <NuxtLink to="/activities/activities">What You Can Do</NuxtLink>
         <ul class="dropdown-menu">
@@ -35,15 +52,12 @@
           <li>
             <NuxtLink to="/activities/services">Donate</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
 
-      <NuxtLink to="/contact" id="contactUs">Contact Us</NuxtLink>  
+      <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contact" />
 
-      <button id="exitB" onclick="location.href='https://www.google.com'">
-        <div>Icon</div>
-        <div>Exit</div>
-      </button>    
+      <ExitButton />
     </nav>
   </header>
 
@@ -55,7 +69,7 @@
     <div id="info">
       <h4>Centro MiLA</h4>
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
-      <button>Donate</button>
+      <MainButton buttonText="Donate" buttonLength="short" to="/activities/services" />
     </div>
 
     <nav>
@@ -92,18 +106,10 @@
     </div>
   </footer>
 </template>
- 
-
-<script>
-export default {
-  // Any layout-specific JavaScript goes here
-}
-</script>
- 
 
 <style scoped>
 /* HEADER **************************************************************************/
-header{
+header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -112,13 +118,13 @@ header{
   height: var(--header-height);
 }
 
-#logo{
+#logo {
   text-decoration: none;
   margin-left: 100px;
 }
 
 /* Navigation Bar */
-nav{
+nav {
   display: flex;
   flex-direction: row;
   justify-content: right;
@@ -129,51 +135,23 @@ nav{
   line-height: var(--l-height2);
 }
 
-nav a{
+nav a {
   color: var(--black);
 }
 
-#contactUs{
-  color: var(--purple);
-  font-weight: var(--bold);
-}
-
-/* Exit Button */
-#exitB{
-  margin-left: 52px;
-  width: 132px;
-  height: 120px;
-  border-radius: 0%;
-  background-color: var(--orange);
-  font-size: var(--body2);
-  font-weight: var(--semibold);
-}
-
-#exitB:hover{
-  background-color:color-mix(in srgb, var(--orange) 80%, var(--white));
-}
-
-#exitB:active{
-  background-color:color-mix(in srgb, var(--orange) 80%, var(--black));
-}
-
-
-
-main{
+main {
   margin-top: var(--header-height);
 }
 
-
-
 /* DROPDOWN MENU ********************************************************/
 /*modificare*/
-.menu-container{
+.menu-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.dropdown-menu { 
+.dropdown-menu {
   display: none;
   position: absolute;
   margin-top: var(--l-height2);
@@ -202,14 +180,14 @@ main{
 
 
 /* FOOTER ************************************************************/
-footer{
+footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
 }
 
-footer #info{
+footer #info {
   display: flex;
   flex-direction: column;
   align-content: space-between;
@@ -219,11 +197,11 @@ footer #info{
   max-width: 15%;
 }
 
-footer #info button{
+footer #info button {
   margin-top: 50px;
 }
 
-footer nav{
+footer nav {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -231,7 +209,7 @@ footer nav{
   gap: 0px;
 }
 
-footer nav div{
+footer nav div {
   display: flex;
   flex-direction: column;
   align-content: space-between;
@@ -242,7 +220,7 @@ footer nav div{
   border-color: var(--light-grey);
 }
 
-footer #contacts{
+footer #contacts {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -254,11 +232,11 @@ footer #contacts{
 
 
 
-.boldText{
+.boldText {
   font-weight: 550;
 }
 
-p{
+p {
   margin: 0px;
 }
 </style>

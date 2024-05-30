@@ -4,8 +4,10 @@
 :root{
   /*Colours*/
   --purple: #6706A5;
+  --purple-light: #9C3EE6;
+  --purple-dark: #480473;
   --lilac: #E0D6F2;
-  --seashell: #FFF8EB;
+  --beige: #FFF8EB;
   --orange: #FF7960;
   --white: #FFFFFF;
   --dirty-white: #F5F3F7;
@@ -14,8 +16,11 @@
   --dark-grey: #76737A;
   --black: #1A141F;
 
-
   --header-height: 120px;
+
+  /*Font-family*/
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
 
   /*Font-size*/
   --h1: 96px;
@@ -34,9 +39,15 @@
 
   /*Font-weight*/
   --regular: 400;
+  --medium: 500;
   --semibold: 550;
   --bold: 700;
 
+  /* Border-radius */
+  --border-radius: 8px;
+
+  /* Transition */
+  --transition: 0.25s ease;
 }
 
 
@@ -118,7 +129,7 @@ a:active{
   color:color-mix(in srgb, currentColor 80%, var(--black)); /*?*/
 }
 
-/* Styling for Buttons */
+/* Styling for Buttons *//*
 button {
   padding: 10px 20px;
   height: 64px;
@@ -140,13 +151,7 @@ button:hover {
 button:active{
   background-color:color-mix(in srgb, var(--purple) 80%, var(--black));
 }
-
-
-
-
-
-
-
+*/
 
 
 /* Basic styling for paragraphs *//*
@@ -162,7 +167,6 @@ ol {
   padding-left: 1.5em;
 }
 */
-
 
 
 /* Basic styling for images */

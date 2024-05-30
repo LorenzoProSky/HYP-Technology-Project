@@ -1,8 +1,30 @@
+<script lang="ts">
+import { defineComponent } from 'vue';
+import BackwardButton from '@/components/BackwardButton.vue';
+import ForwardButton from '@/components/ForwardButton.vue';
+import TextButton from '@/components/TextButton.vue';
+import LinkButton from '@/components/LinkButton.vue';
+
+export default defineComponent({
+  components: {
+    BackwardButton,
+    ForwardButton,
+    TextButton,
+    LinkButton,
+  },
+});
+</script>
+
 <template>
 
   <section class="section">
     <h2>Homepage</h2>
     <p>We're here to provide support and resources for those who have been subject to domestic violence.</p>
+
+    <BackwardButton buttonText="Back" to="/activities/activities" />
+    <ForwardButton buttonText="Next" to="/activities/activities" />
+    <TextButton buttonText="Learn more" to="/activities/activities" />
+    <LinkButton buttonText="Contact us" to="/contact" />
   </section>
   <section class="section">
     <h2>About us</h2>
@@ -20,16 +42,11 @@
     <h2>Contact us</h2>
     <p>Get in touch with us to learn more about our services or to get help.</p>
   </section>
-  
+
 </template>
 
-<script lang="ts" setup>
-// Add any Vue component logic here
-</script>
+
 
 <style>
-/* Add your CSS styles here */
-</style>
 
-<script lang="ts" setup>
-</script>
+</style>
