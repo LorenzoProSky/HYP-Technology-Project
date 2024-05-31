@@ -83,20 +83,20 @@ export default defineComponent({
 
 /* Hover style for the button */
 .secondary-button:hover:not(.is-disabled) {
-  color: var(--purple-light);
-  border: thin solid var(--purple-light);
+  color: var(--purple-hover);
+  border: thin solid var(--purple-hover);
 }
 
 /* Active style for the button */
 .secondary-button:active:not(.is-disabled) {
-  color: var(--purple-dark);
-  border: thin solid var(--purple-dark);
+  color: var(--purple-clicked);
+  border: thin solid var(--purple-clicked);
 }
 
 /* Disabled style for the button */
 .secondary-button.is-disabled {
-  color: var(--light-grey);
-  border: thin solid var(--light-grey);
+  color: var(--grey3);
+  border: thin solid var(--grey3);
   cursor: not-allowed;
 }
 </style>

@@ -77,7 +77,7 @@ export default defineComponent({
 
 /* Disabled style for the button */
 .backward-button.is-disabled {
-  color: var(--light-grey);
+  color: var(--grey3);
   cursor: not-allowed;
 }
 
