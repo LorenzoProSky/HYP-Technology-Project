@@ -4,16 +4,16 @@
 :root{
   /*Colours*/
   --purple: #6706A5;
-  --purple-light: #9C3EE6;
-  --purple-dark: #480473;
+  --purple-hover: #9C3EE6;
+  --purple-clicked: #480473;
   --lilac: #E0D6F2;
   --beige: #FFF8EB;
   --orange: #FF7960;
   --white: #FFFFFF;
-  --dirty-white: #F5F3F7;
-  --light-grey: #D4D2D5;
-  --grey: #ABA7AF;
-  --dark-grey: #76737A;
+  --grey4: #F5F3F7;
+  --grey3: #D4D2D5;
+  --grey2: #ABA7AF;
+  --grey1: #76737A;
   --black: #1A141F;
 
   --header-height: 120px;
@@ -32,6 +32,7 @@
   --l-height1: 19px;
   --body2: 18px;
   --l-height2: 26px;
+  --l-height-header: 22px;
   --body3: 20px;
   --l-height3: 24px;
   --body4: 24px;
@@ -40,7 +41,7 @@
   /*Font-weight*/
   --regular: 400;
   --medium: 500;
-  --semibold: 550;
+  --semibold: 600;
   --bold: 700;
 
   /* Border-radius */
@@ -51,11 +52,12 @@
 }
 
 
+
 /* Reset some default styles */
 html,
 body{
-  height: 100% !important;
-  width: 100% !important;
+  height: 100%!important;
+  width: 100%!important;
   margin: 0;
   padding: 0;
 }
@@ -68,7 +70,7 @@ body{
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: var(--purple);
+  background-color: var(--grey4);
 }
 
 /* Styling for Text */
@@ -122,51 +124,17 @@ a {
 
 a:hover {
   text-decoration: underline;
-  color:color-mix(in srgb, currentColor 80%, var(--white)); /*?*/
+  color:color-mix(in srgb, currentColor 80%, var(--white)); 
 }
 
 a:active{
-  color:color-mix(in srgb, currentColor 80%, var(--black)); /*?*/
+  color:color-mix(in srgb, currentColor 80%, var(--black)); 
 }
 
-/* Styling for Buttons *//*
-button {
-  padding: 10px 20px;
-  height: 64px;
-  width: 163px;
-  background-color: var(--purple);
-  color: var(--white);
-  font-size: var(--body4);
-  font-weight: var(--regular);
-  font-family: "Montserrat", serif;
-  border-radius: 8px;
-  border-width: 0px;
-  transition: background-color 0.5s ease;
-}
-
-button:hover {
-  background-color:color-mix(in srgb, var(--purple) 80%, var(--white));
-}
-
-button:active{
-  background-color:color-mix(in srgb, var(--purple) 80%, var(--black));
-}
-*/
 
 
-/* Basic styling for paragraphs *//*
-p {
-  margin-bottom: 1em;
-}
 
-/* Basic styling for lists */
-/*
-ul,
-ol {
-  margin-bottom: 1em;
-  padding-left: 1.5em;
-}
-*/
+
 
 
 /* Basic styling for images */
@@ -186,20 +154,4 @@ textarea {
   margin-bottom: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-/* Basic styling for form elements */
-label {
-  display: block;
-  margin-bottom: 0.5em;
-}
-
-/* Basic styling for form validation */
-error {
-  color: #dc3545;
-}
-
-/* Basic styling for success messages */
-success {
-  color: #28a745;
 }

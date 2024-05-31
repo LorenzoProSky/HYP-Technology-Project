@@ -65,17 +65,17 @@ export default defineComponent({
 
 /* Hover style for the button */
 .text-button:hover:not(.is-disabled) {
-  color: var(--purple-light);
+  color: var(--purple-hover);
 }
 
 /* Active style for the button */
 .text-button:active:not(.is-disabled) {
-  color: var(--purple-dark);
+  color: var(--purple-clicked);
 }
 
 /* Disabled style for the button */
 .text-button.is-disabled {
-  color: var(--light-grey);
+  color: var(--grey3);
   cursor: not-allowed;
 }
 </style>
