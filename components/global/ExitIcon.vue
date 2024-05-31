@@ -7,9 +7,13 @@ defineComponent({
 });
 </script>
 <template>
-  <svg width="30" height="36" viewBox="0 0 30 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M14 2H5.99994C3.79081 2 2 3.79081 2 5.99994V29.9999C2 32.2091 3.79081 33.9999 5.99994 33.9999H14M28.0001 17.9999H10.0001M28.0001 17.9999L22.0001 11.9999M28.0001 17.9999L22.0001 23.9999"
-      stroke="currentColor" stroke-width="2.625" stroke-linecap="round" stroke-linejoin="round" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+    <g fill="currentColor">
+      <path fill-rule="evenodd"
+        d="M11 20a1 1 0 0 0-1-1H5V5h5a1 1 0 1 0 0-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5a1 1 0 0 0 1-1"
+        clip-rule="evenodd" />
+      <path
+        d="M21.714 12.7a.996.996 0 0 0 .286-.697v-.006a.997.997 0 0 0-.293-.704l-4-4a1 1 0 1 0-1.414 1.414L18.586 11H9a1 1 0 1 0 0 2h9.586l-2.293 2.293a1 1 0 0 0 1.414 1.414l4-4z" />
+    </g>
   </svg>
 </template>

@@ -44,7 +44,7 @@ export default defineComponent({
       @blur="focused = false" :disabled="isDisabled" v-bind="$attrs">
       {{ buttonText }}
       <!-- Icon for the button on the right -->
-      <Icon name="ForwardArrowIcon" size="35" />
+      <Icon name="ForwardArrowIcon" size="24" />
     </button>
   </NuxtLink>
 </template>
@@ -55,7 +55,7 @@ export default defineComponent({
 .forward-button {
   height: 64px;
   padding: 0 10px;
-  background-color: var(--transparent);
+  background-color: transparent;
   font-family: var(--font-montserrat);
   color: var(--purple);
   font-size: var(--body4);
@@ -84,6 +84,6 @@ export default defineComponent({
 /* Icon style */
 .icon {
   margin-top: -2px;
-  margin-left: -5px;
+  margin-left: 1px;
 }
 </style>
