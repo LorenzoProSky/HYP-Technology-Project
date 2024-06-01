@@ -127,7 +127,7 @@ header{
 }
 
 /* Navigation Bar */
-nav{
+header nav{
   display: flex;
   flex-direction: row;
   justify-content: right;
@@ -143,7 +143,7 @@ nav a{
   color: var(--black);
 }
 
-nav #contactUs{
+header nav #contactUs{
   margin-left: 4px;
   margin-right: 1.25vw; /* equal to 24px on a screen that is 1920px wide */
   width: 137px;
@@ -380,4 +380,13 @@ p{
   }
 }
 
+/**Stylings for mobile devices */
+@media only screen and (max-device-width:480px){
+header{
+  height: 64px;
+}
+#logo{
+  height: 27px;
+}
+}
 </style>
