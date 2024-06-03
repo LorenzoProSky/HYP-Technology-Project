@@ -5,7 +5,7 @@
   /*Colours*/
   --purple: #6706A5;
   --purple-hover: #9C3EE6;
-  --purple-clicked: #480473;
+  --purple-active: #480473;
   --lilac: #E0D6F2;
   --beige: #FFF8EB;
   --beige-hover: #FFFDF9;
@@ -48,7 +48,8 @@
   --bold: 700;
 
   /* Border-radius */
-  --border-radius: 8px;
+  --border-radius-bottom: 8px;
+  --border-radius-card: 12px;
 
   /* Transition */
   --transition: 0.25s ease;
@@ -121,7 +122,6 @@ footer {
 
 /* Styling for Links */
 a {
-  color: #007bff;
   text-decoration: none;
 }
 

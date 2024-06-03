@@ -89,7 +89,7 @@ export default defineComponent({
 .card {
   width: 600px;
   height: calc(423px + var(--extra-height));
-  border-radius: 12px;
+  border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
   box-shadow: 0px 5px 20px var(--black-shadow);
@@ -107,11 +107,11 @@ export default defineComponent({
   background-color: var(--beige-hover);
 
   .icon-container {
-    background-color: var(--purple-light);
+    background-color: var(--purple-hover);
   }
 
   .arrow-icon {
-    color: var(--purple-light);
+    color: var(--purple-hover);
   }
 
   .manager-icon {
@@ -125,11 +125,11 @@ export default defineComponent({
   background-color: var(--beige-active);
 
   .icon-container {
-    background-color: var(--purple-dark);
+    background-color: var(--purple-active);
   }
 
   .arrow-icon {
-    color: var(--purple-dark);
+    color: var(--purple-active);
   }
 
   .manager-icon {
@@ -140,7 +140,7 @@ export default defineComponent({
 /* Disabled effect on card */
 .card.is-disabled {
   opacity: 0.5;
-  background-color: var(--light-grey);
+  background-color: var(--grey3);
   cursor: not-allowed;
 }
 
@@ -148,7 +148,7 @@ export default defineComponent({
 .icon-container {
   height: 70px;
   width: 70px;
-  border-radius: 12px;
+  border-radius: var(--border-radius-card);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -220,7 +220,7 @@ export default defineComponent({
   content: "";
   margin-left: -64px;
   margin-right: -110px;
-  border-top: 2px solid var(--grey);
+  border-top: 2px solid var(--grey2);
   margin-bottom: 64px;
   cursor: pointer;
 }

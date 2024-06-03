@@ -70,7 +70,7 @@ export default defineComponent({
 
 /* Active style for the button */
 .text-button:active:not(.is-disabled) {
-  color: var(--purple-clicked);
+  color: var(--purple-active);
 }
 
 /* Disabled style for the button */

@@ -72,7 +72,7 @@ export default defineComponent({
 
 /* Active style for the button */
 .forward-button:active:not(.is-disabled) {
-  color: var(--purple-clicked);
+  color: var(--purple-active);
 }
 
 /* Disabled style for the button */

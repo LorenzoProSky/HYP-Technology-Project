@@ -84,7 +84,7 @@ export default defineComponent({
 .card {
   width: 441px;
   height: 215px;
-  border-radius: 12px;
+  border-radius: var(--border-radius-card);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -106,7 +106,7 @@ export default defineComponent({
   }
 
   .card-icon-container {
-    background-color: var(--purple-light);
+    background-color: var(--purple-hover);
   }
 
   .icon {
@@ -123,7 +123,7 @@ export default defineComponent({
   }
 
   .card-icon-container {
-    background-color: var(--purple-dark);
+    background-color: var(--purple-active);
   }
 
   .icon {
@@ -134,19 +134,7 @@ export default defineComponent({
 /* Disabled effect on card */
 .card.is-disabled {
   opacity: 0.5;
-
-  .card-content {
-    background-color: var(--light-grey);
-  }
-
-  .card-icon-container {
-    background-color: var(--light-grey);
-  }
-
-  .icon {
-    color: var(--light-grey);
-  }
-
+  background-color: var(--grey3);
   cursor: not-allowed;
 }
 

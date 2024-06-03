@@ -87,7 +87,7 @@ export default defineComponent({
 .card {
   width: 606px;
   height: 810px;
-  border-radius: 12px;
+  border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
   box-shadow: 0px 5px 20px var(--black-shadow);
@@ -105,7 +105,7 @@ export default defineComponent({
   background-color: var(--beige-hover);
 
   .icon {
-    color: var(--purple-light);
+    color: var(--purple-hover);
   }
 }
 
@@ -115,14 +115,14 @@ export default defineComponent({
   background-color: var(--beige-active);
 
   .icon {
-    color: var(--purple-dark);
+    color: var(--purple-active);
   }
 }
 
 /* Disabled effect on card */
 .card.is-disabled {
   opacity: 0.5;
-  background-color: var(--light-grey);
+  background-color: var(--grey3);
   cursor: not-allowed;
 }
 
@@ -181,7 +181,7 @@ export default defineComponent({
 .when-content {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
-  color: var(--dark-grey);
+  color: var(--grey1);
   font-weight: var(--medium);
   margin-top: 5px;
   margin-bottom: 0px;
@@ -192,7 +192,7 @@ export default defineComponent({
 .where-content {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
-  color: var(--dark-grey);
+  color: var(--grey1);
   font-weight: var(--semibold);
   margin-top: -20px;
   margin-bottom: 0px;
