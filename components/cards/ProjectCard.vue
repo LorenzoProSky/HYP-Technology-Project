@@ -38,6 +38,12 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    // Type: present or past project
+    type: {
+      type: String,
+      validator: (value: string) => ['present', 'past'].includes(value),
+      required: true,
+    },
   },
   // Setup reactive data for the component
   setup() {
@@ -46,6 +52,12 @@ export default defineComponent({
     const focused = ref(false); // Tracks whether the button has focus
 
     return { hover, active, focused }; // Expose reactive data to the template
+  },
+  // Computed property to check if the card is a past project
+  computed: {
+    isPastProject() {
+      return this.type === 'past';
+    }
   },
 });
 </script>
@@ -58,7 +70,7 @@ export default defineComponent({
       <!-- Card -->
       <div class="card">
         <!-- Project image -->
-        <img :src="imageSrc" alt="${imageSrc}" class="card-image">
+        <img :src="imageSrc" alt="${imageSrc}" class="card-image" :class="{ 'grayscale': isPastProject }">
         <!-- Card content -->
         <div class="card-content">
           <!-- Project title -->
@@ -78,8 +90,12 @@ export default defineComponent({
               <p class="where-content">{{ where }}</p>
             </div>
           </div>
-          <!-- Forward arrow icon -->
-          <Icon name="ForwardArrowIcon" size="32" />
+          <div class="card-end-row">
+            <!-- Conditionally render "Past Project" text if the card is a past project -->
+            <div v-if="isPastProject" class="past-project-text">Past Project</div>
+            <!-- Forward arrow icon -->
+            <Icon name="ForwardArrowIcon" size="32" />
+          </div>
         </div>
       </div>
     </div>
@@ -136,6 +152,11 @@ export default defineComponent({
   width: 100%;
   height: 51%;
   object-fit: cover;
+}
+
+/* Grayscale effect */
+.grayscale {
+  filter: grayscale(100%);
 }
 
 /* Content styling */
@@ -242,10 +263,27 @@ export default defineComponent({
   text-align: left;
 }
 
+/* End row styling */
+.card-end-row {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 37px;
+}
+
+/* Past project text styling */
+.past-project-text {
+  font-family: var(--font-montserrat);
+  font-size: var(--body2);
+  color: var(--orange);
+  font-weight: var(--semibold);
+  text-align: left;
+  margin-bottom: -15px;
+}
+
 /* Icon styling */
 .icon {
   align-self: center;
-  margin-bottom: 37px;
-  margin-left: 459px;
+  margin-top: -13px;
+  margin-left: 455px;
 }
 </style>
