@@ -8,6 +8,8 @@
   --purple-dark: #480473;
   --lilac: #E0D6F2;
   --beige: #FFF8EB;
+  --beige-hover: #FFFDF9;
+  --beige-active: #FFF9EF;
   --orange: #FF7960;
   --white: #FFFFFF;
   --dirty-white: #F5F3F7;
@@ -15,6 +17,7 @@
   --grey: #ABA7AF;
   --dark-grey: #76737A;
   --black: #1A141F;
+  --black-shadow: rgba(26, 20, 31, 0.12);
 
   --header-height: 120px;
 
@@ -120,10 +123,10 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+/* a:hover {
   text-decoration: underline;
-  color:color-mix(in srgb, currentColor 80%, var(--white)); /*?*/
-}
+  color:color-mix(in srgb, currentColor 80%, var(--white));
+} */
 
 a:active{
   color:color-mix(in srgb, currentColor 80%, var(--black)); /*?*/
