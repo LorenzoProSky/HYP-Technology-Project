@@ -63,4 +63,11 @@ export default defineComponent({
 .icon {
   margin-bottom: 8px;
 }
+
+@media (max-width: 851px){
+  .exit-button{
+    width: 100px;
+  }
+}
+
 </style>
