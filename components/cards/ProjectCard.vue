@@ -156,7 +156,8 @@ export default defineComponent({
 
 /* Grayscale effect */
 .grayscale {
-  filter: grayscale(100%);
+  filter: grayscale(100);
+  transition: filter var(--transition) ease-in-out;
 }
 
 /* Content styling */
@@ -169,7 +170,7 @@ export default defineComponent({
   text-align: center;
   color: var(--black);
   padding-left: 64px;
-  padding-right: 62px;
+  padding-right: 92px;
 }
 
 /* Title styling */
@@ -179,7 +180,7 @@ export default defineComponent({
   color: var(--black);
   font-weight: var(--semibold);
   margin-top: 36px;
-  margin-bottom: 0px;
+  margin-bottom: -6px;
   text-align: left;
 }
 
@@ -189,7 +190,8 @@ export default defineComponent({
   font-size: var(--body3);
   color: var(--black);
   font-weight: var(--medium);
-  margin-top: 20px;
+  margin-top: 12px;
+  margin-bottom: 0px;
   text-align: left;
 }
 
@@ -198,7 +200,7 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: -10px;
+  margin-top: -6px;
   margin-bottom: 30px;
 }
 
@@ -208,8 +210,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  padding-left: 0px;
-  padding-right: 0px;
 }
 
 /* When text styling */
@@ -239,8 +239,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  padding-left: 0px;
-  padding-right: 0px;
 }
 
 /* Where text styling */
@@ -277,13 +275,14 @@ export default defineComponent({
   color: var(--orange);
   font-weight: var(--semibold);
   text-align: left;
-  margin-bottom: -15px;
+  margin-top: -8px;
+  margin-bottom: -14px;
 }
 
 /* Icon styling */
 .icon {
   align-self: center;
   margin-top: -13px;
-  margin-left: 455px;
+  margin-left: 458px;
 }
 </style>

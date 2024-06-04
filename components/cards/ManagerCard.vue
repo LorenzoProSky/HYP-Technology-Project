@@ -220,7 +220,8 @@ export default defineComponent({
   content: "";
   margin-left: -64px;
   margin-right: -110px;
-  border-top: 2px solid var(--grey2);
+  border-top: 1px solid var(--grey2);
+  margin-top: 16px;
   margin-bottom: 64px;
   cursor: pointer;
 }
@@ -230,6 +231,6 @@ export default defineComponent({
   color: var(--black);
   align-self: center;
   margin-top: 46px;
-  margin-left: 445px;
+  margin-left: 453px;
 }
 </style>

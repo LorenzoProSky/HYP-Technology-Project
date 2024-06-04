@@ -154,6 +154,6 @@ export default defineComponent({
 .icon {
   align-self: center;
   margin-bottom: 36px;
-  margin-left: 400px;
+  margin-left: 409px;
 }
 </style>

@@ -266,6 +266,6 @@ export default defineComponent({
 .icon {
   align-self: center;
   margin-bottom: 38px;
-  margin-left: 478px;
+  margin-left: 494px;
 }
 </style>

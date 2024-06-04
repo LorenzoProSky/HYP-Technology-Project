@@ -61,14 +61,14 @@ export default defineComponent({
       text="A bi-monthly event offering women and children a safe, supportive environment to enjoy swimming and foster community."
       when="1st and 3rd Sunday 10:00 - 16:00" where="Centro Balneare Romano, 20131 Milano"
       to="/activities/activities"
-      type="past" />
+      type="present" />
     <ServiceCard
       imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       title="Legal Counselling"
       text="With the Legal Counselling, you can know your rights and the tools you need to protect yourself and your children."
       :when="['Monday - Friday 09:00 - 17:00', 'Tuesday - Friday\n09:00 - 18:00']"
       :where="['Centro MiLA Farini', 'Centro MiLA Bovisa']" to="/services" />
-    <ManagerCard type=""
+    <ManagerCard type="service"
       :text="['Name Surname is the main responsible for the Project Name', 'Name Surname is the main responsible for the Project Name', 'Name Surname is the main responsible for the Project Name']"
       :to="['/about', '/activities/activities', '/groups']" />
     <MapCardBig
