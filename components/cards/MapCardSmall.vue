@@ -64,9 +64,9 @@ export default defineComponent({
           </div>
           <!-- Additional contact details -->
           <div class="card-text">
-            <p>{{ address }}</p>
-            <p>{{ email }}</p>
-            <p>{{ phone }}</p>
+            <p class="card-address">{{ address }}</p>
+            <p class="card-email">{{ email }}</p>
+            <p class="card-phone">{{ phone }}</p>
           </div>
         </div>
         <!-- Forward arrow icon -->
@@ -170,8 +170,8 @@ export default defineComponent({
   color: var(--black);
   font-size: var(--body1);
   font-weight: var(--semibold);
-  margin-top: -10px;
-  margin-bottom: -18px;
+  margin-top: -15px;
+  margin-bottom: 0px;
   text-align: left;
 }
 
@@ -182,8 +182,25 @@ export default defineComponent({
   font-size: var(--body1);
   font-weight: var(--regular);
   text-align: left;
-  line-height: 0.5;
-  margin-bottom: 30px;
+  margin-top: -10px;
+  margin-bottom: 40px;
+}
+
+/* Address styling */
+.card-address {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+/* Email styling */
+.card-email {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+/* Phone styling */
+.card-phone {
+  margin-top: 5px;
 }
 
 /* Icon container styling */

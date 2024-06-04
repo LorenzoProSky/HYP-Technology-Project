@@ -169,7 +169,7 @@ export default defineComponent({
 /* Icon styling */
 .icon {
   align-self: center;
-  margin-bottom: 36px;
-  margin-left: 362px;
+  margin-bottom: 37px;
+  margin-left: 375px;
 }
 </style>

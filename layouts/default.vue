@@ -122,6 +122,7 @@ header {
   align-items: center;
   position: fixed;
   height: var(--header-height);
+  z-index: 10; /* Ensure the header is on top */
 }
 
 #logo {

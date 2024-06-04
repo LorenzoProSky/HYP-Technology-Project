@@ -138,7 +138,7 @@ export default defineComponent({
 /* Icon styling */
 .icon {
   align-self: center;
-  margin-top: 43px;
-  margin-left: 485px;
+  margin-top: 44px;
+  margin-left: 496px;
 }
 </style>

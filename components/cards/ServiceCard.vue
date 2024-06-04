@@ -143,7 +143,7 @@ export default defineComponent({
   text-align: center;
   color: var(--black);
   padding-left: 64px;
-  padding-right: 62px;
+  padding-right: 92px;
 }
 
 /* Title styling */
@@ -203,6 +203,6 @@ export default defineComponent({
 .icon {
   align-self: center;
   margin-bottom: 37px;
-  margin-left: 459px;
+  margin-left: 502px;
 }
 </style>
