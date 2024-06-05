@@ -71,7 +71,7 @@ export default defineComponent({
 
 /* Active style for the button */
 .link-button:active:not(.is-disabled) {
-  color: var(--purple-clicked);
+  color: var(--purple-active);
 }
 
 /* Disabled style for the button */

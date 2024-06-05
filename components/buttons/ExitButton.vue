@@ -57,7 +57,7 @@ export default defineComponent({
 
 /* Active style for the button */
 .exit-button:active:not(.is-disabled) {
-  filter: brightness(1);
+  filter: brightness(0.95);
 }
 
 .icon {

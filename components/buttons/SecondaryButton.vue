@@ -72,7 +72,7 @@ export default defineComponent({
 .secondary-button {
   height: 64px;
   padding: 0 10px;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-bottom);
   background-color: var(--white);
   font-family: var(--font-montserrat);
   color: var(--purple);
@@ -91,8 +91,8 @@ export default defineComponent({
 
 /* Active style for the button */
 .secondary-button:active:not(.is-disabled) {
-  color: var(--purple-clicked);
-  border: thin solid var(--purple-clicked);
+  color: var(--purple-active);
+  border: thin solid var(--purple-active);
 }
 
 /* Disabled style for the button */

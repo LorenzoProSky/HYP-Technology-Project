@@ -105,7 +105,9 @@ export default defineComponent({
 <!-- TEMPLATE --------------------------------------------------------------------------------->
 <template>
   <header>
-    <NuxtLink to="/" id="logo"><img src="/assets/styles/SVG_Icons/Logo Mila.svg" alt="Centro MiLA"></NuxtLink>
+    <NuxtLink to="/" id="logo">
+      <Icon class="header-logo" name="CentreLogoIcon" size="180" />
+    </NuxtLink>
     <nav>
       <div class="menu-container">
         <NuxtLink to="/about">About Us</NuxtLink>
@@ -116,7 +118,7 @@ export default defineComponent({
           <li class="last-li">
             <NuxtLink to="/activities/services">Our People</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
 
       <div class="menu-container">
@@ -128,9 +130,9 @@ export default defineComponent({
           <li class="last-li">
             <NuxtLink to="/activities/services">Services</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
-      
+
       <div class="menu-container">
         <NuxtLink to="/activities/activities">What You Can Do</NuxtLink>
         <ul class="dropdown-menu">
@@ -140,11 +142,11 @@ export default defineComponent({
           <li class="last-li">
             <NuxtLink to="/activities/services">Donate</NuxtLink>
           </li>
-        </ul>   
+        </ul>
       </div>
 
       <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contact" id="contactUs"
-         style="font-size: var(--body2); line-height: var(--l-height-header); width: 137px; height: 50px;" />
+        style="font-size: var(--body2); line-height: var(--l-height-header); width: 137px; height: 50px;" />
 
       <ExitButton />
     </nav>
@@ -194,7 +196,7 @@ export default defineComponent({
 
   <footer>
     <div id="info">
-      <img src="/assets/styles/SVG_Icons/Logo Mila.svg" alt="Centro MiLA" style="height: 85px;">
+      <Icon class="footer-logo" name="CentreLogoIcon" size="180" />
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
       <MainButton buttonText="Donate" buttonLength="short" to="/activities/services" />
     </div>
@@ -239,21 +241,24 @@ export default defineComponent({
 
 <style scoped>
 /* HEADER **************************************************************************/
-header{
+header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   height: var(--header-height);
+  z-index: 10; /* Ensure the header is on top */
 }
 
-#logo{
+#logo {
   text-decoration: none;
-  margin-left: 5.2%; /* equal to 100px on a screen that is 1920px wide */
+  margin-left: 5.2%;
+  /* equal to 100px on a screen that is 1920px wide */
   margin-right: 10px;
   min-width: 114px;
 }
+
 
 /* Navigation Bar */
 header nav{
@@ -261,14 +266,16 @@ header nav{
   flex-direction: row;
   justify-content: right;
   align-items: center;
-  gap: 2.917vw; /* equal to 56px on a screen that is 1920px wide */
-  margin-right: 4.17%; /* equal to 80px on a screen that is 1920px wide */
+  gap: 2.917vw;
+  /* equal to 56px on a screen that is 1920px wide */
+  margin-right: 4.17%;
+  /* equal to 80px on a screen that is 1920px wide */
   font-size: var(--body2);
   line-height: var(--l-height-header);
   min-width: 539px;
 }
 
-nav a{
+nav a {
   color: var(--black);
 }
 
@@ -352,19 +359,19 @@ header nav #contactUs{
   display: none;
 }
 
-
-
 /* DROPDOWN MENU ********************************************************/
-.menu-container{
+.menu-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  height: calc(var(--header-height)/2); /**Increase the height to ensure the hover works*/
-  top: calc(var(--header-height)/4 - var(--l-height-header)/2); /**centering the element horizontally*/
+  height: calc(var(--header-height)/2);
+  /**Increase the height to ensure the hover works*/
+  top: calc(var(--header-height)/4 - var(--l-height-header)/2);
+  /**centering the element horizontally*/
 }
 
-.dropdown-menu { 
+.dropdown-menu {
   display: none;
   position: absolute;
   top: 16px;
@@ -372,7 +379,7 @@ header nav #contactUs{
   background-color: var(--white);
   width: 187px;
   border: 1px, solid, var(--lilac);
-  border-radius: 12px;
+  border-radius: var(--border-radius-card);
   z-index: 1;
 }
 
@@ -382,12 +389,12 @@ header nav #contactUs{
   display: block;
 }
 
-.dropdown-menu .first-li{
+.dropdown-menu .first-li {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-.dropdown-menu .last-li{
+.dropdown-menu .last-li {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -401,29 +408,28 @@ header nav #contactUs{
   display: block;
 }
 
-.menu-container:hover a{
-  color: var(--purple)!important;
+.menu-container:hover a {
+  color: var(--purple) !important;
 }
 
-.menu-container:hover .dropdown-menu a{
-  color: var(--black)!important;
+.menu-container:hover .dropdown-menu a {
+  color: var(--black) !important;
 }
-
-
 
 /* FOOTER ************************************************************/
-footer{
+footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
   gap: 30px;
   font-size: var(--body2);
   line-height: var(--l-height2);
 }
 
+
 /**left */
-footer #info{
+footer #info {
   display: flex;
   flex-direction: column;
   align-content: space-between;
@@ -433,12 +439,12 @@ footer #info{
   max-width: 350px;
 }
 
-footer #info button{
+footer #info button {
   margin-top: 40px;
 }
 
 /**center */
-footer nav{
+footer nav {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -446,7 +452,7 @@ footer nav{
   gap: 0px;
 }
 
-footer nav div{
+footer nav div {
   display: flex;
   flex-direction: column;
   align-content: space-between;
@@ -455,17 +461,17 @@ footer nav div{
   padding: 20px 40px;
 }
 
-footer nav .vertical-line{
+footer nav .vertical-line {
   height: 200px;
   width: 0;
   border-width: 0 0 0 2px;
   border-style: dashed;
   border-color: var(--grey3);
-  padding: 0;  
+  padding: 0;
 }
 
 /**right */
-footer #contacts{
+footer #contacts {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -474,7 +480,7 @@ footer #contacts{
   margin-right: 10.42vw;
 }
 
-#contacts a{
+#contacts a {
   color: var(--black);
   display: flex;
   flex-direction: row;
@@ -498,20 +504,20 @@ footer .arrow{
 
 
 /**other general stylings */
-footer .body4{
+footer .body4 {
   font-size: var(--body4);
   line-height: var(--l-height4);
 }
 
-main{
+main {
   margin-top: var(--header-height);
 }
 
-.semiboldText{
+.semiboldText {
   font-weight: var(--semibold)
 }
 
-p{
+p {
   margin: 0px;
 }
 
@@ -522,75 +528,85 @@ p{
   .menu-container{
   top: calc(var(--header-height)/4 - var(--l-height-header)); /**centering the element horizontally*/
   }
-  .dropdown-menu{
+
+  .dropdown-menu {
     top: 38px;
   }
 }
 
-@media (max-width: 851px){
-  header nav{
-  font-size: var(--body1);
-  margin-right: 10px;
+@media (max-width: 851px) {
+  header nav {
+    font-size: var(--body1);
+    margin-right: 10px;
   }
 
-  #logo{
+  #logo {
     margin-left: 10px;
   }
 }
 
 /**Dynamic footer */
-@media (max-width: 1600px){
-  footer{
-  font-size: var(--body1);
-  line-height: var(--l-height1);
+@media (max-width: 1600px) {
+  footer {
+    font-size: var(--body1);
+    line-height: var(--l-height1);
   }
-  footer .body4{
-  font-size: var(--body2);
-  line-height: var(--l-height-header);
+
+  footer .body4 {
+    font-size: var(--body2);
+    line-height: var(--l-height-header);
   }
 }
 
-@media (max-width: 1030px){
-  footer nav{
-  flex-direction: column;
+@media (max-width: 1030px) {
+  footer nav {
+    flex-direction: column;
   }
-  footer nav div{
-  padding: 20px;
+
+  footer nav div {
+    padding: 20px;
   }
-  footer nav .vertical-line{
-  width: 200px;
-  height: 0;
-  border-width: 2px 0 0 0;
+
+  footer nav .vertical-line {
+    width: 200px;
+    height: 0;
+    border-width: 2px 0 0 0;
   }
-  footer #info{
-  max-width: 30vw;
+
+  footer #info {
+    max-width: 30vw;
   }
 }
 
-@media (max-width: 800px){
-  footer{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-  gap: 50px;
+@media (max-width: 800px) {
+  footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 50px;
   }
-  footer #info{
-  max-width: 100%;
+
+  footer #info {
+    max-width: 100%;
   }
-  footer nav{
-  flex-direction: row;
+
+  footer nav {
+    flex-direction: row;
   }
-  footer nav div{
-  padding: 20px 40px;
+
+  footer nav div {
+    padding: 20px 40px;
   }
-  footer nav .vertical-line{
-  height: 200px;
-  width: 0;
-  border-width: 0 0 0 2px;
+
+  footer nav .vertical-line {
+    height: 200px;
+    width: 0;
+    border-width: 0 0 0 2px;
   }
-  footer #contacts{
-  margin-left: 5.73vw;
+
+  footer #contacts {
+    margin-left: 5.73vw;
   }
 }
 
