@@ -16,7 +16,7 @@ export default defineComponent({
     // Length of the button, affects its width
     buttonLength: {
       type: String,
-      validator: (value: string) => ['short', 'medium', 'long'].includes(value),
+      validator: (value: string) => ['short', 'medium', 'long', 'smartphone', 'tablet'].includes(value),
       required: true,
     },
     // Indicates whether the button is disabled
@@ -44,7 +44,9 @@ export default defineComponent({
       const widths: { [key: string]: string } = {
         short: '163px',
         medium: '248px',
-        long: '296px'
+        long: '296px',
+        smartphone: '70vw',
+        tablet: '80vw'
       };
       return widths[this.buttonLength] || '163px';
     }
