@@ -70,4 +70,33 @@ export default defineComponent({
   }
 }
 
+@media only screen and (max-device-width:1024px){
+  .exit-button{
+    height: 84px;
+    width: 84px;
+    border-radius: 100%;
+  } 
+  .exit-button span{
+    display: none;
+  }
+  .icon{
+    min-height: 42px;
+    min-width: 42px;
+    margin: 0;
+  }
+}
+
+@media only screen and (max-device-width: 430px){
+  .exit-button{
+    height: 64px;
+    width: 64px;
+  }
+  .icon{
+    min-height: 0;
+    min-width: 0;
+    max-height: 32px;
+    max-width: 32px;
+  }
+}
+
 </style>
