@@ -110,19 +110,19 @@ export default defineComponent({
     </NuxtLink>
     <nav>
       <div class="menu-container">
-        <NuxtLink to="/about">About Us</NuxtLink>
+        <NuxtLink to="/about-us">About Us</NuxtLink>
         <ul class="dropdown-menu">
           <li class="first-li">
-            <NuxtLink to="/activities/projects">Our Location</NuxtLink>
+            <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
           </li>
           <li class="last-li">
-            <NuxtLink to="/activities/services">Our People</NuxtLink>
+            <NuxtLink to="/about-us/people">Our People</NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/activities/activities">Our Activities</NuxtLink>
+        <NuxtLink to="/activities">Our Activities</NuxtLink>
         <ul class="dropdown-menu">
           <li class="first-li">
             <NuxtLink to="/activities/projects">Projects</NuxtLink>
@@ -134,18 +134,18 @@ export default defineComponent({
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/activities/activities">What You Can Do</NuxtLink>
+        <NuxtLink to="/what-you-can-do">What You Can Do</NuxtLink>
         <ul class="dropdown-menu">
           <li class="first-li">
-            <NuxtLink to="/activities/projects">Volunteering</NuxtLink>
+            <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
           </li>
           <li class="last-li">
-            <NuxtLink to="/activities/services">Donate</NuxtLink>
+            <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
           </li>
         </ul>
       </div>
 
-      <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contact" id="contactUs"
+      <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contacts" id="contactUs"
         style="font-size: var(--body2); line-height: var(--l-height-header); width: 137px; height: 50px;" />
 
       <ExitButton />
@@ -156,35 +156,35 @@ export default defineComponent({
     <Icon name="MapPinIcon" color=var(--purple) id="mobileMenuClose" />
     <div id="mobile-container" ref="mobileContainer">
       <div class="dropdown-mobile">
-        <NuxtLink to="/activities/activities" class="semiboldText">About Us</NuxtLink>
+        <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
         <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
         <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
       </div>
       <div class="subMenu">
-        <NuxtLink to="/activities/projects">Our Location</NuxtLink>        
-        <NuxtLink to="/activities/projects">Our People</NuxtLink>
+        <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
+        <NuxtLink to="/about-us/people">Our People</NuxtLink>
       </div>
       <div class="dropdown-mobile">
-        <NuxtLink to="/activities/activities" class="semiboldText">Our Activities</NuxtLink>
+        <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
         <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
         <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
       </div>
       <div class="subMenu">
-        <NuxtLink to="/activities/projects">Our Location</NuxtLink>        
-        <NuxtLink to="/activities/projects">Our People</NuxtLink>
+        <NuxtLink to="/activities/projects">Projects</NuxtLink>        
+        <NuxtLink to="/activities/services">Services</NuxtLink>
       </div>
       <div class="dropdown-mobile">
-        <NuxtLink to="/activities/activities" class="semiboldText">What You Can Do</NuxtLink>
+        <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
         <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
         <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
       </div>
       <div class="subMenu">
-        <NuxtLink to="/activities/projects">Our Location</NuxtLink>        
-        <NuxtLink to="/activities/projects">Our People</NuxtLink>
+        <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
+        <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
       </div>
-      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contact" id="contactUsT"
+      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contactUsT"
          style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-      <SecondaryButton buttonText="Contact Us" buttonLength="smartphone" to="/contact" id="contactUsS"
+      <SecondaryButton buttonText="Contact Us" buttonLength="smartphone" to="/contacts" id="contactUsS"
          style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
     </div>
     <ExitButton id="mobile-exit"/>
@@ -198,26 +198,26 @@ export default defineComponent({
     <div id="info">
       <Icon class="footer-logo" name="CentreLogoIcon" size="180" />
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
-      <MainButton buttonText="Donate" buttonLength="short" to="/activities/services" />
+      <MainButton buttonText="Donate" buttonLength="short" to="/what-you-can-do/donate" />
     </div>
 
     <nav class="body4">
       <div>
-        <NuxtLink to="/activities/activities" class="semiboldText">About Us</NuxtLink>
-        <NuxtLink to="/activities/activities">Our Location</NuxtLink>
-        <NuxtLink to="/activities/activities">Our People</NuxtLink>
+        <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
+        <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
+        <NuxtLink to="/about-us/people">Our People</NuxtLink>
       </div>
       <div class="vertical-line"></div>
       <div>
-        <NuxtLink to="/activities/activities" class="semiboldText">Our Activities</NuxtLink>
-        <NuxtLink to="/activities/activities">Our Services</NuxtLink>
-        <NuxtLink to="/activities/activities">Our Projects</NuxtLink>
+        <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
+        <NuxtLink to="/activities/services">Our Services</NuxtLink>
+        <NuxtLink to="/activities/projects">Our Projects</NuxtLink>
       </div>
       <div class="vertical-line"></div>
       <div>
-        <NuxtLink to="/activities/activities" class="semiboldText">What You Can Do</NuxtLink>
-        <NuxtLink to="/activities/activities">Volunteering</NuxtLink>
-        <NuxtLink to="/activities/activities">Donate</NuxtLink>
+        <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
+        <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
+        <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
       </div>
     </nav>
 
@@ -230,9 +230,9 @@ export default defineComponent({
       </div>
       <div>
         <p class="semiboldText">Location</p>
-        <NuxtLink to="/activities/activities">Via Valtellina 20, Milan 20159 <Icon name="ForwardArrowIcon" color=var(--purple) class="arrow" /></NuxtLink>
+        <NuxtLink to="/about-us/locations">Via Valtellina 20, Milan 20159 <Icon name="ForwardArrowIcon" color=var(--purple) class="arrow" /></NuxtLink>
         <hr style="width: 100%; border-top: 2px dashed var(--grey3); border-bottom: 0px;">
-        <NuxtLink to="/activities/activities">Via Candiani 72, Milan 20158 <Icon name="ForwardArrowIcon" color=var(--purple) class="arrow" /></NuxtLink>
+        <NuxtLink to="/about-us/locations">Via Candiani 72, Milan 20158 <Icon name="ForwardArrowIcon" color=var(--purple) class="arrow" /></NuxtLink>
       </div>
     </div>
   </footer>
