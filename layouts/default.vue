@@ -612,7 +612,7 @@ p {
 
 /**Stylings for mobile devices */
 /**tablet */
-@media only screen and (max-device-width:1024px){
+@media only screen and (max-device-width:997px){
 header{
   height: var(--mobile-header2);
 }

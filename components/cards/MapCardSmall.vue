@@ -71,8 +71,10 @@ export default defineComponent({
         </div>
         <!-- Forward arrow icon -->
         <div class="card-icon-container">
-          <Icon name="ForwardArrowIcon" size="50" />
+          <Icon class="icon-arrow" name="ForwardArrowIcon" size="50" />
         </div>
+        <!-- Pin icon -->
+        <Icon class="icon-pin" name="MapPinIcon" size="56" />
       </div>
     </div>
   </NuxtLink>
@@ -109,7 +111,11 @@ export default defineComponent({
     background-color: var(--purple-hover);
   }
 
-  .icon {
+  .icon-pin {
+    color: var(--purple-hover);
+  }
+
+  .icon-arrow {
     color: var(--beige-hover);
   }
 }
@@ -126,7 +132,11 @@ export default defineComponent({
     background-color: var(--purple-active);
   }
 
-  .icon {
+  .icon-pin {
+    color: var(--purple-active);
+  }
+
+  .icon-arrow {
     color: var(--beige-active);
   }
 }
@@ -215,11 +225,19 @@ export default defineComponent({
   align-items: center;
 }
 
-/* Icon styling */
-.icon {
+/* Arrow Icon styling */
+.icon-arrow {
   color: var(--white);
   align-self: center;
   margin-top: 87px;
   margin-left: 0px;
+}
+
+/* Pin icon styling */
+.icon-pin {
+  position: absolute;
+  margin-top: 303px;
+  margin-left: 204px;
+  color: var(--purple);
 }
 </style>
