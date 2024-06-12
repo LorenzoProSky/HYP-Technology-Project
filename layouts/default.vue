@@ -634,7 +634,7 @@ p {
 
 /**Stylings for mobile devices */
 /**tablet */
-@media only screen and (max-device-width: 900px){
+@media only screen and (max-device-width:900px){
 header{
   height: var(--mobile-header2);
 }
