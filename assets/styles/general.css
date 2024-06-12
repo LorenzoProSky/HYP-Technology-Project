@@ -87,6 +87,7 @@ body {
   font-family: "Montserrat", serif;
   color: var(--black);
   font-weight: var(--regular);
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -98,6 +99,7 @@ h1, h2, h3, h4, h5, h6 {
 h1{
   font-size: var(--h1);
   line-height: 104px;
+  color: var(--white);
 }
 h2{
   font-size: var(--h2);
@@ -123,6 +125,9 @@ footer {
   background-color: var(--white);
   padding: 50px 0;
   width: 100%;
+  border-top-width: 1px;
+  border-color: var(--grey3);
+  border-style: solid;
 }
 
 /* Styling for Links */

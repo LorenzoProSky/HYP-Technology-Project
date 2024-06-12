@@ -152,13 +152,13 @@ export default defineComponent({
     </nav>
 
     <!-- header for mobile -->
-    <Icon name="HeartIcon" color=var(--purple) id="mobileMenu" />
-    <Icon name="MapPinIcon" color=var(--purple) id="mobileMenuClose" />
+    <Icon name="MenuIcon" color=var(--purple) id="mobileMenu" />
+    <Icon name="MobileExitIcon" color=var(--purple) id="mobileMenuClose" />
     <div id="mobile-container" ref="mobileContainer">
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
       </div>
       <div class="subMenu">
         <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
@@ -166,8 +166,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/activities/projects">Projects</NuxtLink>        
@@ -175,8 +175,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <Icon name="ForwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="BackwardArrowIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
@@ -196,7 +196,7 @@ export default defineComponent({
 
   <footer>
     <div id="info">
-      <Icon class="footer-logo" name="CentreLogoIcon" size="180" />
+      <Icon class="footer-logo" name="CentreLogoIcon" size="283" />
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
       <MainButton buttonText="Donate" buttonLength="short" to="/what-you-can-do/donate" />
     </div>
@@ -258,7 +258,6 @@ header {
   margin-right: 10px;
   min-width: 114px;
 }
-
 
 /* Navigation Bar */
 header nav{
@@ -372,7 +371,10 @@ header nav #contactUs{
 }
 
 .dropdown-menu {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+
   position: absolute;
   top: 16px;
   padding: 0;
@@ -405,7 +407,9 @@ header nav #contactUs{
 
 /* Show the dropdown menu on hover */
 .menu-container:hover .dropdown-menu {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 
 .menu-container:hover a {
@@ -439,8 +443,16 @@ footer #info {
   max-width: 350px;
 }
 
-footer #info button {
-  margin-top: 40px;
+footer #info .footer-logo{
+  margin-top: -100px;
+}
+
+footer #info p{
+  margin-top: -100px;
+}
+
+footer #info a {
+  margin-top: 50px;
 }
 
 /**center */
@@ -502,7 +514,6 @@ footer .arrow{
 }
 
 
-
 /**other general stylings */
 footer .body4 {
   font-size: var(--body4);
@@ -524,24 +535,35 @@ p {
 
 
 /**Dynamic header */
-@media (max-width: 1073px){
-  .menu-container{
-  top: calc(var(--header-height)/4 - var(--l-height-header)); /**centering the element horizontally*/
-  }
-
+@media (max-width: 1084px) and (min-device-width: 901px){
   .dropdown-menu {
     top: 38px;
   }
+  #logo svg{
+    width: 130px;
+  }
 }
 
-@media (max-width: 851px) {
+@media (max-width: 1019.2px){
+  .menu-container{
+    top: calc(var(--header-height)/4 - var(--l-height-header)); /**centering the element horizontally*/
+  }
+
+}
+
+@media (max-width: 968px){
+  #logo {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 851px) and (min-device-width: 901px){
   header nav {
     font-size: var(--body1);
     margin-right: 10px;
   }
-
-  #logo {
-    margin-left: 10px;
+  #logo svg{
+    width: 100px;
   }
 }
 
@@ -558,7 +580,7 @@ p {
   }
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1060px) {
   footer nav {
     flex-direction: column;
   }
@@ -578,7 +600,7 @@ p {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   footer {
     display: flex;
     flex-direction: column;
@@ -612,7 +634,7 @@ p {
 
 /**Stylings for mobile devices */
 /**tablet */
-@media only screen and (max-device-width:997px){
+@media only screen and (max-device-width:900px){
 header{
   height: var(--mobile-header2);
 }

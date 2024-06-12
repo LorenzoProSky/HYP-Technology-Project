@@ -70,7 +70,7 @@ export default defineComponent({
   }
 }
 
-@media only screen and (max-device-width:997px){
+@media only screen and (max-device-width:900px){
   .exit-button{
     height: 84px;
     width: 84px;
