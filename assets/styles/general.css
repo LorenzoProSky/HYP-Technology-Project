@@ -71,6 +71,10 @@ body{
   padding: 0;
 }
 
+main{
+  width: 100%;
+}
+
 #__nuxt{
   display: flex;
   flex-direction: column;

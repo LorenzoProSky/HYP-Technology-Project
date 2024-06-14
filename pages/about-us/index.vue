@@ -84,8 +84,8 @@
       <h3>One Centre, Two Locations</h3>
       <p id="locations-p">You can find us in Bovisa and in Zona Farini, choose the location closest to you. We are to help you.</p>
       <div id="locations-cards">
-        <MapCardSmall title="Centro MiLA Bovisa" address="Via Candiani 72, 20158 Milano" email="centromila.bovisa@gmail.com" phone="+39 345697365" to="/about-us/locations.vue" />
-        <MapCardSmall title="Centro MiLA Farini" address="Via Valtellina 20, 20159 Milano" email="centromila.farini@gmail.com" phone="+39 344677462" to="/about-us/locations.vue" />
+        <MapCardSmall title="Centro MiLA Bovisa" address="Via Candiani 72, 20158 Milano" email="centromila.bovisa@gmail.com" phone="+39 345697365" to="/about-us/locations" />
+        <MapCardSmall title="Centro MiLA Farini" address="Via Valtellina 20, 20159 Milano" email="centromila.farini@gmail.com" phone="+39 344677462" to="/about-us/locations" />
       </div>
     </div>
 
@@ -102,17 +102,7 @@
 </template>
 
 
-<style>
-body{
-  overflow-x: hidden;
-}
-main{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+<style scoped>
 #aboutusdiv{
   background-image: url('/assets/images/cover-about-us.png');
   background-size: cover;
@@ -126,24 +116,24 @@ h1{
   z-index: 1;
   width:fit-content;
 }
-
- #container{
+#container{
   width: 100%;
+  position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   font-size: var(--body4);
   line-height: var(--l-height4);
- }
+}
 
-
- #intro{
+/**Introductive section */
+#intro{
   margin: 100px 15%;
   width: 60vw;
- }
+}
 
-
- #mission{
+/**Our Mission section */
+#mission{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -151,34 +141,34 @@ h1{
   background-color: var(--lilac);
   padding: 80px 0;
   width: 100%;
- }
- #mission div{
+}
+#mission div{
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 29%;
   max-width: 560px;
- }
- #mission div p{
+}
+#mission div p{
   text-align: center;
   size: var(--body4);
   line-height: var(--l-height4);
- }
+}
 
-
- #history{
+/**History section */
+#history{
   margin: 100px 15%;
   width: 60vw;
- }
- #image-group{
+}
+#image-group{
   margin-top: -50px;
   position: absolute;
   right: 0;
   width: 50vw;
   height: auto;
   z-index: -1;
- }
- #history-flex{
+}
+#history-flex{
   margin-top: 100px;
   width: 100%;
   min-width: 440px;
@@ -187,71 +177,68 @@ h1{
   justify-content: space-between;
   gap: 20px;
   color: var(--purple);
- }
- #history-flex div{
+}
+#history-flex div{
   display: flex;
   flex-direction: column;
   align-items: center;
- }
- #history h2{
+}
+#history h2{
   color: var(--purple);
- }
+}
 
-
- #commitment{
+/**Our Commitment section */
+#commitment{
   margin-top: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
- }
- #commitment-p{
+}
+#commitment-p{
   max-width: 36.8vw;
   text-align: center;
- }
- #commitment-cards{
+}
+#commitment-cards{
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 8vw;
- }
- .card{
-  width: 32vw;
- }
+}
 
-
- #locations{
+/**Our Locations section */
+#locations{
   margin-top: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
- }
- #locations-p{
+}
+#locations-p{
   max-width: 36.8vw;
   text-align: center;
- }
- #locations-cards{
+}
+#locations-cards{
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 8vw;
- }
+}
 
-
- #people{
+/**Our People section */
+#people{
   margin: 400px 0 0 15%;
   min-height: calc(78vw*864/1498);
- }
- #people p{
+}
+#people p{
   max-width: 29vw;
- }
- #people img{
+}
+#people img{
   position: absolute;
   right: 0;
   width: 78vw;
   z-index: -1;
- }
+}
 
 
 @media (max-width: 1330px){  
@@ -261,7 +248,7 @@ h1{
   }
 }
 
- @media (max-width: 1000px){
+@media (max-width: 1000px){
   #container{
     font-size: var(--body2);
     line-height: var(--l-height2);
@@ -270,18 +257,65 @@ h1{
     flex-direction: column;
     gap: 100px;
   }
- }
+}
 
- @media (max-width: 850px){
+@media (max-width: 850px){
   #history h2{
     font-size: 50px;
   }
- }
+}
 
- @media (max-width: 600px){
+@media (max-width: 650px){
+  h1{
+    font-size: 40px;
+  }
+
+  #intro{
+    width: 90vw;
+    margin: 100px 10px;
+  }
+  
+  #mission{
+    flex-direction: column;
+    align-items: center
+  }
+  #mission div{
+    width: 90%;
+  }
+  
+  #history{    
+    width: 90vw;
+    margin: 100px 10px;
+  }
   #history-flex{
     flex-direction: column;
+    min-width: 0px;
   }
- }
- 
+
+  #commitment-p{
+    width: 80vw;
+    max-width: 100vw;
+  }
+
+  #locations-p{
+    width: 80vw;
+    max-width: 100vw;
+  }
+
+  #people{
+    margin-left: 10px;
+  }
+  #people img{
+    display: none;
+  }
+  #people p{
+    max-width: 80%;
+  }
+}
+
+@media (max-width:430px){
+  #container{
+    font-size: var(--body1);
+  }
+}
 </style>
