@@ -20,7 +20,7 @@ function closeMenu(){
     mobileContainer.style.display = "none";
     mobileMenu.style.display = "block";
     mobileMenuClose.style.display = "none";
-    if (window.screen.width > 1024) {    
+    if (window.screen.width > 900) {    
       mobileMenu.style.display = "none";    
     }
   }

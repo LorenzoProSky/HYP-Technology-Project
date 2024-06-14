@@ -190,6 +190,7 @@ export default defineComponent({
   font-family: var(--font-montserrat);
   color: var(--black);
   font-size: var(--body1);
+  line-height: var(--l-height1);
   font-weight: var(--regular);
   text-align: left;
   margin-top: -10px;
@@ -239,5 +240,32 @@ export default defineComponent({
   margin-top: 303px;
   margin-left: 204px;
   color: var(--purple);
+}
+
+
+/** PROVVISORIO */
+@media (max-width: 650px){  
+  .card{
+    width: 70vw;
+    height: auto;
+  }
+  .card-content{
+    padding-right: 40px;
+  }
+  .card-icon-container{
+    display: none;
+  }
+  .icon-pin{
+    margin-left: 30%;
+  }
+}
+@media (max-width: 400px){
+  .card-content{
+    padding-left: 2px;
+  }
+  .card-text{
+    font-size: 12px !important;
+
+  }
 }
 </style>

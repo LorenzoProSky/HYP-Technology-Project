@@ -141,4 +141,21 @@ export default defineComponent({
   margin-top: 44px;
   margin-left: 496px;
 }
+
+
+/** PROVVISORIO */
+@media (max-width: 650px){  
+  .card{
+    width: 80vw;
+    height: auto;
+  }
+  .card .icon{
+    margin-left: 120%;
+    margin-bottom: 10px;
+  }
+  .card-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+}
 </style>
