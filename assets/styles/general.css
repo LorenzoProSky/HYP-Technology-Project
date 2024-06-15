@@ -126,6 +126,9 @@ h4 {
   font-size: var(--h4);
   line-height: 34px;
 }
+.semiboldText {
+  font-weight: var(--semibold)
+}
 
 page-title {
   font-family: var(--font-playfair);
@@ -168,16 +171,33 @@ footer {
 /* Styling for Links */
 a {
   text-decoration: none;
+  color: var(--purple);
 }
 
-/* a:hover {
-  text-decoration: underline;
-  color:color-mix(in srgb, currentColor 80%, var(--white));
-} */
+ a:hover {
+  color: var(--purple-hover);
+} 
 
-a:active {
-  color: color-mix(in srgb, currentColor 80%, var(--black));
+a:active{
+  color: var(--purple-active); 
 }
+
+/* Styling for grids */
+.grid-3-1{
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: 27vw;
+  grid-template-rows: repeat(1, 684px);
+  gap: 4.17vw;
+}
+.grid-3-2{
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: 27vw;
+  grid-template-rows: repeat(2, 684px);
+  gap: 4.17vw;
+}
+
 
 
 /* Basic styling for images */
