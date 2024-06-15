@@ -131,6 +131,7 @@ export default defineComponent({
   font-family: var(--font-montserrat);
   color: var(--grey1);
   font-size: var(--body3);
+  line-height: var(--l-height3);
   font-weight: var(--medium);
   text-align: left;
 }
@@ -150,12 +151,15 @@ export default defineComponent({
     height: auto;
   }
   .card .icon{
-    margin-left: 120%;
-    margin-bottom: 10px;
+    margin-left: 80%;
+    margin-bottom: 30px;
   }
   .card-text{
     font-size: var(--body1);
     line-height: var(--l-height1);
+  }
+  .card-content{
+    padding: 0 20px;
   }
 }
 </style>

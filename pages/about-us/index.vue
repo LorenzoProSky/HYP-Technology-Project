@@ -148,6 +148,7 @@ h1{
   align-items: center;
   width: 29%;
   max-width: 560px;
+  text-align: center;
 }
 #mission div p{
   text-align: center;
@@ -292,11 +293,17 @@ h1{
     min-width: 0px;
   }
 
+  #commitment{
+    text-align: center;
+  }
   #commitment-p{
     width: 80vw;
     max-width: 100vw;
   }
 
+  #locations{
+    text-align: center;
+  }
   #locations-p{
     width: 80vw;
     max-width: 100vw;
