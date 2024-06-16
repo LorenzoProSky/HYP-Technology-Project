@@ -43,7 +43,7 @@ export default defineComponent({
       @mouseleave="hover = false" @mousedown="active = true" @mouseup="active = false" @focus="focused = true"
       @blur="focused = false" :disabled="isDisabled" v-bind="$attrs">
       <!-- Icon for the button on the left -->
-      <Icon name="BackwardArrowIcon" size="14" />
+      <Icon name="BackwardArrowIcon" size="18" />
       {{ buttonText }}
     </button>
   </NuxtLink>
@@ -84,6 +84,6 @@ export default defineComponent({
 /* Icon style */
 .icon {
   margin-top: -3px;
-  margin-right: -1px;
+  margin-right: 5px;
 }
 </style>

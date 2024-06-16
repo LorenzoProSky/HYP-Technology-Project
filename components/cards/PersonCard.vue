@@ -125,14 +125,13 @@ export default defineComponent({
 /* Content styling */
 .card-content {
   height: 42%;
-  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
   color: var(--black);
   padding-left: 54px;
-  padding-right: 93px;
+  padding-right: 59px;
 }
 
 /* Name styling */
@@ -164,12 +163,13 @@ export default defineComponent({
   font-size: var(--body1);
   font-weight: var(--medium);
   text-align: left;
+  margin-bottom: 0px;
 }
 
 /* Icon styling */
 .icon {
   align-self: center;
   margin-bottom: 37px;
-  margin-left: 375px;
+  margin-left: 370px;
 }
 </style>

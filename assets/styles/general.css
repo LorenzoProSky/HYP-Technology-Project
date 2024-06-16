@@ -126,6 +126,7 @@ h4 {
   font-size: var(--h4);
   line-height: 34px;
 }
+
 .semiboldText {
   font-weight: var(--semibold)
 }
@@ -141,14 +142,64 @@ page-title {
   width: fit-content;
 }
 
+backward-button-wrapper {
+  position: absolute;
+  top: 22vw;
+  left: 9.75vw;
+}
+
 @media (max-width: 1400px) {
   page-title {
+    position: absolute;
+    top: 31vh;
+    left: 23.3vw;
+    width: 50vw;
+    height: 20vw;
     font-size: 7.6vw;
     line-height: 8vw;
-    position: relative;
-    top: 35%;
-    left: 25%;
-    width: fit-content;
+    text-align: center;
+  }
+
+  backward-button-wrapper {
+    top: 20vh;
+    left: 10vw;
+  }
+}
+
+@media (max-width: 900px) {
+  page-title {
+    position: absolute;
+    top: 35vh;
+    left: 23.3vw;
+    width: 50vw;
+    height: 20vw;
+    font-size: 7.6vw;
+    line-height: 8vw;
+    text-align: center;
+  }
+
+  backward-button-wrapper {
+    top: 20vh;
+    left: 7vw;
+  }
+}
+
+
+@media (max-width: 600px) {
+  page-title {
+    position: absolute;
+    top: 39vh;
+    left: 23.3vw;
+    width: 50vw;
+    height: 20vw;
+    font-size: 7.6vw;
+    line-height: 8vw;
+    text-align: center;
+  }
+
+  backward-button-wrapper {
+    top: 24vh;
+    left: 5vw;
   }
 }
 
@@ -174,23 +225,24 @@ a {
   color: var(--purple);
 }
 
- a:hover {
+a:hover {
   color: var(--purple-hover);
-} 
+}
 
-a:active{
-  color: var(--purple-active); 
+a:active {
+  color: var(--purple-active);
 }
 
 /* Styling for grids */
-.grid-3-1{
+.grid-3-1 {
   margin-top: 64px;
   display: grid;
   grid-template-columns: 27vw;
   grid-template-rows: repeat(1, 684px);
   gap: 4.17vw;
 }
-.grid-3-2{
+
+.grid-3-2 {
   margin-top: 64px;
   display: grid;
   grid-template-columns: 27vw;
