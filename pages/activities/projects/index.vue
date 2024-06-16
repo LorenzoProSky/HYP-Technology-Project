@@ -1,13 +1,397 @@
-<template>
-  <div>
-    
-  </div>
-</template>
+<script lang="ts">
+// Import necessary components
+import ProjectCard from '~/components/cards/ProjectCard.vue';
+import BackwardButton from '~/components/buttons/BackwardButton.vue';
+import projectImage from '~/assets/images/project-image.png';
 
-<script lang="ts" setup>
+export default {
+  components: {
+    ProjectCard,
+    BackwardButton
+  },
+  data() {
+    return {
+      // TODO: Replace the placeholder data with the actual data
+      projects: Array(6).fill({
+        imageSrc: projectImage,
+        title: 'Art Therapy Session',
+        text: 'A monthly event to engage in creative workshops using art as a medium for healing and self-expression, to process emotions in a supportive environment.',
+        when: '2nd Sunday 10:00 - 16:00',
+        where: 'BASE Milano, 20144 Milano',
+        to: '/index',
+        type: 'present'
+      }),
 
+      pastProjects: Array(2).fill({
+        imageSrc: projectImage,
+        title: 'Art Therapy Session',
+        text: 'A monthly event to engage in creative workshops using art as a medium for healing and self-expression, to process emotions in a supportive environment.',
+        when: '2nd Sunday 10:00 - 16:00',
+        where: 'BASE Milano, 20144 Milano',
+        to: '/index',
+        type: 'past'
+      }),
+
+      // Pagination settings
+      projectsPerPage: 6,
+      startCount: 0,
+      endCount: 6,
+
+      // Projects present or past
+      viewMode: 'present',
+    };
+  },
+
+  computed: {
+    // Computed property to dynamically calculate the visible projects based on pagination settings and view mode
+    visibleProjects() {
+      return this.viewMode === 'present'
+        ? this.projects.slice(this.startCount, this.endCount)
+        : this.pastProjects.slice(this.startCount, this.endCount);
+    },
+    // Computed property to calculate the total number of pages based on the projects count, pagination settings and view mode
+    totalPages(): number {
+      return this.viewMode === 'present'
+        ? Math.ceil(this.projects.length / this.projectsPerPage)
+        : Math.ceil(this.pastProjects.length / this.projectsPerPage);
+    },
+    // Computed property to calculate the current page number based on the start count and projects per page
+    currentPage(): number {
+      return Math.floor(this.startCount / this.projectsPerPage) + 1;
+    },
+  },
+  methods: {
+    // Method to increment the visible projects count and adjust pagination
+    showMore() {
+      this.startCount += this.projectsPerPage;
+      this.endCount += this.projectsPerPage;
+      this.scrollToTarget();
+    },
+    // Method to decrement the visible projects count and adjust pagination
+    showLess() {
+      this.startCount -= this.projectsPerPage;
+      if (this.startCount < 0) {
+        this.startCount = 0;
+      }
+      this.endCount -= this.projectsPerPage;
+      if (this.endCount < this.projectsPerPage) {
+        this.endCount = this.projectsPerPage;
+      }
+      this.scrollToTarget();
+    },
+    // Smooth scroll to the target section when pagination changes
+    scrollToTarget() {
+      const targetElement = this.$refs.targetSection as HTMLElement | null;
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+    // Method to determine if the separator should be displayed based on the page number
+    shouldDisplaySeparator(pageNumber: number): boolean {
+      // If it's the last page, don't display the separator
+      if (pageNumber === this.totalPages) {
+        return false;
+      }
+      return true;
+    },
+    // Method to toggle between present and past projects
+    toggleViewMode(mode: string) {
+      this.viewMode = mode;
+      // Reset pagination settings when switching between present and past projects
+      // to ensure the first page is displayed and not empty space
+      this.startCount = 0;
+      this.endCount = this.projectsPerPage;
+    },
+  }
+};
 </script>
 
-<style>
+<!-- Template for the projects page -->
+<template>
+  <div id="projects-page">
 
+    <!-- Cover section with image, title, back button -->
+    <div id="page-title">
+      <backward-button-wrapper>
+        <BackwardButton buttonText="Our Activities" to="/activities" />
+      </backward-button-wrapper>
+      <page-title>Discover<br />Our Projects</page-title>
+    </div>
+
+    <!-- Section content -->
+    <div id="page-section" ref="targetSection"> <!-- Target section for smooth scroll -->
+      <h3 id="section-title">MiLA is Full of Opportunities</h3>
+      <div id="section-description">
+        At MiLA, we believe in creating meaningful opportunities for those impacted by domestic violence. We propose and
+        design initiatives funded by the center in collaboration with partners like Milan Municipality and other local
+        institutions.<br />
+        From art therapy to financial independence, these projects embody our commitment to holistic support and
+        empowerment. Explore how each endeavor fosters healing, growth, and resilience for our community.
+      </div>
+    </div>
+
+    <!-- Toggle Button for present or past projects -->
+    <div id="toggle-buttons">
+      <button class="toggle-button" @click="toggleViewMode('present')" :disabled="viewMode === 'present'">Ongoing
+        Projects</button>
+      <button class="toggle-button" @click="toggleViewMode('past')" :disabled="viewMode === 'past'">Past
+        Projects</button>
+    </div>
+
+    <!-- Cards container -->
+    <div id="cards-container">
+      <div id="page-cards">
+        <!-- Loop through visibleProjects to render ProjectCard components -->
+        <ProjectCard v-for="(project, index) in visibleProjects" :key="index" :imageSrc="project.imageSrc"
+          :title="project.title" :text="project.text" :when="project.when" :where="project.where" :to="project.to"
+          :type="project.type" />
+      </div>
+      <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
+    </div>
+
+    <!-- Navigation buttons for pagination -->
+    <div id="navigation-button" v-if="totalPages > 1">
+      <!-- Backward button element -->
+      <button class="nav-button" @click="showLess" :disabled="endCount <= projectsPerPage">
+        <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
+        <p> Back </p>
+      </button>
+
+      <!-- Dynamic page number generation -->
+      <p id="page-number">
+        <span v-for="pageNumber in totalPages" :key="pageNumber">
+          <span :class="{ 'active-number': pageNumber === currentPage }">{{ pageNumber }}</span>
+          <span v-if="shouldDisplaySeparator(pageNumber)" id="separator"></span>
+        </span>
+      </p>
+
+      <!-- Next button element -->
+      <button class="nav-button" @click="showMore"
+        :disabled="endCount >= (viewMode === 'present' ? projects.length : pastProjects.length)">
+        <p> Next </p>
+        <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
+      </button>
+    </div>
+  </div>
+
+</template>
+
+<!-- Scoped styles for the projects page -->
+<style scoped>
+#projects-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#page-title {
+  background-image: url('/assets/images/our-projects-cover.png');
+  background-size: cover;
+  width: 100%;
+  height: calc(100vw / 2);
+}
+
+#page-section {
+  margin-top: 160px;
+  margin-bottom: 0px;
+  margin-left: 300px;
+  width: 52vw;
+  color: var(--black);
+}
+
+@media (max-width: 1500px) {
+  #page-section {
+    margin: 80px auto;
+    margin-bottom: 0px;
+  }
+}
+
+#section-title {
+  text-align: left;
+  margin-top: 0px;
+  font-family: var(--font-playfair);
+  font-weight: var(--bold);
+  font-size: 42px;
+}
+
+#section-description {
+  text-align: left;
+  margin-top: 32px;
+  font-family: var(--font-montserrat);
+  font-weight: var(--regular);
+  font-size: var(--body4);
+}
+
+@media (max-width: 1500px) {
+  #section-title {
+    text-align: center;
+  }
+
+  #section-description {
+    text-align: center;
+  }
+}
+
+#toggle-buttons {
+  margin-top: 132px;
+  margin-bottom: 0px;
+  margin-left: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 1.6vw;
+}
+
+@media (max-width: 1500px) {
+  #toggle-buttons {
+    margin: 99px auto;
+    margin-bottom: 0px;
+  }
+}
+
+.toggle-button {
+  width: 232px;
+  height: 56px;
+  padding: 0 10px;
+  border-radius: 24px;
+  background-color: var(--grey4);
+  font-family: var(--font-montserrat);
+  color: var(--grey2);
+  font-size: var(--body3);
+  font-weight: var(--medium);
+  cursor: pointer;
+  border: thin solid var(--grey4);
+  transition: background-color var(--transition);
+}
+
+.toggle-button:hover {
+  background-color: var(--grey3);
+  color: var(--grey1);
+}
+
+.toggle-button:active {
+  background-color: var(--grey2);
+  color: var(--black);
+}
+
+.toggle-button[disabled] {
+  background-color: var(--orange);
+  color: var(--white);
+  font-weight: var(--semibold);
+  cursor: not-allowed;
+}
+
+#cards-container {
+  margin-top: 64px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Grid layout for the cards */
+#page-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
+  row-gap: 6vw;
+  column-gap: 8vw;
+}
+
+@media (max-width: 1500px) {
+  #page-cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+#bottom-space {
+  margin-bottom: 400px;
+}
+
+@media (max-width: 1500px) {
+  #bottom-space {
+    margin-bottom: 200px;
+  }
+}
+
+#navigation-button {
+  margin-top: 220px;
+  margin-bottom: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2.7vw;
+}
+
+@media (max-width: 1500px) {
+  #navigation-button {
+    margin-top: 110px;
+    margin-bottom: 200px;
+  }
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  font-family: var(--font-montserrat);
+  color: var(--black);
+  font-size: var(--body3);
+  font-weight: var(--regular);
+  cursor: pointer;
+  border: none;
+  transition: background-color var(--transition);
+}
+
+.nav-button:hover {
+  color: var(--purple-hover);
+}
+
+.nav-button:active {
+  color: var(--purple-active);
+}
+
+.nav-button[disabled] {
+  color: var(--grey3);
+  cursor: not-allowed;
+}
+
+.nav-button[disabled]:hover {
+  color: var(--grey3);
+  cursor: not-allowed;
+}
+
+#left-icon {
+  margin-top: 0px;
+  margin-right: 5px;
+}
+
+#right-icon {
+  margin-top: 2px;
+  margin-left: 5px;
+}
+
+#page-number {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  font-family: var(--font-montserrat);
+  color: var(--grey2);
+  font-size: var(--body3);
+  font-weight: var(--regular);
+}
+
+.active-number {
+  color: var(--black);
+  font-weight: var(--medium);
+}
+
+#separator {
+  display: inline-block;
+  width: 2.5vw;
+}
 </style>

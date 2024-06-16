@@ -108,27 +108,30 @@ export default {
         <PersonCard v-for="(person, index) in visiblePeople" :key="index" :imageSrc="person.imageSrc"
           :name="person.name" :job="person.job" :text="person.text" :to="person.to" />
       </div>
-      <div id="navigation-button">
-        <!-- Backward button element -->
-        <button class="nav-button" @click="showLess" :disabled="endCount <= peoplePerPage">
-          <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
-          <p> Back </p>
-        </button>
+      <div id="bottom-space" v-if="totalPages == 1"/> <!-- Add space at the bottom if there is only one page -->
+    </div>
 
-        <!-- Dynamic page number generation -->
-        <p id="page-number">
-          <span v-for="pageNumber in totalPages" :key="pageNumber">
-            <span :class="{ 'active-number': pageNumber === currentPage }">{{ pageNumber }}</span>
-            <span v-if="shouldDisplaySeparator(pageNumber)" id="separator"></span>
-          </span>
-        </p>
+    <!-- Navigation buttons for pagination -->
+    <div id="navigation-button" v-if="totalPages > 1">
+      <!-- Backward button element -->
+      <button class="nav-button" @click="showLess" :disabled="endCount <= peoplePerPage">
+        <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
+        <p> Back </p>
+      </button>
 
-        <!-- Next button element -->
-        <button class="nav-button" @click="showMore" :disabled="endCount >= people.length">
-          <p> Next </p>
-          <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
-        </button>
-      </div>
+      <!-- Dynamic page number generation -->
+      <p id="page-number">
+        <span v-for="pageNumber in totalPages" :key="pageNumber">
+          <span :class="{ 'active-number': pageNumber === currentPage }">{{ pageNumber }}</span>
+          <span v-if="shouldDisplaySeparator(pageNumber)" id="separator"></span>
+        </span>
+      </p>
+
+      <!-- Next button element -->
+      <button class="nav-button" @click="showMore" :disabled="endCount >= people.length">
+        <p> Next </p>
+        <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
+      </button>
     </div>
   </div>
 
@@ -170,7 +173,6 @@ export default {
   font-size: 42px;
 }
 
-
 #section-description {
   text-align: center;
   margin-top: 32px;
@@ -211,6 +213,16 @@ export default {
 @media (max-width: 1050px) {
   #page-cards {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+#bottom-space {
+  margin-bottom: 400px;
+}
+
+@media (max-width: 1500px) {
+  #bottom-space {
+    margin-bottom: 200px;
   }
 }
 
