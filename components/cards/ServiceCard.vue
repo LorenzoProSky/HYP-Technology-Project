@@ -203,6 +203,6 @@ export default defineComponent({
 .icon {
   align-self: center;
   margin-bottom: 37px;
-  margin-left: 502px;
+  margin-left: 497px;
 }
 </style>
