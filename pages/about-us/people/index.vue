@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       // TODO: Replace the placeholder data with the actual data
-      people: Array(20).fill({
+      people: Array(30).fill({
         imageSrc: profileImage,
         name: 'Alessandra Ferrari',
         job: 'Psychotherapist',
@@ -23,10 +23,7 @@ export default {
       // Pagination settings
       peoplePerPage: 12,
       startCount: 0,
-      endCount: 12,
-
-      // State variable to control the disabled state of the backward navigation button for numbers styling
-      isBackButtonDisabled: true,
+      endCount: 12
     };
   },
 
@@ -34,6 +31,14 @@ export default {
     // Computed property to dynamically calculate the visible people based on pagination settings
     visiblePeople() {
       return this.people.slice(this.startCount, this.endCount);
+    },
+    // Computed property to calculate the total number of pages based on the people count and pagination settings
+    totalPages(): number {
+      return Math.ceil(this.people.length / this.peoplePerPage);
+    },
+    // Computed property to calculate the current page number based on the start count and people per page
+    currentPage(): number {
+      return Math.floor(this.startCount / this.peoplePerPage) + 1;
     }
   },
   methods: {
@@ -42,16 +47,6 @@ export default {
       this.startCount += this.peoplePerPage;
       this.endCount += this.peoplePerPage;
       this.scrollToTarget();
-
-      // Logic to disable the backward button when there are no previous pages
-      if (this.people.length > this.endCount) {
-        (this.$refs.backButton as HTMLButtonElement).disabled = true;
-      } else {
-        (this.$refs.backButton as HTMLButtonElement).disabled = false;
-      }
-
-      // Update the disabled state of the backward button for numbers styling
-      this.isBackButtonDisabled = false
     },
     // Method to decrement the visible people count and adjust pagination
     showLess() {
@@ -64,16 +59,6 @@ export default {
         this.endCount = this.peoplePerPage;
       }
       this.scrollToTarget();
-
-      // Logic to disable the next button when showing the second page
-      if (this.endCount === this.peoplePerPage) {
-        (this.$refs.nextButton as HTMLButtonElement).disabled = true;
-      } else {
-        (this.$refs.nextButton as HTMLButtonElement).disabled = false;
-      }
-
-      // Update the disabled state of the backward button
-      this.isBackButtonDisabled = true
     },
     // Smooth scroll to the target section when pagination changes
     scrollToTarget() {
@@ -81,7 +66,15 @@ export default {
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
       }
-    }
+    },
+    // Method to determine if the separator should be displayed based on the page number
+    shouldDisplaySeparator(pageNumber: number): boolean {
+      // If it's the last page, don't display the separator
+      if (pageNumber === this.totalPages) {
+        return false;
+      }
+      return true;
+    },
   }
 };
 </script>
@@ -117,20 +110,21 @@ export default {
       </div>
       <div id="navigation-button">
         <!-- Backward button element -->
-        <button class="nav-button" @click="showLess" :disabled="endCount <= peoplePerPage" ref="backButton">
+        <button class="nav-button" @click="showLess" :disabled="endCount <= peoplePerPage">
           <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
           <p> Back </p>
         </button>
 
-        <!-- Page number element -->
+        <!-- Dynamic page number generation -->
         <p id="page-number">
-          <span :class="{ 'active-number': isBackButtonDisabled }">{{ 1 }}</span>
-          <span id="separator"></span>
-          <span :class="{ 'active-number': !isBackButtonDisabled }">{{ 2 }}</span>
+          <span v-for="pageNumber in totalPages" :key="pageNumber">
+            <span :class="{ 'active-number': pageNumber === currentPage }">{{ pageNumber }}</span>
+            <span v-if="shouldDisplaySeparator(pageNumber)" id="separator"></span>
+          </span>
         </p>
 
         <!-- Next button element -->
-        <button class="nav-button" @click="showMore" :disabled="endCount >= people.length" ref="nextButton">
+        <button class="nav-button" @click="showMore" :disabled="endCount >= people.length">
           <p> Next </p>
           <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
         </button>
@@ -226,7 +220,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 40px;
+  gap: 2.7vw;
 }
 
 @media (max-width: 1500px) {
@@ -297,6 +291,7 @@ export default {
 }
 
 #separator {
-  width: 2.6vw;
+  display: inline-block;
+  width: 2.5vw;
 }
 </style>
