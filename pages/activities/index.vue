@@ -8,7 +8,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   <div id="activities-page">
     <!-- Cover section with image and title -->
     <div id="page-title">
-      <page-title>Explore<br />Our Activities</page-title>
+      <h1 class="page-title">Explore<br />Our Activities</h1>
     </div>
 
     <!-- Section content -->
@@ -92,9 +92,6 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 #section-description {
   text-align: center;
   margin-top: 32px;
-  font-family: var(--font-montserrat);
-  font-weight: var(--regular);
-  font-size: var(--body4);
 }
 
 #cards-container {
@@ -200,10 +197,12 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 
   #quote-text {
     font-size: 2.7vw;
+    line-height: 2.8vw;
   }
 
   #quote-author {
     font-size: 2.4vw;
+    line-height: 2.5vw;
   }
 }
 </style>

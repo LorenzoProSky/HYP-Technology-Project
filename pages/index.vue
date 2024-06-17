@@ -6,8 +6,8 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
 </script>
 
 <template>
-  <div id="homediv">
-    <div>
+  <div id="home-cover">
+    <div class="page-title">
       <h1>Centro MiLA</h1>
       <h2>Empowering women on their journey beyond abuse, towards healing and renewal.</h2>
     </div>
@@ -15,37 +15,37 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
 
   <div id="home-intro">
     <h3>Empowering Survivors</h3>
-    <p>Empowering individuals, families, and communities to break the cycle of violence through support, education, and advocacy.</p>
+    <p class="dynamic-p">Empowering individuals, families, and communities to break the cycle of violence through support, education, and advocacy.</p>
     <NuxtLink to="contacts">Do you need help? Contact Us</NuxtLink>
   </div>
 
-  <div id="home-services" class="activity-container">
+  <div class="activity-container">
     <h3>Our Services</h3>
-    <div class="grid-3-2">
+    <div class="grid-3">
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item1" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item2" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item3" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item1" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item2" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item3" />
+      title="Titolo" text="testo" to="/activities/services" />
     </div>
   </div>
 
-  <div id="home-projects" class="activity-container">
+  <div class="activity-container">
     <h3>Our Projects</h3>
-    <div class="grid-3-1">
+    <div class="grid-3">
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item1" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item2" />
+      title="Titolo" text="testo" to="/activities/services" />
       <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" class="item3" />
+      title="Titolo" text="testo" to="/activities/services" />
     </div>
     <MainButton buttonText="Discover All Projects" buttonLength="long" to="/activities/projects"
     style="margin-top: 75px;"/>
@@ -67,7 +67,7 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
     <img src="/assets/images/Group.jpg" alt="" id="image-group">
     <div id="home-locations" >
       <h3>One Centre, Two Locations</h3>
-      <p id="home-locations-p">You can find us in Bovisa and in Zona Farini, choose the location closest to you. We are to help you.</p>
+      <p id="home-locations-p" class="dynamic-p">You can find us in Bovisa and in Zona Farini, choose the location closest to you. We are to help you.</p>
       <div id="home-locations-cards">
         <MapCardSmall title="Centro MiLA Bovisa" address="Via Candiani 72, 20158 Milano" email="centromila.bovisa@gmail.com" phone="+39 345697365" to="/about-us/locations" />
         <MapCardSmall title="Centro MiLA Farini" address="Via Valtellina 20, 20159 Milano" email="centromila.farini@gmail.com" phone="+39 344677462" to="/about-us/locations" />
@@ -78,15 +78,15 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
       <div id="needHelp" >
         <p class="semiboldText" >Do you need help?</p>
         <p>Our crisis line is open everyday, at every hour.</p>
-        <p class="semiboldText" style="font-size: var(--h3);">0521 248886</p>
+        <p class="semiboldText" style="font-size: var(--h3); line-height: 44px;">0521 248886</p>
       </div>
       <div>
-        <p class="semiboldText" style="font-size: var(--h3);">Call 1522</p>
+        <p class="semiboldText" style="font-size: var(--h3); line-height: 44px;">Call 1522</p>
         <p>To contact an anti-violence centre</p>
       </div>
-      <hr style="height: 150px; border-left: 4px solid var(--purple); border-bottom: 0px;">
+      <hr style="height: 150px; border-left: 4px solid var(--purple); border-bottom: 0px;" id="vertical-line">
       <div>
-        <p class="semiboldText" style="font-size: var(--h3);">Call 112</p>
+        <p class="semiboldText" style="font-size: var(--h3); line-height: 44px;">Call 112</p>
         <p>To request police intervention</p>
       </div>
     </div>
@@ -95,38 +95,33 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
 
 
 <style scoped>
-main p, main a{
-  font-size: var(--body4);
-  line-height: var(--l-height4);
-}
-#homediv{
+#home-cover{
   background-image: url(/assets/images/cover-homepage.png);
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
 }
-#homediv div{
-  position: relative;
-  bottom: -50%;
-  left: 10%;
-  z-index: 1;
-  width: fit-content;
-}
-#homediv h1{
-  width: fit-content;
-}
-#homediv h2{
+#home-cover h2{
   color: var(--white);
   font-weight: var(--semibold);
-  width: 892px;
+  max-width: 892px;
+}
+@media(max-width:1400px){
+  #home-cover h2{
+    font-size: 3.4vw;
+    line-height: 3.5vw;
+    max-width: 60vw;
+  }
 }
 
+/**Introductive section */
 #home-intro{
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 160px 0;
+  text-align: center;
 }
 #home-intro p{
   width: 41%;
@@ -137,22 +132,15 @@ main p, main a{
   text-decoration: underline;
 }
 
+/**Activities sections */
 .activity-container{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 156px 0 212px 0;
 }
-.item1{
-  grid-column: 1;
-}
-.item2{
-  grid-column: 2;
-}
-.item3{
-  grid-column: 3;
-}
 
+/**About Us section */
 #home-about{
   background-image: url(/assets/images/homepage-about-us.png);
   width: 100%;
@@ -186,6 +174,7 @@ main p, main a{
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  text-align: center;
 }
 #image-group{
   margin-top: 150px;
@@ -207,6 +196,7 @@ main p, main a{
   margin-top: 86px;
 }
 
+/**Need Help section */
 #home-help{
   display: flex;
   flex-direction: row;
@@ -224,5 +214,47 @@ main p, main a{
   padding: 35px 50px;
   text-align: center;
   max-width: 363px;
+}
+
+
+@media (max-width: 1000px){
+  #home-locations-cards{
+    flex-direction: column;
+    gap: 100px;
+  }
+  #home-help{
+    flex-direction: column;
+  }
+  #vertical-line{
+    width: 60%;
+    height: 0px!important;
+    border-top: 4px solid var(--purple); 
+    border-left: 0px;
+    border-bottom: 0px;
+  }
+}
+
+@media (max-width: 900px){
+  #home-about{
+    flex-direction: column;
+    align-items: center;
+  }
+  #home-about h2{
+    margin-bottom: 0%;
+    margin-top: 30px;
+  }
+  #home-about div{
+    margin-bottom: 30px
+  }
+  #home-about div p{
+    width: 80vw;
+  }
+}
+
+@media (max-width: 650px){
+  .dynamic-p{
+    width: 80vw !important;
+    max-width: 80vw !important;
+  }
 }
 </style>
