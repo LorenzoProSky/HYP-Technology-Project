@@ -134,18 +134,18 @@ h4 {
   font-size: var(--h4);
   line-height: 34px;
 }
-
 .semiboldText {
   font-weight: var(--semibold)
 }
 
+
+/* Styling for the Page Title */
 .page-title {
   position: relative;
   bottom: -50%;
   left: 10%;
   width: fit-content;
 }
-
 backward-button-wrapper {
   position: absolute;
   top: 22vw;
@@ -192,7 +192,6 @@ backward-button-wrapper {
   }
 }
 
-
 @media (max-width: 600px) {
   page-title {
     position: absolute;
@@ -208,6 +207,7 @@ backward-button-wrapper {
     left: 5vw;
   }
 }
+
 
 /* Basic styling for Header and Footer */
 header {
