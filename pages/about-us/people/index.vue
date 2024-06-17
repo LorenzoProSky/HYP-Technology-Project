@@ -88,7 +88,7 @@ export default {
       <backward-button-wrapper>
         <BackwardButton buttonText="About Us" to="/about-us" />
       </backward-button-wrapper>
-      <page-title>Discover<br />Our People</page-title>
+      <h1 class="page-title">Discover<br />Our People</h1>
     </div>
 
     <!-- Section content -->
