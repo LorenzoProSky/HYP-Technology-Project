@@ -125,14 +125,13 @@ export default defineComponent({
 /* Content styling */
 .card-content {
   height: 42%;
-  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
   color: var(--black);
   padding-left: 54px;
-  padding-right: 93px;
+  padding-right: 59px;
 }
 
 /* Name styling */
@@ -141,9 +140,9 @@ export default defineComponent({
   font-size: var(--h3);
   color: var(--black);
   font-weight: var(--semibold);
-  margin-top: 24px;
-  margin-bottom: -15px;
   text-align: left;
+  margin-top: 24px;
+  margin-bottom: 0px;
 }
 
 /* Job styling */
@@ -152,8 +151,9 @@ export default defineComponent({
   font-size: var(--body4);
   color: var(--black);
   font-weight: var(--medium);
-  margin-bottom: 5px;
   text-align: left;
+  margin-top: 6px;
+  margin-bottom: 0px;
 }
 
 /* Text styling */
@@ -164,12 +164,14 @@ export default defineComponent({
   font-size: var(--body1);
   font-weight: var(--medium);
   text-align: left;
+  margin-top: 26px;
+  margin-bottom: 0px;
 }
 
 /* Icon styling */
 .icon {
   align-self: center;
-  margin-bottom: 37px;
-  margin-left: 375px;
+  margin-bottom: 33px;
+  margin-left: 370px;
 }
 </style>
