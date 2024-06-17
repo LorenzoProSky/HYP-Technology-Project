@@ -5,8 +5,8 @@
 </script>
 
 <template>
-  <div id="aboutusdiv">
-    <h1>About Us</h1>
+  <div id="about-cover">
+    <h1 class="page-title">About Us</h1>
   </div>
 
   <div id="container">
@@ -103,27 +103,15 @@
 
 
 <style scoped>
-#aboutusdiv{
+#about-cover{
   background-image: url('/assets/images/cover-about-us.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
 }
-h1{
-  position: relative;
-  bottom: -50%;
-  left: 10%;
-  z-index: 1;
-  width:fit-content;
-}
 #container{
-  width: 100%;
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  font-size: var(--body4);
-  line-height: var(--l-height4);
 }
 
 /**Introductive section */
@@ -250,10 +238,6 @@ h1{
 }
 
 @media (max-width: 1000px){
-  #container{
-    font-size: var(--body2);
-    line-height: var(--l-height2);
-  }
   #locations-cards{
     flex-direction: column;
     gap: 100px;
@@ -267,10 +251,6 @@ h1{
 }
 
 @media (max-width: 650px){
-  h1{
-    font-size: 40px;
-  }
-
   #intro{
     width: 90vw;
     margin: 100px 10px;
@@ -320,9 +300,4 @@ h1{
   }
 }
 
-@media (max-width:430px){
-  #container{
-    font-size: var(--body1);
-  }
-}
 </style>

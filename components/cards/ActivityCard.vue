@@ -156,4 +156,27 @@ export default defineComponent({
   margin-bottom: 36px;
   margin-left: 409px;
 }
+
+
+
+@media (max-width: 650px){  
+  .card{
+    width: 80vw;
+    height: auto;
+  }
+  .card .icon{
+    margin-left: 80%;
+    margin-bottom: 30px;
+  }
+  .card-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .card-content{
+    padding: 0 20px;
+  }
+  .card-title{
+    margin-top: 10px;
+  }
+}
 </style>

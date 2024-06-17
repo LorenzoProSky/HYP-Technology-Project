@@ -73,6 +73,19 @@ body {
 
 main {
   width: 100%;
+  font-size: var(--body4);
+  line-height: var(--l-height4);
+}
+@media (max-width: 1000px){
+  main{
+    font-size: var(--body2);
+    line-height: var(--l-height2);
+  }
+}
+@media (max-width:430px){
+  main{
+    font-size: var(--body1);
+  }
 }
 
 #__nuxt {
@@ -101,27 +114,22 @@ h4,
 h5,
 h6 {
   font-family: "Playfair Display", serif;
-  color: var(--black);
   font-weight: var(--extrabold);
   margin: 0px;
 }
-
 h1 {
   font-size: var(--h1);
   line-height: 104px;
   color: var(--white);
 }
-
 h2 {
   font-size: var(--h2);
   line-height: 66px;
 }
-
 h3 {
   font-size: var(--h3);
   line-height: 44px;
 }
-
 h4 {
   font-size: var(--h4);
   line-height: 34px;
@@ -130,25 +138,24 @@ h4 {
   font-weight: var(--semibold)
 }
 
-page-title {
-  font-family: var(--font-playfair);
-  font-weight: var(--extrabold);
-  font-size: var(--h1);
-  color: var(--white);
+.page-title {
   position: relative;
   bottom: -50%;
   left: 10%;
   width: fit-content;
 }
-
 @media (max-width: 1400px) {
-  page-title {
+  .page-title {
     font-size: 7.6vw;
     line-height: 8vw;
     position: relative;
     top: 35%;
     left: 25%;
     width: fit-content;
+  }
+  .page-title h1{
+    font-size: inherit;
+    line-height: inherit;
   }
 }
 
@@ -158,7 +165,6 @@ header {
   text-align: center;
   width: 100%;
 }
-
 footer {
   background-color: var(--white);
   padding: 50px 0;
@@ -173,29 +179,27 @@ a {
   text-decoration: none;
   color: var(--purple);
 }
-
  a:hover {
   color: var(--purple-hover);
 } 
-
 a:active{
   color: var(--purple-active); 
 }
 
 /* Styling for grids */
-.grid-3-1{
+.grid-3{
+  width: 90vw;
   margin-top: 64px;
   display: grid;
-  grid-template-columns: 27vw;
-  grid-template-rows: repeat(1, 684px);
-  gap: 4.17vw;
+  justify-content: space-around;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, 520px);
+  row-gap: 112px;
 }
-.grid-3-2{
-  margin-top: 64px;
-  display: grid;
-  grid-template-columns: 27vw;
-  grid-template-rows: repeat(2, 684px);
-  gap: 4.17vw;
+@media(max-width: 650px){
+  .grid-3{
+    grid-template-columns: repeat(auto-fill, 90vw);
+  }
 }
 
 
