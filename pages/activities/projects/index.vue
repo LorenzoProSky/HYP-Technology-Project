@@ -115,7 +115,7 @@ export default {
       <backward-button-wrapper>
         <BackwardButton buttonText="Our Activities" to="/activities" />
       </backward-button-wrapper>
-      <page-title>Discover<br />Our Projects</page-title>
+      <h1 class="page-title">Discover<br />Our Projects</h1>
     </div>
 
     <!-- Section content -->
