@@ -70,7 +70,7 @@ import MainButton from '~/components/buttons/MainButton.vue';
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
     <!--Cambiare action-->  
-    <form action="/" style="width: 800px;">
+    <form action="/" style="width: 800px; margin-top: 92px;">
       <input type="text" name="name" placeholder="Name and Surname" required>
       <input type="text" name="age" placeholder="Your age" required>
       <input type="text" name="e-mail" placeholder="E-mail address" required>

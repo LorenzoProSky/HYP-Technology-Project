@@ -268,4 +268,50 @@ export default defineComponent({
   margin-bottom: 38px;
   margin-left: 494px;
 }
+
+
+@media (max-width: 650px){  
+  .card{
+    width: 80vw;
+    height: auto;
+  }
+  .card .icon{
+    margin-left: 80%;
+    margin-bottom: 30px;
+  }
+  .card-content{
+    padding: 0 20px;
+  }
+  .card-name{
+    font-size: var(--h4);
+  }
+  .card-address{
+    margin-top: 0;
+    font-size: var(--body2);
+  }
+  .card-contact{
+    margin-top: 50px;
+  }
+  .card-contact-title{
+    font-size: var(--body2);
+  }
+  .prefix {
+    font-size: var(--body1);
+  }
+  .card-phone {
+    font-size: var(--body1); 
+  }
+  .card-email {
+    font-size: var(--body1);
+  }
+  .card-op-hours{
+    margin-top: 50px;
+  }
+  .card-hours-title {
+    font-size: var(--body2);
+  }
+  .card-hours {
+    font-size: var(--body1);
+  }
+}
 </style>
