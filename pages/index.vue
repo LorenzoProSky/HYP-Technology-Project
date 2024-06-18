@@ -75,7 +75,7 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
     </div>
 
     <div id="home-help" >
-      <div id="needHelp" >
+      <div class="needHelp" >
         <p class="semiboldText" >Do you need help?</p>
         <p>Our crisis line is open everyday, at every hour.</p>
         <p class="semiboldText" style="font-size: var(--h3); line-height: 44px;">0521 248886</p>
@@ -207,13 +207,6 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
   margin-left: 17.5vw;
   margin-top: 400px;
   margin-bottom: 400px;
-}
-#needHelp{
-  background-color: var(--lilac);
-  border-radius: var(--border-radius-card);
-  padding: 35px 50px;
-  text-align: center;
-  max-width: 363px;
 }
 
 

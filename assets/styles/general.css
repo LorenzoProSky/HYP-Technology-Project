@@ -255,6 +255,15 @@ a:active{
   }
 }
 
+/* div which asks if help is needed */
+.needHelp{
+  background-color: var(--lilac);
+  border-radius: var(--border-radius-card);
+  padding: 35px 50px;
+  text-align: center;
+  max-width: 363px;
+}
+
 
 
 /* Basic styling for images */
@@ -268,7 +277,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-bottom: 1em;
   border: 1px solid #ccc;
