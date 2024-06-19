@@ -13,12 +13,12 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
     <div class="needHelp" >
       <p class="semiboldText" >Do you need help?</p>
       <p>Our crisis line is open everyday, at every hour.</p>
-      <p class="semiboldText dynamic-p" style="font-size: var(--h3); line-height: 44px;">0521 248886</p>
+      <p class="semiboldText dynamic-help" style="font-size: var(--h3); line-height: 44px;">0521 248886</p>
     </div>
     <div class="needHelp" >
       <p class="semiboldText" >Are you unable to call?</p>
       <p>You can write us an email. Your privacy is safe.</p>
-      <p class="semiboldText dynamic-p" style="font-size: var(--h4); line-height: 39px;">centromila@gmail.com</p>
+      <p class="semiboldText dynamic-help" style="font-size: var(--h4); line-height: 39px;">centromila@gmail.com</p>
     </div>
   </div>
 
@@ -62,7 +62,7 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
   </div>
 </template>
 
-<style>
+<style scoped>
 #contacts-cover{
   background-image: url('/assets/images/cover-contact-us.png');
   background-size: cover;
@@ -138,7 +138,7 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
     align-items: center;
     gap: 50px;
   }
-  .dynamic-p{
+  .dynamic-help{
     font-size: var(--body3) !important; 
     line-height: 24px;
   }
