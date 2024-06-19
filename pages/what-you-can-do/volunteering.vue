@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import MainButton from '~/components/buttons/MainButton.vue';
 </script>
 
 <template>
