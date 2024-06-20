@@ -25,10 +25,10 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
       <div id="page-cards">
         <DiscoverCard title="Donate to MiLA"
           text="Even with a small donation, you can contribute to the realisation of our activities, thus supporting women in their pathways out of violence."
-          to="/activities/services/index" />
+          to="/what-you-can-do/donate" />
         <DiscoverCard title="Become a Volunteer!"
           text="Contribute to the fight against violence against women and for rights by becoming a volunteer in our centre."
-          to="/activities/projects/index" />
+          to="/what-you-can-do/volunteering" /> 
       </div>
     </div>
 
@@ -71,11 +71,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   color: var(--black);
 }
 
-@media (max-width: 1500px) {
-  #page-section {
-    margin-top: 80px;
-  }
-}
+
 
 #section-title {
   text-align: center;
@@ -99,11 +95,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   align-items: center;
 }
 
-@media (max-width: 1500px) {
-  #cards-container {
-    margin-top: 80px;
-  }
-}
+
 
 #page-cards {
   display: flex;
@@ -112,12 +104,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   gap: 8vw;
 }
 
-@media (max-width: 1500px) {
-  #page-cards {
-    flex-direction: column;
-    gap: 80px;
-  }
-}
+
 
 #quote-section {
   margin-top: 330px;
@@ -129,12 +116,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   color: var(--black);
 }
 
-@media (max-width: 1500px) {
-  #quote-section {
-    margin-top: 165px;
-    margin-bottom: 172.5px;
-  }
-}
+
 
 #quote-container {
   display: flex;
@@ -177,7 +159,34 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   font-style: italic;
 }
 
-@media (max-width: 1700px) {
+
+
+/* media 1500 */
+
+@media (min-width: 100px) and (max-width: 1500px) {
+  #page-section {
+    margin-top: 80px;
+  }
+
+  #page-cards {
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  #cards-container {
+    margin-top: 80px;
+  }
+
+
+  #quote-section {
+    margin-top: 165px;
+    margin-bottom: 172.5px;
+  }
+}
+
+
+/* media 1500 - 1700 */
+@media (min-width: 1500px) and (max-width: 1700px) {
   #quote-container {
     margin: 6vw 0 10vw -10vw;
     width: 100%;
@@ -193,20 +202,95 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   }
 }
 
-@media (max-width: 1000px) {
+
+/* media 0 - 1050 */
+@media (max-width: 1050px) {
   #quote-container {
-    margin: 8vw 0 10vw -10vw;
-    width: 100%;
+    margin-top: 55px;
+    padding: 15px;
+    width: 80%;
+    height: 25vh;
   }
 
   #quote-text {
-    font-size: 2.7vw;
-    line-height: 2.8vw;
+    font-size: 2.8vw;
+    line-height: 3vw;
+    margin: 30px;
   }
 
   #quote-author {
     font-size: 2.4vw;
     line-height: 2.5vw;
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+
+
+  #page-title {
+  height: calc(90vw / 2);
+}
+
+  .page-title {
+    top: 18vh;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
   }
 }
+
+/* iphone 13 / 13 pro */
+@media (max-width: 950px) {
+
+  #quote-section {
+  margin-bottom: 90px;
+  margin-top: 90px; 
+  height: 80vw;
+  }
+
+  #quote-icon {
+    margin:  6px!important;
+    width: 100%;
+  }
+
+  #quote-container {
+    margin-top: 50px;
+    padding: 10px;
+    width: 80%;
+    height: 25vh;
+  }
+
+  #quote-text {
+    font-size: 4vw;
+    line-height: 4vw;
+    margin: 20px 20px 10px 10px;
+  }
+
+  #quote-author {
+    font-size: 3.2vw;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+
+  #page-title {
+  height: 75vw;
+}
+
+  .page-title {
+    top: 19vh;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+
+  
+  }
 </style>
