@@ -129,7 +129,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 }
 
 #page-title {
-  background-image: url('/assets/images/our-activities-index-cover.png');
+  background-image: url('/assets/images/cover-donate.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
