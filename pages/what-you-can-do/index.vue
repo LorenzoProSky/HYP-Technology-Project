@@ -163,7 +163,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 
 /* media 1500 */
 
-@media (min-width: 1050px) and (max-width: 1500px) {
+@media (min-width: 100px) and (max-width: 1500px) {
   #page-section {
     margin-top: 80px;
   }
