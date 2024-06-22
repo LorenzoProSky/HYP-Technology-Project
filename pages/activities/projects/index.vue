@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       // TODO: Replace the placeholder data with the actual data
-      projects: Array(6).fill({
+      projects: Array(7).fill({
         imageSrc: projectImage,
         title: 'Art Therapy Session',
         text: 'A monthly event to engage in creative workshops using art as a medium for healing and self-expression, to process emotions in a supportive environment.',

@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       // TODO: Replace the placeholder data with the actual data
-      people: Array(30).fill({
+      people: Array(20).fill({
         imageSrc: profileImage,
         name: 'Alessandra Ferrari',
         job: 'Psychotherapist',
