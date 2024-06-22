@@ -144,7 +144,7 @@ export default defineComponent({
 }
 
 
-/** PROVVISORIO */
+
 @media (max-width: 650px){  
   .card{
     width: 80vw;

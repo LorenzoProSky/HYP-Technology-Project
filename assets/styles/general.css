@@ -151,14 +151,22 @@ h4 {
 }
 backward-button-wrapper {
   position: absolute;
-  top: 22vw;
+  top: calc(max((100vw / 2) * 0.3375 , var(--header-height)));
   left: 9.75vw;
 }
+@media(max-device-width: 900px){
+  backward-button-wrapper {
+    top: calc(max((100vw / 2) * 0.3375 , var(--mobile-header2)));
+  }
+}
+@media(max-device-width: 430px){
+  backward-button-wrapper {
+    top: calc(max((100vw / 2) * 0.3375 , var(--mobile-header1)));
+  }
+}
 
-@media (max-width: 1400px) {
+@media (max-width: 1000px) {
   .page-title {
-    position: absolute;
-    top: 31vh;
     left: 23.3vw;
     width: 50vw;
     height: 20vw;
@@ -172,41 +180,18 @@ backward-button-wrapper {
   }
 
   backward-button-wrapper {
-    top: 20vh;
     left: 10vw;
   }
 }
 
 @media (max-width: 900px) {
-  page-title {
-    position: absolute;
-    top: 35vh;
-    left: 23.3vw;
-    width: 50vw;
-    height: 20vw;
-    font-size: 7.6vw;
-    line-height: 8vw;
-    text-align: center;
-  }
-
   backward-button-wrapper {
-    top: 20vh;
     left: 7vw;
   }
 }
 
 @media (max-width: 600px) {
-  page-title {
-    position: absolute;
-    top: 39vh;
-    left: 23.3vw;
-    width: 50vw;
-    height: 20vw;
-    font-size: 7.6vw;
-    line-height: 8vw;
-  }
   backward-button-wrapper {
-    top: 24vh;
     left: 5vw;
   }
 }

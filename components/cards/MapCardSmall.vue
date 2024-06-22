@@ -243,7 +243,7 @@ export default defineComponent({
 }
 
 
-/** PROVVISORIO */
+
 @media (max-width: 650px){  
   .card{
     width: 70vw;
@@ -257,15 +257,18 @@ export default defineComponent({
   }
   .icon-pin{
     margin-left: 30%;
+    margin-top: 340px;
   }
 }
 @media (max-width: 400px){
   .card-content{
-    padding-left: 2px;
+    padding-left: 20px;
   }
   .card-text{
     font-size: 12px !important;
-
+  }
+  .icon-pin{
+    margin-top: 360px;
   }
 }
 </style>

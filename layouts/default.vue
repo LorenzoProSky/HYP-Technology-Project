@@ -65,12 +65,40 @@ function closeDrop(num: number){
   }
 }
 
+function openChat(){
+  let chatL = document.getElementById('chatbot-label');
+  let chatB = document.getElementById('chatbot-button');
+  if (chatL) {
+    chatL.style.visibility = 'visible';
+    chatL.style.opacity = '1';
+    chatL.style.transition = 'opacity 0.25s';
+  }
+  if (chatB) {
+    chatB.removeEventListener('click', openChat);
+  }
+}
+
+function closeChat(){
+  let chatL = document.getElementById('chatbot-label');
+  let chatB = document.getElementById('chatbot-button');
+  if (chatL) {
+    chatL.style.visibility = 'hidden';
+    chatL.style.opacity = '0';
+    chatL.style.transition = 'opacity 0.25s, visibility 0.25s';
+  }
+  if (chatB) {
+    chatB.addEventListener('click', openChat);
+  }
+}
+
 onMounted(() => {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
   let plus = document.getElementsByClassName('plus');
   let minus = document.getElementsByClassName('minus');
   let links = document.getElementsByTagName('a');
+  let chatB = document.getElementById('chatbot-button');
+  let chatClose = document.getElementById('chat-close-button');
   for (let i = 0; i < links.length; i++) {
     links[i].addEventListener('click', closeMenu);
   }
@@ -84,6 +112,12 @@ onMounted(() => {
   for (let i = 0; i < minus.length; i++) {
     minus[i].addEventListener('click', () => {closeDrop(i)});
   }
+  if (chatB) {
+    chatB.addEventListener('click', openChat);
+  }
+  if (chatClose) {
+    chatClose.addEventListener('click', closeChat);
+  }
 });
 </script>
 
@@ -92,6 +126,7 @@ import { defineComponent } from 'vue';
 import MainButton from '~/components/buttons/MainButton.vue';
 import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
+import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
 
 export default defineComponent({
   components: {
@@ -191,6 +226,30 @@ export default defineComponent({
   </header>
 
   <main>
+    <!-- Chatbot -->
+    <ChatbotButton id="chatbot-button" />
+    <div id="chatbot-label">
+      <div id="chat-left">
+        <h4>We are to <br> help you.</h4>
+        <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
+          While you won't be interacting with a person directly, the answers provided have been carefully crafted by trained professionals from Anti-Violence Centers.</p>
+      </div>
+
+      <div id="chat-right" >
+        <div id="chat-close">
+          <Icon name="MobileExitIcon" color="var(--purple)" size="32" style="margin-right: 40px; cursor: pointer" id="chat-close-button" />
+        </div>
+        <div id="chat-conversation" >
+          <!--la conversazione con il chatbot va inserita qui-->
+
+        </div>
+        <form action="">
+          <input type="text" name="input" placeholder="Here you can write" id="chat-input" required>
+          <button type="submit" >invia</button>
+        </form>
+      </div>
+    </div>
+
     <slot />
   </main>
 
@@ -418,6 +477,83 @@ header nav #contactUs{
 
 .menu-container:hover .dropdown-menu a {
   color: var(--black) !important;
+}
+
+/** CHATBOT **********************************************************/
+#chatbot-label{
+  position: fixed;
+  top: 251px;
+  right: 59px;
+  z-index: 100;
+  width: 73.75vw;
+  height: 670px;
+  border-radius: 24px;
+  box-shadow: 0px 16px 40px rgba(26, 20, 31, 0.15);
+  display: flex;
+  flex-direction: row;
+  background-color: var(--white);
+  visibility: hidden;
+  opacity: 0;
+}
+#chat-left{
+  width: 27%;
+  height: 100%;
+  background-color: var(--purple);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+#chat-left h4{
+  width: 68.8%;
+}
+#chat-left p{
+  font-size: var(--body1);
+  line-height: var(--l-height1);
+  margin-top: 24px;
+  margin-bottom: 72px;
+  width: 68.8%;
+}
+#chat-right{
+  width: 73%;
+  height: 100%;
+}
+#chat-close{
+  height: 80px;
+  border-bottom: 1px solid var(--grey1);
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+#chat-conversation{
+  height: 450px;
+  background-color: aqua;
+}
+form{
+  position: absolute;
+  bottom: 64px;
+  right: 3.5vw;
+  width: 46vw;
+  height: 72px;
+  background-color: var(--white);
+  border: 2px solid var(--grey2);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--body1);
+}
+#chat-input{
+  border: 0px;
+  margin: 0;
+}
+#chat-input:focus{
+  outline: none;
 }
 
 /* FOOTER ************************************************************/
