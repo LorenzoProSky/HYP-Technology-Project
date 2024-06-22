@@ -191,7 +191,7 @@ export default defineComponent({
   </header>
 
   <main>
-    <slot />
+    <slot/>
   </main>
 
   <footer>

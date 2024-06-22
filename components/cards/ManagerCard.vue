@@ -9,13 +9,18 @@ export default defineComponent({
   name: 'ManagerCard',
   // Define props expected by the component
   props: {
+
+    managerName: {
+      type: String,
+      required: true
+    },
     // Manager of project or service
     type: {
       type: String,
       validator: (value: string) => ['project', 'service'].includes(value),
       required: true
     },
-    // Managere descriptions
+    // Manager descriptions
     text: {
       type: Array,
       required: true
@@ -71,8 +76,8 @@ export default defineComponent({
         <!-- Activity description -->
         <div class="card-details" v-for="(item, index) in text" :key="index">
           <!-- Wrap the single description in a NuxtLink for navigation -->
-          <NuxtLink :to="to[index] as RouteLocationRaw">
-            <p class="card-description">{{ item }}</p>
+          <NuxtLink :to="to[index]">
+            <p class="card-description">{{ managerName }} is the main resposible for the {{ type }} {{ item }}</p>
             <!-- Forward arrow icon -->
             <Icon class="arrow-icon" name="ForwardArrowIcon" size="32" />
           </NuxtLink>

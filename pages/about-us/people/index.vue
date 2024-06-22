@@ -17,7 +17,7 @@ export default {
         name: 'Alessandra Ferrari',
         job: 'Psychotherapist',
         text: 'Alessandra Ferrari is the responsible for the projects SELF. Rediscovery & Confidence and Paws for Healing.',
-        to: '/index'
+        to: '/about-us/people/1'
       }),
 
       // Pagination settings
@@ -106,7 +106,7 @@ export default {
       <div id="page-cards">
         <!-- Loop through visiblePeople to render PersonCard components -->
         <PersonCard v-for="(person, index) in visiblePeople" :key="index" :imageSrc="person.imageSrc"
-          :name="person.name" :job="person.job" :text="person.text" :to="person.to" />
+          :name="person.name" :job="person.job" :text="person.text" :to="person.to"/>
       </div>
       <div id="bottom-space" v-if="totalPages == 1"/> <!-- Add space at the bottom if there is only one page -->
     </div>
