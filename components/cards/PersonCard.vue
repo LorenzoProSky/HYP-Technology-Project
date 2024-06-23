@@ -26,7 +26,7 @@ export default defineComponent({
     // Description of the person
     text: {
       type: String,
-      required: true
+      required: false
     },
     // URL or route to navigate to when the card is clicked
     to: {

@@ -4,16 +4,14 @@
 
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import ManagerCard from '~/components/cards/ManagerCard.vue';
-import ForwardButton from '~/components/buttons/ForwardButton.vue';
-
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
 import type { Person, Service, Project } from '~/types/types';
 
 // Retrieve Id of person from url and build the server url for api request
 const route = useRoute();
-const id = route.params.id; 
-const personDataUrl = `http://localhost:3005/people/${id}`;
+let id = ref(Number(route.params.id)); 
+const personDataUrl = `http://localhost:3005/people/${id.value}`;
 const countPeopleUrl = "http://localhost:3005/count-people";
 
 // Variable ref<Person> holding all the data for the person with the specified id
@@ -24,7 +22,6 @@ try {
   const { data: countPpl } = await useFetch<Number>(countPeopleUrl);
   const people: Person[] | null= fetchPerson.value;
   peopleCounter.value = Number(countPpl.value);
-  console.log(peopleCounter.value);
   if(people){
     personData.value = people[0];
   }
@@ -40,6 +37,25 @@ const managesProjects = computed(() => {
 const managesServices = computed(() => {
   return personData.value.responsible_service.length > 0;
 });
+
+const previousLink = computed(() => {
+  if(id.value > 0){
+    const previousId = id.value - 1;
+    return "/about-us/people/" + previousId;
+  } else {
+    return null;
+  }
+});
+
+const nextLink = computed(() => {
+  if(id.value < peopleCounter.value){
+    const nextId = id.value + 1;
+    return "/about-us/people/" + nextId;
+  } else {
+    return null;
+  }
+});
+
 
 // Build the arrays necessary to create the ManagerCards
 let managedProjects: Project[] = personData.value.project;
@@ -141,8 +157,32 @@ let reactive_managedServiceIds = ref(managedServiceIds);
         </div>
 
         
+    <!-- Navigation buttons for pagination -->
+    <div id="navigation-button">
+      <!-- Backward button element -->
+      <router-link :to="previousLink">
+        <button class="nav-button" :disabled="id <= 1">
+        <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
+        <p> Previous </p>
+        </button>
+      </router-link>
 
+      <router-link :to="'/about-us/people'">
+        <button class="nav-button">
+        <p> All People </p>
+        </button>
+      </router-link>
 
+      <!-- Next button element -->
+      <router-link :to="nextLink">
+        <button class="nav-button" :disabled="id >= peopleCounter">
+        <p> Next </p>
+        <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
+      </button>
+    </router-link>
+
+    </div>
+     
 
     </div>
 
@@ -250,6 +290,15 @@ let reactive_managedServiceIds = ref(managedServiceIds);
 
 }
 
+#navigation-button{
+  display: flex;
+  justify-content: center;
+  gap: 6%;
+  margin-top: 20%;
+  margin-bottom: 15%;
+
+}
+
 /* Overriding some styling from the page-title class to adjust it to the person page */
 .page-title{
   position: static;
@@ -280,6 +329,39 @@ let reactive_managedServiceIds = ref(managedServiceIds);
   border-radius: 8px;
   text-align: center;
   padding: 10px;
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  font-family: var(--font-montserrat);
+  color: var(--black);
+  font-size: var(--body3);
+  font-weight: var(--regular);
+  cursor: pointer;
+  border: none;
+  transition: background-color var(--transition);
+}
+
+.nav-button:hover {
+  color: var(--purple-hover);
+}
+
+.nav-button:active {
+  color: var(--purple-active);
+}
+
+.nav-button[disabled] {
+  color: var(--grey3);
+  cursor: not-allowed;
+}
+
+.nav-button[disabled]:hover {
+  color: var(--grey3);
+  cursor: not-allowed;
 }
 
 

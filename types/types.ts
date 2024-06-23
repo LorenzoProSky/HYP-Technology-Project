@@ -1,5 +1,6 @@
 
 export interface Person {
+    person_id: number;
     name: string;
     surname: string;
     job_title: string;
