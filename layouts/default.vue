@@ -65,14 +65,43 @@ function closeDrop(num: number){
   }
 }
 
+function openChat(){
+  let chatL = document.getElementById('chatbot-label');
+  let chatB = document.getElementById('chatbot-button');
+  if (chatL) {
+    chatL.style.visibility = 'visible';
+    chatL.style.opacity = '1';
+    chatL.style.transition = 'opacity 0.25s';
+  }
+  if (chatB) {
+    chatB.removeEventListener('click', openChat);
+  }
+}
+
+function closeChat(){
+  let chatL = document.getElementById('chatbot-label');
+  let chatB = document.getElementById('chatbot-button');
+  if (chatL) {
+    chatL.style.visibility = 'hidden';
+    chatL.style.opacity = '0';
+    chatL.style.transition = 'opacity 0.25s, visibility 0.25s';
+  }
+  if (chatB) {
+    chatB.addEventListener('click', openChat);
+  }
+}
+
 onMounted(() => {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
   let plus = document.getElementsByClassName('plus');
   let minus = document.getElementsByClassName('minus');
   let links = document.getElementsByTagName('a');
+  let chatB = document.getElementById('chatbot-button');
+  let chatClose = document.getElementById('chat-close-button');
   for (let i = 0; i < links.length; i++) {
     links[i].addEventListener('click', closeMenu);
+    links[i].addEventListener('click', closeChat); 
   }
   if (mobileMenu && mobileMenuClose) {
     mobileMenu.addEventListener('click', openMenu);
@@ -84,6 +113,12 @@ onMounted(() => {
   for (let i = 0; i < minus.length; i++) {
     minus[i].addEventListener('click', () => {closeDrop(i)});
   }
+  if (chatB) {
+    chatB.addEventListener('click', openChat);
+  }
+  if (chatClose) {
+    chatClose.addEventListener('click', closeChat);
+  }
 });
 </script>
 
@@ -92,6 +127,7 @@ import { defineComponent } from 'vue';
 import MainButton from '~/components/buttons/MainButton.vue';
 import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
+import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
 
 export default defineComponent({
   components: {
@@ -154,7 +190,7 @@ export default defineComponent({
     <!-- header for mobile -->
     <Icon name="MenuIcon" color=var(--purple) id="mobileMenu" />
     <Icon name="MobileExitIcon" color=var(--purple) id="mobileMenuClose" />
-    <div id="mobile-container" ref="mobileContainer">
+    <div id="mobile-container" >
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
         <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
@@ -191,6 +227,42 @@ export default defineComponent({
   </header>
 
   <main>
+    <!-- Chatbot -->
+    <ChatbotButton id="chatbot-button" />
+    <div id="chatbot-label">
+      <div id="chat-left">
+        <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px;" />
+        <h4>We are to <br> help you.</h4>
+        <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
+          While you won't be interacting with a person directly, the answers provided have been carefully crafted by trained professionals from Anti-Violence Centers.</p>
+      </div>
+
+      <div id="chat-right" >
+        <div id="chat-close">
+          <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1);
+           width: 120px; height: 40px;" id="secondaryButton-mobile"/>
+          <Icon name="MobileExitIcon" color="var(--purple)" size="32" style="margin-right: 40px; cursor: pointer" id="chat-close-button" />
+        </div>
+        <div id="chat-conversation" >
+          <!--la conversazione con il chatbot va inserita qui-->
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatUser text="ciao" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
+        </div>
+        <form>
+          <input type="text" name="input" placeholder="Here you can write" id="chat-input" required>
+          <button type="submit" style="width: 80px; height: 40px; border: 1px solid var(--purple); border-radius: 8px; font-size: var(--body1); 
+          background-color: var(--white); color: var(--purple); cursor: pointer;" >Send</button>
+        </form>
+      </div>
+    </div>
+
     <slot />
   </main>
 
@@ -431,7 +503,6 @@ footer {
   line-height: var(--l-height2);
 }
 
-
 /**left */
 footer #info {
   display: flex;
@@ -511,6 +582,120 @@ footer .arrow{
   padding: 5px;
   min-width: 24px;
   min-height: 24px;
+}
+
+/** CHATBOT **********************************************************/
+#chatbot-label{
+  position: fixed;
+  top: 26.5vh;
+  right: 59px;
+  z-index: 100;
+  width: 1416px;
+  max-width: 90vw;
+  height: 70vh;
+  border-radius: 24px;
+  box-shadow: 0px 16px 40px rgba(26, 20, 31, 0.15);
+  display: flex;
+  flex-direction: row;
+  background-color: var(--white);
+  visibility: hidden;
+  opacity: 0;
+}
+
+#chat-left{
+  width: 27%;
+  height: 100%;
+  background-color: var(--purple);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+#chat-left h4{
+  width: 68.8%;
+}
+#chat-left p{
+  font-size: var(--body1);
+  line-height: var(--l-height1);
+  margin-top: 24px;
+  margin-bottom: 72px;
+  width: 68.8%;
+}
+#chat-left a{
+  position: absolute;
+  top: 48px;
+  left: 4.2%;
+}
+
+#secondaryButton-mobile{
+  display: none;
+}
+#chat-right{
+  width: 73%;
+  height: 100%;
+}
+#chat-close{
+  height: 80px;
+  border-bottom: 1px solid var(--grey1);
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 32px;
+}
+#chat-conversation{
+  height: calc(100% - 80px - 72px - 6.8vh);
+  background-color: var(--white);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/* scrollbar per browser WebKit */
+#chat-conversation::-webkit-scrollbar {
+  width: 12px;
+}
+#chat-conversation::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--white) 80%, transparent);
+  border-radius: 10px;
+}
+#chat-conversation::-webkit-scrollbar-thumb {
+  background: var(--grey2);
+  border-radius: 10px;
+  border: 1px solid var(--white);
+}
+/* scrollbar per Firefox */
+/*
+#chat-conversation {
+  scrollbar-width: thin;
+  scrollbar-color: var(--grey2) var(--white);
+}*/
+
+form{
+  position: absolute;
+  bottom: 6.8vh;
+  right: 3.5vw;
+  width: 883px;
+  max-width: calc(100vw * 90/100 * 73/100 * 90/100);
+  height: 72px;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: var(--body1);
+}
+#chat-input{
+  height: calc(100% - 20px);
+  width: 88.45%;
+  margin: 0;
+  border: 2px solid var(--grey2);
+  border-radius: 12px;
+}
+#chat-input:focus{
+  outline: none;
 }
 
 
@@ -629,6 +814,30 @@ p {
 
   footer #contacts {
     margin-left: 5.73vw;
+  }
+}
+
+/**Dynamic Chatbot */
+@media(max-width: 1100px){
+  #chat-left p{
+    width: 90%;
+  }
+}
+@media(max-width: 900px){
+  #chatbot-label{
+    right: 3vw;
+  }
+  #chat-left{
+    display: none;
+  }
+  #chat-right{
+    width: 100%;
+  }
+  form{
+    max-width: calc(100vw * 90/100 * 90/100);
+  }
+  #secondaryButton-mobile{
+    display: block !important;
   }
 }
 
