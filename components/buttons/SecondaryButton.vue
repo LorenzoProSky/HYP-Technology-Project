@@ -27,7 +27,7 @@ export default defineComponent({
     // URL or route to navigate to when the button is clicked
     to: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   // Setup reactive data for the component

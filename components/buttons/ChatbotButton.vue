@@ -45,7 +45,7 @@ export default defineComponent({
   border-radius: 20px;
 
   position: fixed;
-  top: 252px;
+  top: 26.7vh;
   right: 60px;
   z-index: 100;
   display: flex;
