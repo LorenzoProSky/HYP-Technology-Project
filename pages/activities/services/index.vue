@@ -18,7 +18,7 @@ export default {
         text: 'You can find out what your options are and what legal or bureaucratic help you may need to obtain protection from the Italian state.',
         when: ['Mon - Tues - Fri 09:00 - 13:00', 'Wed - Thurs 14:00 - 18:00'],
         where: ['Centro MiLA Farini', 'Centro MiLA Bovisa'],
-        to: '/index',
+        to: '/activities/services/1',
       }),
 
       // Pagination settings

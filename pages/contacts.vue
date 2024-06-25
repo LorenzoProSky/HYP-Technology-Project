@@ -23,10 +23,10 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
   </div>
 
   <div id="contacts-maps" >
-    <MapCardBig imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    <MapCardBig imageSrc="location-farini.png"
     name="Centro MiLA Farini" to="https://maps.google.com/?q=Via+Valtellina+20,+20159+Milano"
     address="Via Valtellina 20, 20159 Milano" email="centromila.farini@gmail.com" phone="+39 344677462" hours="07:00 - 19:00 daily" />
-    <MapCardBig imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    <MapCardBig imageSrc="location-bovisa.png"
     name="Centro MiLA Bovisa" to="https://maps.google.com/?q=Via+Candiani+72,+20158+Milano" title="Centro MiLA Bovisa"
     address="Via Candiani 72, 20158 Milano" email="centromila.bovisa@gmail.com" phone="+39 345697365" hours="07:00 - 19:00 daily" />
   </div>

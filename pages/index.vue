@@ -59,7 +59,7 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
       <p>Since opening our doors in 2004, Centro MiLA has been a steadfast ally for women and children facing domestic violence. <br><br>
           From our humble beginnings, we've expanded to offer a wide range of services and initiatives, all rooted in our commitment to empowerment and advocacy. 
           Today, MiLA stands as a testament to the resilience of survivors and the power of collective action.</p>
-          <SecondaryButton buttonText="About Us" buttonLength="small" to="about-us"/>
+      <SecondaryButton buttonText="About Us" buttonLength="short" to="about-us"/>
     </div>
   </div>
   
