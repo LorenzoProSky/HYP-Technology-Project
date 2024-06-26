@@ -86,4 +86,16 @@ export default defineComponent({
   margin-top: -3px;
   margin-right: 5px;
 }
+
+@media(max-width: 1000px){
+  .backward-button{
+    font-size: var(--body2);
+    line-height: var(--l-height2);
+  }
+}
+@media (max-width:430px){
+  .backward-button{
+    font-size: var(--body1);
+  }
+}
 </style>

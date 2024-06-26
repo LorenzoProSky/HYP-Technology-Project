@@ -34,8 +34,6 @@ const visibleProjects = computed(() => {
 
 <template>
 
-
-
   <div id="home-cover">
     <div class="page-title">
       <h1>Centro MiLA</h1>

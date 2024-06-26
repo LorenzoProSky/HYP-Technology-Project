@@ -4,7 +4,6 @@ import ProjectCard from '~/components/cards/ProjectCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import projectImage from '~/assets/images/project-image.png';
 
-
 import type { Project } from '~/types/types';
 
 const fetchProjectsURL = "http://localhost:3005/projects";

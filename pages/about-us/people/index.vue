@@ -8,6 +8,7 @@ import profileImage from '~/assets/images/profile-image.jpeg';
 import type { Person } from '~/types/types'
 import { ref } from 'vue';
 
+
 // Create references for data to be observed
 const people = ref([] as Person[]);
 let peoplePerPage = ref(12);
