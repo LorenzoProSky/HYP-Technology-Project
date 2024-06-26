@@ -114,7 +114,7 @@ let reactive_managedServiceIds = ref(managedServiceIds);
       <div id="purple-background">
         <div id="align-text" >
           <backward-button-wrapper>
-          <BackwardButton id="back-button" button-text="Our People" to="/about-us/people"></BackwardButton>
+            <BackwardButton id="back-button" button-text="Our People" to="/about-us/people"></BackwardButton>
           </backward-button-wrapper>
           <h1 class="page-title">{{ personData.name }}<br>{{ personData.surname }}</h1>
           <p id="job-title">{{ personData.job_title }}</p>
@@ -131,63 +131,55 @@ let reactive_managedServiceIds = ref(managedServiceIds);
     <!-- Text section under the cover -->
     <div class="central-flow">
 
-        <!-- Initial description -->
-        <h3>Know more about {{ completeName }}</h3>
-        <p id="description-text">{{ personData.description }}</p>
-        
-        <!-- Buttons for CV and email -->
-        <div id="button-container">
-          <a :href="personData.cv_url" class="cv-email-buttons">Download CV</a>
-          <a :href="`mailto:${personData.email}`" class="cv-email-buttons">{{ personData.email }}</a>
+      <!-- Initial description -->
+      <h3>Know more about {{ completeName }}</h3>
+      <p id="description-text">{{ personData.description }}</p>
+      
+      <!-- Buttons for CV and email -->
+      <div id="button-container">
+        <a :href="personData.cv_url" class="cv-email-buttons">Download CV</a>
+        <a :href="`mailto:${personData.email}`" class="cv-email-buttons">{{ personData.email }}</a>
+      </div>
+      <!-- Conditional rendering of services and projects managed by the employee -->
+      <div id="manager-card-container" v-if="managesServices || managesProjects">
+        <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceIds" ></ManagerCard>
+        <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectIds" ></ManagerCard>
+      </div>
+      
+      <!-- Circular image and description of the role -->
+      <div id="person-role-container">
+        <div id="circular-image" :style="{ backgroundImage: `url('${personData.profile_image_url}')` }"></div>
+        <div id="role-description">
+          <h3>Role at MiLa</h3>
+          <p>{{ personData.role_description }}</p>
         </div>
-
-        <!-- Conditional rendering of services and projects managed by the employee -->
-        <div id="manager-card-container" v-if="managesServices || managesProjects">
-          <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceIds" ></ManagerCard>
-          <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectIds" ></ManagerCard>
-        </div>
-        
-        <!-- Circular image and description of the role -->
-        <div id="person-role-container">
-          <div id="circular-image" :style="{ backgroundImage: `url('${personData.profile_image_url}')` }"></div>
-          <div id="role-description">
-            <h3>Role at MiLa</h3>
-            <p>{{ personData.role_description }}</p>
-          </div>
-        </div>
-
+      </div>
+    </div>
         
     <!-- Navigation buttons for pagination -->
     <div id="navigation-button">
       <!-- Backward button element -->
       <router-link :to="previousLink">
         <button class="nav-button" :disabled="id <= 1">
-        <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
-        <p> Previous </p>
+          <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
+          <p> Previous </p>
         </button>
       </router-link>
 
-      <router-link :to="'/about-us/people'">
+      <router-link :to="'/about-us/people'" >
         <button class="nav-button">
-        <p> All People </p>
+          <p> All People </p>
         </button>
       </router-link>
 
       <!-- Next button element -->
       <router-link :to="nextLink">
         <button class="nav-button" :disabled="id >= peopleCounter">
-        <p> Next </p>
-        <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
-      </button>
-    </router-link>
-
+          <p> Next </p>
+          <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
+        </button>
+      </router-link>
     </div>
-     
-
-    </div>
-
-
-
   </div>
 </template>
 

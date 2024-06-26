@@ -1,83 +1,75 @@
-<script lang="ts">
+<script lang="ts" setup>
 // Import necessary components
 import ServiceCard from '~/components/cards/ServiceCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import serviceImage from '~/assets/images/service-image.png';
 
-export default {
-  components: {
-    ServiceCard,
-    BackwardButton
-  },
-  data() {
-    return {
-      // TODO: Replace the placeholder data with the actual data
-      services: Array(6).fill({
-        imageSrc: serviceImage,
-        title: 'Intercultural Mediation',
-        text: 'You can find out what your options are and what legal or bureaucratic help you may need to obtain protection from the Italian state.',
-        when: ['Mon - Tues - Fri 09:00 - 13:00', 'Wed - Thurs 14:00 - 18:00'],
-        where: ['Centro MiLA Farini', 'Centro MiLA Bovisa'],
-        to: '/index',
-      }),
 
-      // Pagination settings
-      servicesPerPage: 6,
-      startCount: 0,
-      endCount: 6
-    };
-  },
+import type { Service } from '~/types/types';
 
-  computed: {
-    // Computed property to dynamically calculate the visible service based on pagination settings
-    visibleServices() {
-      return this.services.slice(this.startCount, this.endCount);
-    },
-    // Computed property to calculate the total number of pages based on the service count and pagination settings
-    totalPages(): number {
-      return Math.ceil(this.services.length / this.servicesPerPage);
-    },
-    // Computed property to calculate the current page number based on the start count and service per page
-    currentPage(): number {
-      return Math.floor(this.startCount / this.servicesPerPage) + 1;
-    }
-  },
-  methods: {
-    // Method to increment the visible service count and adjust pagination
-    showMore() {
-      this.startCount += this.servicesPerPage;
-      this.endCount += this.servicesPerPage;
-      this.scrollToTarget();
-    },
-    // Method to decrement the visible service count and adjust pagination
-    showLess() {
-      this.startCount -= this.servicesPerPage;
-      if (this.startCount < 0) {
-        this.startCount = 0;
-      }
-      this.endCount -= this.servicesPerPage;
-      if (this.endCount < this.servicesPerPage) {
-        this.endCount = this.servicesPerPage;
-      }
-      this.scrollToTarget();
-    },
-    // Smooth scroll to the target section when pagination changes
-    scrollToTarget() {
-      const targetElement = this.$refs.targetSection as HTMLElement | null;
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    },
-    // Method to determine if the separator should be displayed based on the page number
-    shouldDisplaySeparator(pageNumber: number): boolean {
-      // If it's the last page, don't display the separator
-      if (pageNumber === this.totalPages) {
-        return false;
-      }
-      return true;
-    },
-  }
+const fetchServicesURL = 'http://localhost:3005/services';
+
+const services = ref([]) as Ref<Service[]>;
+const servicesPerPage = ref(6);
+const startCount = ref(0);
+const endCount = ref(6);
+const targetSection = ref(null);
+
+const { data } = await useFetch(fetchServicesURL);
+if(data.value){
+  services.value = data.value as Service[];
+  console.log(services.value[0].service_id);
+}
+
+// Computed Properties
+const visibleServices = computed(() => {
+  return services.value.slice(startCount.value, endCount.value);
+});
+
+const totalPages = computed (() => {
+  return Math.ceil(services.value.length / servicesPerPage.value)
+});
+
+const currentPage = computed(() => {
+  return Math.floor(startCount.value / servicesPerPage.value) + 1;
+})
+
+// Method to increment the visible service count and adjust pagination
+function showMore () {
+  startCount.value += servicesPerPage.value;
+  endCount.value += servicesPerPage.value;
+  scrollToTarget();
 };
+  
+// Method to decrement the visible service count and adjust pagination
+function showLess() {
+      startCount.value -= servicesPerPage.value;
+      if (startCount.value < 0) {
+        startCount.value = 0;
+      }
+      endCount.value -= servicesPerPage.value;
+      if (endCount < servicesPerPage) {
+        endCount.value = servicesPerPage.value;
+      }
+      scrollToTarget();
+}
+    // Smooth scroll to the target section when pagination changes
+function scrollToTarget() {
+  const targetElement = targetSection.value as HTMLElement | null;
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Method to determine if the separator should be displayed based on the page number
+function shouldDisplaySeparator(pageNumber: number): boolean {
+      // If it's the last page, don't display the separator
+  if (pageNumber === totalPages.value) {
+    return false;
+  }
+  return true;
+}
+
 </script>
 
 <!-- Template for the service page -->
@@ -108,8 +100,8 @@ export default {
     <div id="cards-container">
       <div id="page-cards">
         <!-- Loop through visibleServices to render ServiceCard components -->
-        <ServiceCard v-for="service in visibleServices" :key="service.title" :imageSrc="service.imageSrc"
-          :title="service.title" :text="service.text" :when="service.when" :where="service.where" :to="service.to" />
+        <ServiceCard v-for="service in visibleServices" :key="service.service_id" :imageSrc="service.image[0].image_url"
+          :title="service.service_name" :text="service.short_description" :when="['']" :where="['']" :to="`/activities/services/${service.service_id}`" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
     </div>

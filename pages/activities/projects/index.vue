@@ -1,109 +1,109 @@
-<script lang="ts">
+<script lang="ts" setup>
 // Import necessary components
 import ProjectCard from '~/components/cards/ProjectCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import projectImage from '~/assets/images/project-image.png';
 
-export default {
-  components: {
-    ProjectCard,
-    BackwardButton
-  },
-  data() {
-    return {
-      // TODO: Replace the placeholder data with the actual data
-      projects: Array(6).fill({
-        imageSrc: projectImage,
-        title: 'Art Therapy Session',
-        text: 'A monthly event to engage in creative workshops using art as a medium for healing and self-expression, to process emotions in a supportive environment.',
-        when: '2nd Sunday 10:00 - 16:00',
-        where: 'BASE Milano, 20144 Milano',
-        to: '/index',
-        type: 'present'
-      }),
 
-      pastProjects: Array(2).fill({
-        imageSrc: projectImage,
-        title: 'Art Therapy Session',
-        text: 'A monthly event to engage in creative workshops using art as a medium for healing and self-expression, to process emotions in a supportive environment.',
-        when: '2nd Sunday 10:00 - 16:00',
-        where: 'BASE Milano, 20144 Milano',
-        to: '/index',
-        type: 'past'
-      }),
+import type { Project } from '~/types/types';
 
-      // Pagination settings
-      projectsPerPage: 6,
-      startCount: 0,
-      endCount: 6,
+const fetchProjectsURL = "http://localhost:3005/projects";
 
-      // Projects present or past
-      viewMode: 'present',
-    };
-  },
+const allProjects = ref([]) as Ref<Project[]>;
+const projectsPerPage = ref(6);
+const startCount = ref(0);
+const endCount = ref(6);
+const viewMode = ref('present');
+const targetSection = ref(null);
 
-  computed: {
-    // Computed property to dynamically calculate the visible projects based on pagination settings and view mode
-    visibleProjects() {
-      return this.viewMode === 'present'
-        ? this.projects.slice(this.startCount, this.endCount)
-        : this.pastProjects.slice(this.startCount, this.endCount);
-    },
-    // Computed property to calculate the total number of pages based on the projects count, pagination settings and view mode
-    totalPages(): number {
-      return this.viewMode === 'present'
-        ? Math.ceil(this.projects.length / this.projectsPerPage)
-        : Math.ceil(this.pastProjects.length / this.projectsPerPage);
-    },
-    // Computed property to calculate the current page number based on the start count and projects per page
-    currentPage(): number {
-      return Math.floor(this.startCount / this.projectsPerPage) + 1;
-    },
-  },
-  methods: {
-    // Method to increment the visible projects count and adjust pagination
-    showMore() {
-      this.startCount += this.projectsPerPage;
-      this.endCount += this.projectsPerPage;
-      this.scrollToTarget();
-    },
-    // Method to decrement the visible projects count and adjust pagination
-    showLess() {
-      this.startCount -= this.projectsPerPage;
-      if (this.startCount < 0) {
-        this.startCount = 0;
+
+
+const { data } = await useFetch(fetchProjectsURL);
+if(data.value){
+  allProjects.value = data.value as Project[];
+}
+
+// Divide present and past projects into different arrays
+const ongoingProjects = computed(() => {
+  let ongoingProjects: Project [] = [];
+  for(let project of allProjects.value){
+      if(project.status === true){
+        ongoingProjects.push(project);
       }
-      this.endCount -= this.projectsPerPage;
-      if (this.endCount < this.projectsPerPage) {
-        this.endCount = this.projectsPerPage;
-      }
-      this.scrollToTarget();
-    },
-    // Smooth scroll to the target section when pagination changes
-    scrollToTarget() {
-      const targetElement = this.$refs.targetSection as HTMLElement | null;
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    },
-    // Method to determine if the separator should be displayed based on the page number
-    shouldDisplaySeparator(pageNumber: number): boolean {
-      // If it's the last page, don't display the separator
-      if (pageNumber === this.totalPages) {
-        return false;
-      }
-      return true;
-    },
-    // Method to toggle between present and past projects
-    toggleViewMode(mode: string) {
-      this.viewMode = mode;
-      // Reset pagination settings when switching between present and past projects
-      // to ensure the first page is displayed and not empty space
-      this.startCount = 0;
-      this.endCount = this.projectsPerPage;
-    },
   }
-};
+  return ongoingProjects;
+});
+
+const pastProjects = computed(() => {
+  let pastProjects: Project [] = [];
+  for(let project of allProjects.value){
+      if(project.status === false){
+        pastProjects.push(project);
+      }
+  }
+  return pastProjects;
+});
+
+const visibleProjects = computed(() => {
+  return viewMode.value === 'present' ? ongoingProjects : pastProjects;
+});
+
+const totalPages = computed(() => {
+  return viewMode.value === 'present' 
+  ? Math.ceil(ongoingProjects.value.length / projectsPerPage.value) 
+  : Math.ceil(pastProjects.value.length / projectsPerPage.value);
+})
+
+const currentPage = computed(() => {
+  return Math.floor(startCount.value / projectsPerPage.value) + 1;
+});
+
+
+function showMore() {
+  startCount.value += projectsPerPage.value;
+  endCount.value += projectsPerPage.value;
+  scrollToTarget();
+}
+
+function showLess() {
+  startCount.value -= projectsPerPage.value;
+  if(startCount.value < 0){
+    startCount.value = 0;
+  }
+
+  endCount.value -= projectsPerPage.value;
+  if(endCount.value < projectsPerPage.value){
+    endCount.value = projectsPerPage.value;
+  }
+
+  scrollToTarget();
+}
+
+function scrollToTarget() {
+  const targetElement = targetSection.value as HTMLElement | null;
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function shouldDisplaySeparator(pageNumber: number): boolean {
+  if(pageNumber === totalPages.value){
+      return false;
+  }
+  return true;
+}
+
+function toggleViewMode(mode: string) {
+  viewMode.value = mode;
+
+  // Reset pagination settings when switching between present and past projects
+  // to ensure the first page is displayed and not empty space
+  startCount.value = 0;
+  endCount.value = projectsPerPage.value;
+}
+
+
+
 </script>
 
 <!-- Template for the projects page -->
@@ -142,9 +142,9 @@ export default {
     <div id="cards-container">
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
-        <ProjectCard v-for="(project, index) in visibleProjects" :key="index" :imageSrc="project.imageSrc"
-          :title="project.title" :text="project.text" :when="project.when" :where="project.where" :to="project.to"
-          :type="project.type" />
+        <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
+          :title="project.project_name" :text="project.description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
+          :type="project.status === true ? 'present' : 'past'" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
     </div>
@@ -167,7 +167,7 @@ export default {
 
       <!-- Next button element -->
       <button class="nav-button" @click="showMore"
-        :disabled="endCount >= (viewMode === 'present' ? projects.length : pastProjects.length)">
+        :disabled="endCount >= (viewMode === 'present' ? ongoingProjects.length : pastProjects.length)">
         <p> Next </p>
         <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
       </button>
