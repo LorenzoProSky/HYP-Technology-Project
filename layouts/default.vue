@@ -91,6 +91,13 @@ function closeChat(){
   }
 }
 
+function replyToUserChatBot(event: Event) {
+  event.preventDefault();
+  const userInput = document.getElementById('chat-input')?.textContent;
+  console.log(userInput);
+
+}
+
 onMounted(() => {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -99,6 +106,7 @@ onMounted(() => {
   let links = document.getElementsByTagName('a');
   let chatB = document.getElementById('chatbot-button');
   let chatClose = document.getElementById('chat-close-button');
+  let chatForm = document.getElementById('chat-form');
   for (let i = 0; i < links.length; i++) {
     links[i].addEventListener('click', closeMenu);
     links[i].addEventListener('click', closeChat); 
@@ -119,6 +127,9 @@ onMounted(() => {
   if (chatClose) {
     chatClose.addEventListener('click', closeChat);
   }
+  chatForm?.addEventListener('submit', replyToUserChatBot);
+  
+
 });
 </script>
 
@@ -232,7 +243,7 @@ export default defineComponent({
     <div id="chatbot-label">
       <div id="chat-left">
         <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px;" />
-        <h4>We are to <br> help you.</h4>
+        <h4>We are here to <br> help you.</h4>
         <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
           While you won't be interacting with a person directly, the answers provided have been carefully crafted by trained professionals from Anti-Violence Centers.</p>
       </div>
