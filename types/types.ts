@@ -44,6 +44,7 @@ export interface Project {
 }
 
 export interface Service {
+    service_id: number;
     service_name: string;
     description: string;
     additional_info: string;
