@@ -60,52 +60,87 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- Card container -->
-  <div class="card-container">
-    <!-- Card -->
-    <div class="card" :style="cardHeightStyle">
-      <!-- Icon container -->
-      <div class="icon-container">
-        <!-- Icon of project or service -->
-        <Icon class="manager-icon" :name="type === 'project' ? 'ProjectIcon' : 'ServiceIcon'" size="32" />
-      </div>
-      <!-- Card content -->
-      <div class="card-content">
-        <!-- Manager -->
-        <h3 class="card-title">{{ type === 'project' ? 'Project Manager' : 'Service Manager' }}</h3>
-        <!-- Activity description -->
-        <div class="card-details" v-for="(item, index) in text" :key="index">
-          <!-- Wrap the single description in a NuxtLink for navigation -->
-          <NuxtLink :to="to[index]">
-            <p class="card-description">{{ managerName }} is the main resposible for the {{ type }} {{ item }}</p>
-            <!-- Forward arrow icon -->
-            <Icon class="arrow-icon" name="ForwardArrowIcon" size="32" />
-          </NuxtLink>
-        </div>
-      </div>
+  <!-- Wrapper for the entire component -->
+  <div class="card-wrapper">
+    <div class="icon-container-div">
+        <Icon :name="type === 'project' ? 'ProjectIcon' : 'ServiceIcon'" size="32" />
     </div>
+    <h3 class="card-title">{{ type === 'project' ? 'Project Manager' : 'Service Manager' }}</h3>
+    <NuxtLink class="link-activity" v-for="(item, index) in text" :key="index" :to="to[index]">
+      <p class="card-description">{{ managerName }} is the main responsible for the {{ type }} {{ item }}</p>
+      <hr v-if="text[index+1]" class="text-divisor-hr"/>
+    </NuxtLink>
+
+
   </div>
 
 </template>
 
-<!-- Styles for the ManagerCard -->
+
+
 <style scoped>
-/* Card styling */
-.card {
-  width: 600px;
-  height: calc(423px + var(--extra-height));
-  border-radius: var(--border-radius-card);
+
+.card-wrapper {
+  display: inline-block;
+  min-width: 200px;
+  max-width: 500px;
+  padding: 1.6em 3em 1.6em 1.6em;
+
   overflow: hidden;
   background-color: var(--white);
+  border-radius: var(--border-radius-card);
   box-shadow: 0px 5px 20px var(--black-shadow);
   transition: transform var(--transition) ease-in-out;
 }
 
-/* Card container styling */
-.card-container {
-  display: inline-block;
-  vertical-align: top;
+.icon-container-div {
+  /*
+    Icon is responsive because it starts from a default value that depends on the 
+    viewport width and has upper and lower bounds to prevent it from becoming too large or too small.
+  */
+  height: 18vw;
+  width: 18vw;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 70px;
+  max-height: 70px;
+
+  border-radius: var(--border-radius-card);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  background-color: var(--purple);
+  
 }
+
+.card-title {
+  font-family: var(--font-playfair);
+  font-size: var(--h3);
+  color: var(--black);
+  font-weight: var(--semibold);
+  margin-top: 1em;
+}
+
+.link-activity {
+  display: block;
+  margin-top: 16px;
+}
+
+.text-divisor-hr{
+  /* Total width of the divisor is the width of the NuxtLink containing the divisor
+   * plus the 4.6em amount of the padding on the left and right of the card-wrapper.
+   */
+  width: calc(100% + 4.6em);  
+  margin-left: -1.6em;
+  background-color: var(--grey2);
+  height: 1px;
+  border: none;
+}
+
+
+
+
 
 /* Hover effect on card */
 .card:hover:not(.is-disabled) {
@@ -149,29 +184,9 @@ export default defineComponent({
   cursor: not-allowed;
 }
 
-/* Icon container styling */
-.icon-container {
-  height: 70px;
-  width: 70px;
-  border-radius: var(--border-radius-card);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-  color: var(--white);
-  background-color: var(--purple);
-  margin-top: 56px;
-  margin-left: 64px;
-  margin-bottom: 0px;
-}
 
-/* Manager icon styling */
-.manager-icon {
-  align-self: center;
-  margin-top: 0px;
-  margin-left: 0px;
-}
+
 
 /* Content styling */
 .card-content {
@@ -188,16 +203,7 @@ export default defineComponent({
 }
 
 /* Title styling */
-.card-title {
-  font-family: var(--font-playfair);
-  font-size: var(--h3);
-  color: var(--black);
-  font-weight: var(--semibold);
-  margin-top: 64px;
-  margin-bottom: 9px;
-  text-align: left;
-  margin-bottom: 0px;
-}
+
 
 /* Details styling */
 .card-details {
@@ -225,7 +231,7 @@ export default defineComponent({
   content: "";
   margin-left: -64px;
   margin-right: -110px;
-  border-top: 1px solid var(--grey2);
+  border-top: 1px solid ;
   margin-top: 16px;
   margin-bottom: 64px;
   cursor: pointer;

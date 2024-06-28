@@ -18,7 +18,7 @@ const targetSection = ref(null);  // reference to fixed element for scrolling
 const peopleUrl = "http://localhost:3005/people";
 
 // Fetch data from the api
-const { data, error } = useFetch(peopleUrl);
+const { data, error } = await useFetch(peopleUrl);
 if(data.value !== null){
   people.value = data.value as Person[];
 } else { 

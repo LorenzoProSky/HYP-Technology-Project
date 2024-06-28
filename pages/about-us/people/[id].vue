@@ -61,89 +61,79 @@ const nextLink = computed(() => {
 let managedProjects: Project[] = personData.value.project;
 let managedServices: Service[] = personData.value.responsible_service;
 let managedProjectNames = [];
-let managedProjectIds = [];
+let managedProjectURLs = [];
 let managedServiceNames = [];
-let managedServiceIds = [];
+let managedServiceURLs = [];
 
 if(managesProjects){
-
-  let regex = /project\_(\d+)/
   for(let project of managedProjects){
-    managedProjectNames.push(project.project_name);
-
-    // Extract the id of the project
-    let match = project.project_id.match(regex);
-    if(match){
-      managedProjectIds.push("/activities/projects/" + match[1]);
+      managedProjectNames.push(project.project_name);
+      managedProjectURLs.push(`/activities/projects/${project.project_id}`);
     }
-  }
-
 }
+
 let reactive_managedProjectNames = ref(managedProjectNames);
-let reactive_managedProjectIds = ref(managedProjectIds);
+let reactive_managedProjectURLs = ref(managedProjectURLs);
 
 if(managesServices){
-
-  let regex = /service\_(\d+)/
   for(let service of managedServices){
     managedServiceNames.push(service.service_name);
-
-    // Extract the id of the service
-    let match = service.service_id.match(regex);
-    if(match){
-      managedServiceIds.push("/activities/services/" + match[1]);
-    }
+    managedServiceURLs.push(`/activities/services/${service.service_id}`);
   }
 }
 
 let reactive_managedServiceNames = ref(managedServiceNames);
-let reactive_managedServiceIds = ref(managedServiceIds);
+let reactive_managedServiceURLs = ref(managedServiceURLs);
 
 
 </script>
 
 
 <template>
-  <!-- container for the whole page -->
-  <div id="page-container">
+  <!-- Wrapper for the whole page, reset some styling for a mobile-first design -->
+  <div id="page-wrapper">
 
-    <!-- Top section (cover) -->
-    <div id="cover">
+    <!-- Cover section wrapper-->
+    <div class="cover-div">
 
-      <!-- Purple section on the left -->
-      <div id="purple-background">
-        <div id="align-text" >
+      <!-- Purple section on the left of the cover with the title -->
+      <div class="purple-background-cover-div">
+
+        <!-- TODO: FIX BACKWARD BUTTON FOR MOBILE VERSION -->
           <backward-button-wrapper>
-            <BackwardButton id="back-button" button-text="Our People" to="/about-us/people"></BackwardButton>
+            <BackwardButton button-text="Our People" to="/about-us/people"></BackwardButton>
           </backward-button-wrapper>
-          <h1 class="page-title">{{ personData.name }}<br>{{ personData.surname }}</h1>
-          <p id="job-title">{{ personData.job_title }}</p>
-        </div>
+
+          <!-- Text in cover section -->
+          <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
+          <p id="job-title-cover-p">{{ personData.job_title }}</p>
+      
       </div>
 
-      <!-- Image on the right -->
-       <div id="profile-image" :style= "{ backgroundImage: `url('${personData.profile_image_url}')` }">
-          <!-- Purple overlay -->
-          <div class="purple-overlay"></div>
-       </div>
+      <!-- Person image on the right section of the cover -->
+      <img class="profile-image-cover-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"/>
+      <div class="purple-overlay-profile-image-div"></div>
+
     </div>
 
-    <!-- Text section under the cover -->
-    <div class="central-flow">
-
-      <!-- Initial description -->
-      <h3>Know more about {{ completeName }}</h3>
+    <!-- Text section under the cover: know more section about the employee -->
+    <div class="know-more-div vertical-spacing">
+      <h3> Know more about {{ completeName }}</h3>
       <p id="description-text">{{ personData.description }}</p>
+    </div>
       
-      <!-- Buttons for CV and email -->
-      <div id="button-container">
-        <a :href="personData.cv_url" class="cv-email-buttons">Download CV</a>
-        <a :href="`mailto:${personData.email}`" class="cv-email-buttons">{{ personData.email }}</a>
-      </div>
+    <!-- Section containing the links to CV and email -->
+    <div class="cv-email-div">
+      <a :href="personData.cv_url">Download CV</a>
+      <a :href="`mailto:${personData.email}`">{{ personData.email }}</a>
+    </div>
+
+
+
       <!-- Conditional rendering of services and projects managed by the employee -->
       <div id="manager-card-container" v-if="managesServices || managesProjects">
-        <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceIds" ></ManagerCard>
-        <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectIds" ></ManagerCard>
+        <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceURLs" ></ManagerCard>
+        <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectURLs" ></ManagerCard>
       </div>
       
       <!-- Circular image and description of the role -->
@@ -154,7 +144,6 @@ let reactive_managedServiceIds = ref(managedServiceIds);
           <p>{{ personData.role_description }}</p>
         </div>
       </div>
-    </div>
         
     <!-- Navigation buttons for pagination -->
     <div id="navigation-button">
@@ -186,62 +175,98 @@ let reactive_managedServiceIds = ref(managedServiceIds);
 
 <style scoped>
 
-#page-container{
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
+/*
+ * Resetting some styles for a mobile-first approach.
 
+ * Font sizes:
+ * body -> 16px  |  h1 -> 32px  |  h2 -> 24px
+ * The font size of the wrapper is set to the one of the body and the children will inherit with em measurements.
+ * Line heights are set with relative measures so that they adjust when scaling.
+ *
+ * Widths calculated with a border-box approach
+ */
+#page-wrapper *,
+#page-wrapper *::before,
+#page-wrapper *::after {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+#page-wrapper h1 {
+  font-size: 2em;
+  line-height: 1.2em;
+}
+#page-wrapper h2 {
+  font-size: 1.5em;
+  line-height: 1.2em;
+}
+#page-wrapper h3 {
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 
-#cover{
+.vertical-spacing {
+  margin-top: 5em;
+}
+
+.cover-div {
   display: flex;
   flex-direction: row;
-  min-height: 50vh;
+  min-height: 50vw;
+  position: relative;
 }
 
-#purple-background{
-  display: flex;
-  flex-direction: column;
+.purple-background-cover-div{
   min-height: 100%;
   width: 50%;
   background-color: var(--purple);
-  gap: 20vh;
+  padding: 10.5em 0 2em 1.5em;
 }
 
-#back-button{
-  margin-top: 20%;
-}
-
-/* Aligning the text of the title with the backward button */
-#align-text{
-  display: flex;
-  flex-direction: column;
-  margin-left: 9.79vw;
-  margin-top: 40%;
-}
-
-#job-title{
+#job-title-cover-p{
   color:white;
   margin-top: 5%;
-  margin-bottom: 20%;
 }
 
-#profile-image{
-  position: relative;
+.profile-image-cover-img {
   width: 50%;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  filter: grayscale(1);
 }
 
-#description-text{
-  margin-bottom: 5%
+.purple-overlay-profile-image-div {
+  position: absolute;
+  width: 50%;
+  margin-left: 50%;
+  background-color: var(--purple);
+  opacity: 0.35;
+  min-height: 100%;
 }
 
-#button-container{
+.know-more-div {
+  padding: 0 2.3em;
+}
+
+.cv-email-div{
   display: flex;
-  flex-direction: row;
-  gap: 5%;
+  flex-direction: column;
+  align-items: center;;
+  gap: 2em;
+  margin-top: 3em;
 }
+
+.cv-email-div a {
+  border: 2px solid var(--purple); /* Purple border */
+  border-radius: 8px;
+  padding: 10px;
+
+
+}
+
+
+
+
+
+
 
 #manager-card-container{
   display: flex;
@@ -308,20 +333,6 @@ let reactive_managedServiceIds = ref(managedServiceIds);
   min-width: 100%;
 }
 
-.central-flow{
-  display: flex;
-  flex-direction: column;
-  padding-left: 15%;
-  padding-right: 20%;
-  padding-top: 10%;
-}
-
-.cv-email-buttons{
-  border: 2px solid var(--purple); /* Purple border */
-  border-radius: 8px;
-  text-align: center;
-  padding: 10px;
-}
 
 .nav-button {
   display: flex;
