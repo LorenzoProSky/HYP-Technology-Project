@@ -1,88 +1,149 @@
 <script lang="ts" setup>
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
+import { onMounted } from 'vue';
+import type { Person, Service } from '~/types/types';
+
+// service id from url
+const serviceId = useRoute().params.id as string;
+const serviceUrl = "http://localhost:3005/services/" + serviceId;
+const regex = /service\_(\d+)/;
+const find_id = serviceUrl.match(regex);
+let id: number = 0;
+if(find_id){
+  id = +find_id[1];
+}
+
+const totalServices = 6;
+let previousUrl = '';
+let nextUrl = '';
+if (id!=1) {previousUrl = `/activities/services/service_${id-1}`;}
+if (id != totalServices){nextUrl = `/activities/services/service_${id+1}`;}
+
+/**general information about the service */
+const {data, error} = await useFetch(serviceUrl);
+const service = ref() as Ref<Service>;
+if(data.value){
+  const services = data.value as Service[];
+  service.value = services[0];
+} else {
+  console.log(error);
+}
+
+const name_service = service.value.service_name;
+const description_service = service.value.description;
+const additional_info = service.value.additional_info;
+const manager = service.value.manager;
+
+/**information about the images */
+const service_images = service.value.image;
+const cover_image = service_images[0].image_url;
+
+/**information about people offering the service */
+const offering_people = service.value.offering_person;
+const offers = service.value.offers;
+const offering_bovisa: Person[] = [];
+const bovisa_links: string[] = [];
+const offering_farini: Person[] = [];
+const farini_links: string[] = [];
+
+for (let i = 0; i<offering_people.length; i++){
+  for (let j = 0; j<offers.length; j++){
+    if(offering_people[i].person_id == offers[j].person_id && offers[j].location_id == 1){
+      offering_farini.push(offering_people[i]);
+      farini_links.push("/about-us/people/"+offering_people[i].name+"_"+offering_people[i].surname);
+    } else if(offering_people[i].person_id == offers[j].person_id && offers[j].location_id == 2) {
+      offering_bovisa.push(offering_people[i]);
+      bovisa_links.push("/about-us/people/"+offering_people[i].name+"_"+offering_people[i].surname);
+    }
+  }  
+}
+
+/**information about the schedule of the service */
+let schedule_farini: string = '';
+let schedule_bovisa: string = '';
+
+for (let i = 0; i<offers.length; i++){
+  if (offers[i].location_id == 1) {
+    schedule_farini = offers[i].schedule;
+  } else {
+    schedule_bovisa = offers[i].schedule;
+  }
+}
+
+/**information about the testimonials */
+const service_testimonial = service.value.testimonial;
+
+onMounted(async ()=>{
+  console.log(id);  
+});
 </script>
 
 <template>
-  <div id="service-cover">
+  <div id="service-cover" :style="{ backgroundImage: `url('${cover_image}')` }">
     <backward-button-wrapper>
       <BackwardButton buttonText="Our Services" to="/activities/services" />
     </backward-button-wrapper>
     <div class="page-title" >
-      <h1 >{Nome servizio}</h1>
-      <h3>Manager: {Nome manager}</h3>
+      <h1 >{{name_service}}</h1>
+      <h3>Manager: {{ manager.name }} {{ manager.surname }}</h3>
     </div>
   </div>
 
   <div id="service-intro" >
-    <!--Dati da prendere dal db-->
-    <h3>Welcome Interviews</h3>
-    <p class="dynamic-p">At Centro MiLA, our Welcome Interviews Service is the first step towards a path of healing and empowerment 
-      for women affected by domestic violence. During your initial visit, you will meet with a dedicated counselor 
-      who will provide a safe, confidential, and compassionate environment for you to share your story. Together with your 
-      counselor, we will assess your individual needs and circumstances, creating a personalized plan that addresses your specific 
-      situation. This plan may include psychological counseling, legal assistance, educational programs, or other services that 
-      can help you rebuild your life and regain independence. Our holistic approach ensures that all aspects of your well-being 
-      are considered, helping you set out on a path out of violence.</p>
+    <h3>{{ name_service }}</h3>
+    <p class="dynamic-p">{{ description_service }}</p>
   </div>
 
   <div id="service-location" >
-    <div>
+    <div class="centre-container" >
       <h3>Centro MiLA Farini</h3>
       <p class="semiboldText" style="margin-top: 40px;" >Provided By</p>
-      <p>nome cognome</p> <!--prendere dal db-->
+      <div class="offering-container" >
+        <NuxtLink v-for="(person, index) in offering_farini" :to=farini_links[index] >
+          <p>{{ person.name }} {{ person.surname }}</p>
+        </NuxtLink>
+      </div>
       <p class="semiboldText" style="margin-top: 50px;">Opening Hours</p>
-      <p>Monday to Friday - 07:00 - 19:00</p>
+      <p>{{ schedule_farini }}</p>
     </div>
-    <div>
+    <div class="centre-container" >
       <h3>Centro MiLA Bovisa</h3>
       <p class="semiboldText" style="margin-top: 40px;" >Provided By</p>
-      <p>nome cognome</p> <!--prendere dal db-->
+      <div class="offering-container" >
+        <NuxtLink v-for="(person, index) in offering_bovisa" :to="bovisa_links[index]" >
+          <p>{{ person.name }} {{ person.surname }}</p>
+        </NuxtLink>
+      </div>
       <p class="semiboldText" style="margin-top: 50px;">Opening Hours</p>
-      <p>Monday to Friday - 07:00 - 19:00</p>
+      <p>{{ schedule_bovisa }}</p>
     </div>
   </div>
 
   <div id="service-additional">
     <h3 style="text-align: center;" >Additional Information</h3>
-    <!--prendere dal db-->
-    <p style="margin-top: 32px; text-align: center; max-width: 55.7vw;" class="dynamic-p" >To schedule a Welcome Interview, please call our or send an email. Walk-ins are also welcome, but we recommend making an appointment to ensure a counselor is 
-      available to meet with you. If possible, bring any relevant documents, such as identification, legal papers, or medical records, to help us better understand your 
-      situation. However, do not worry if you cannot provide these documents immediately. After the initial interview, we will schedule follow-up appointments and connect 
-      you with the appropriate services to support your ongoing journey towards safety and recovery.</p>
+    <p style="margin-top: 32px; text-align: center; max-width: 55.7vw;" class="dynamic-p" >{{ additional_info }}</p>
   </div>
   
   <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; opacity: 0.25; right: 0px; margin-top: -200px; z-index: 0;">
   <div id="service-images" >
-    <!--prendere immagini dal db-->
-    <img src="/assets/images/volunteer-pic1.jpeg" alt="">
-    <img src="/assets/images/volunteer-pic2.jpeg" alt="">
+    <img v-for="(image, index) in service_images.slice(1)" :key="index" :src="image.image_url" >
   </div>
 
   <div id="service-voices" >
     <h3 style="text-align: center;">Voices That Matter</h3>
-    <!--prendere quotes da db-->
     <div id="quotes" >
-      <div class="quote-container">
+      <div class="quote-container" v-for="(testimonial, index) in service_testimonial" >
         <Icon name="QuoteIcon" size="70px" style="margin-top: -30px; color: var(--purple); min-width: 70px;" />
         <div>
-          <p>Volunteering at Centro MiLA has been one of the most rewarding experiences of my life. The love, strength, and resilience I see every day 
-            inspire me to be a better person. Centro MiLA is truly a place where we all grow together.</p>
-          <p style="font-style: italic; font-size: var(--body3);">Elena, MiLA volunteer</p>
-        </div>
-      </div>
-      <div class="quote-container">
-        <Icon name="QuoteIcon" size="70px" style="margin-top: -30px; color: var(--purple); min-width: 70px;" />
-        <div>
-          <p>Volunteering at Centro MiLA has been one of the most rewarding experiences of my life. The love, strength, and resilience I see every day 
-            inspire me to be a better person. Centro MiLA is truly a place where we all grow together.</p>
-          <p style="font-style: italic; font-size: var(--body3);">Elena, MiLA volunteer</p>
+          <p>{{ testimonial.description }}</p>
+          <p style="font-style: italic; font-size: var(--body3);">{{ testimonial.name }}</p>
         </div>
       </div>
     </div>
   </div>
 
   <div id="service-navigation">
-    <NuxtLink to="/activities/services/0" style="color: var(--black);" >
+    <NuxtLink :to=previousUrl style="color: var(--black);" :disabled=!(id-1) >
       <Icon name="NavLeftArrowIcon" size="19" />
       <p> Previous </p>
     </NuxtLink>
@@ -91,7 +152,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
       <p> All Services </p>
     </NuxtLink>
 
-    <NuxtLink to="/activities/services/2" style="color: var(--black);">
+    <NuxtLink :to=nextUrl style="color: var(--black);" :disabled=!(totalServices-id) >
       <p> Next </p>
       <Icon name="NavRightArrowIcon" size="19" />
     </NuxtLink>
@@ -100,7 +161,6 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 
 <style scoped>
 #service-cover{
-  background-image: url('/assets/images/cover-contact-us.png'); /**prendere dal db */
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -135,12 +195,22 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 #service-location p{
   margin: 0;
 }
-#service-location div{
+#service-location .centre-container{
   border: 2px solid var(--purple);
   border-radius: 24px;
   width: calc(35.3vw - 64*2px);
   max-width: 678px;
   padding: 64px;
+}
+#service-location .offering-container{
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.offering-container a{
+  text-decoration: underline;
 }
 
 #service-additional{
@@ -202,11 +272,11 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 #service-navigation a:active {
   color: var(--purple-active) !important;
 }
-#service-navigation a[disabled] {
+#service-navigation a[disabled = true] {
   color: var(--grey3) !important;
   cursor: not-allowed;
 }
-#service-navigation a[disabled]:hover {
+#service-navigation a[disabled = true]:hover {
   color: var(--grey3) !important;
   cursor: not-allowed;
 }
@@ -216,7 +286,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
     flex-direction: column;
     align-items: center;
   }
-  #service-location div{
+  #service-location .centre-container{
     width: calc(90vw - 64*2px);
   }
   #quotes{
@@ -248,7 +318,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
     font-size: var(--body1);
     line-height: var(--l-height1);
   }
-  #service-location div{
+  #service-location .centre-container{
     padding: 32px;
   }
   .quote-container{
