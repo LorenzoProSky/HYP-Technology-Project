@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
+import ChatUser from '~/components/chatbot/ChatUser.vue'
 
 function openMenu() {
   let mobileContainer = document.getElementById('mobile-container');
@@ -91,13 +92,6 @@ function closeChat(){
   }
 }
 
-function replyToUserChatBot(event: Event) {
-  event.preventDefault();
-  const userInput = document.getElementById('chat-input')?.textContent;
-  console.log(userInput);
-
-}
-
 onMounted(() => {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -127,7 +121,6 @@ onMounted(() => {
   if (chatClose) {
     chatClose.addEventListener('click', closeChat);
   }
-  chatForm?.addEventListener('submit', replyToUserChatBot);
   
 
 });
@@ -139,12 +132,14 @@ import MainButton from '~/components/buttons/MainButton.vue';
 import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
 import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
+import Chat from '~/components/chatbot/Chat.vue';
 
 export default defineComponent({
   components: {
     MainButton,
     SecondaryButton,
-    ExitButton
+    ExitButton,
+    Chat
   },
 });
 </script>
@@ -254,23 +249,7 @@ export default defineComponent({
            width: 120px; height: 40px;" id="secondaryButton-mobile"/>
           <Icon name="MobileExitIcon" color="var(--purple)" size="32" style="margin-right: 40px; cursor: pointer" id="chat-close-button" />
         </div>
-        <div id="chat-conversation" >
-          <!--la conversazione con il chatbot va inserita qui-->
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatUser text="ciao" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-        </div>
-        <form>
-          <input type="text" name="input" placeholder="Here you can write" id="chat-input" required>
-          <button type="submit" style="width: 80px; height: 40px; border: 1px solid var(--purple); border-radius: 8px; font-size: var(--body1); 
-          background-color: var(--white); color: var(--purple); cursor: pointer;" >Send</button>
-        </form>
+        <Chat></Chat>
       </div>
     </div>
 

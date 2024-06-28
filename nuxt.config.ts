@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
+export default{
   devtools: { enabled: true },
   ssr: true,
   app: {
@@ -9,6 +9,18 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/general.css'],
 
-  modules: ['nuxt-icon']
+  runtimeConfig: {
+    public: {
+      openaiApiKey: process.env.OPENAI_API_KEY,
+    }
+  },
+
+  buildModules: [
+    '@nuxtjs/dotenv',
+  ],
+
+  modules: ['nuxt-icon'],
   // modules: ['@nuxtjs/supabase']
-})
+
+  plugins: ['~/plugins/openai'],
+}
