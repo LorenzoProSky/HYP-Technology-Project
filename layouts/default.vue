@@ -105,7 +105,7 @@ onMounted(() => {
   }
   if (mobileMenu && mobileMenuClose) {
     mobileMenu.addEventListener('click', openMenu);
-    mobileMenuClose.addEventListener('click', closeMenu);
+    mobileMenuClose.addEventListener('click', closeMenu); /**forse non serve */
   }
   for (let i = 0; i < plus.length; i++) {
     plus[i].addEventListener('click', () => {openDrop(i)});
@@ -135,6 +135,13 @@ export default defineComponent({
     SecondaryButton,
     ExitButton
   },
+  /*
+  watch: {
+    // Quando il percorso cambia, esegui la funzione
+    '$route'(to, from) {
+      closeChat();
+    },
+  },*/
 });
 </script>
 
@@ -193,8 +200,8 @@ export default defineComponent({
     <div id="mobile-container" >
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />        
       </div>
       <div class="subMenu">
         <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
@@ -202,8 +209,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/activities/projects">Projects</NuxtLink>        
@@ -211,8 +218,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
@@ -839,6 +846,9 @@ p {
   #secondaryButton-mobile{
     display: block !important;
   }
+  footer{
+    padding-bottom: 200px;
+  }
 }
 
 /**Stylings for mobile devices */
@@ -878,6 +888,14 @@ header nav{
   display: none;
 }
 
+footer {
+  align-items: center;
+}
+footer #info {
+  max-width: 95%;
+  align-items: center;
+  margin: 0;
+}
 footer #info img{
   height: 54px!important;
 }
@@ -892,6 +910,9 @@ footer nav .vertical-line{
 width: 200px;
 height: 0;
 border-width: 2px 0 0 0;
+}
+footer #contacts {
+  margin: 0;
 }
 }
 
