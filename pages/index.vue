@@ -3,9 +3,37 @@ import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import MainButton from '~/components/buttons/MainButton.vue';
 import ActivityCard from '~/components/cards/ActivityCard.vue';
 import MapCardSmall from '~/components/cards/MapCardSmall.vue';
+
+import type { Project, Service } from '~/types/types';
+
+const fetchServicesURL = "http://localhost:3005/services";
+const fetchOngoingProjectsURL = "http://localhost:3005/projects?status=ongoing";
+
+const services = ref([]) as Ref<Service[]>;
+const projects = ref([]) as Ref<Project[]>;
+
+const { data:serviceData } = await useFetch(fetchServicesURL);
+if(serviceData.value){
+  services.value = serviceData.value as Service[];
+}
+
+const { data: projectData } = await useFetch(fetchOngoingProjectsURL);
+if(projectData.value){
+  projects.value = projectData.value as Project[];
+}
+
+const visibleProjects = computed(() => {
+  return projects.value.slice(0, 3);
+});
+
+
+
+
+
 </script>
 
 <template>
+
   <div id="home-cover">
     <div class="page-title">
       <h1>Centro MiLA</h1>
@@ -16,36 +44,22 @@ import MapCardSmall from '~/components/cards/MapCardSmall.vue';
   <div id="home-intro">
     <h3>Empowering Survivors</h3>
     <p class="dynamic-p">Empowering individuals, families, and communities to break the cycle of violence through support, education, and advocacy.</p>
-    <NuxtLink to="contacts">Do you need help? Contact Us</NuxtLink>
+    <NuxtLink to="/contacts">Do you need help? Contact Us</NuxtLink>
   </div>
 
   <div class="activity-container">
     <h3>Our Services</h3>
     <div class="grid-3">
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
+      <ActivityCard v-for="(service, index) of services" :key="index" :imageSrc="service.image[0].image_url" 
+      :title="service.service_name" :text="service.short_description" :to="`/activities/services/${service.service_id}`" />
     </div>
   </div>
 
   <div class="activity-container">
     <h3>Our Projects</h3>
     <div class="grid-3">
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
-      <ActivityCard imageSrc="https://plus.unsplash.com/premium_photo-1669863280125-7789ef60adc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-      title="Titolo" text="testo" to="/activities/services" />
+      <ActivityCard v-for="(project, index) of visibleProjects" :key="index" :imageSrc="project.image[0].image_url" 
+      :title="project.project_name" :text="project.short_description" :to="`/activities/projects/${project.project_id}`" />
     </div>
     <MainButton buttonText="Discover All Projects" buttonLength="long" to="/activities/projects"
     style="margin-top: 75px;"/>

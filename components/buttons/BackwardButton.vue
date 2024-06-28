@@ -22,7 +22,7 @@ export default defineComponent({
     to: {
       type: String,
       required: true,
-    },
+    }
   },
   // Setup reactive data for the component
   setup() {

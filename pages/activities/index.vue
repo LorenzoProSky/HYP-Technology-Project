@@ -163,6 +163,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   font-family: var(--font-montserrat);
   font-weight: var(--regular);
   font-size: var(--h4);
+  line-height: 2vw;
 }
 
 #quote-author {
@@ -175,7 +176,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 
 @media (max-width: 1700px) {
   #quote-container {
-    margin: 6vw 0 10vw -10vw;
+    margin: 9vw 0 10vw -10vw;
     width: 100%;
   }
 
@@ -187,21 +188,14 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   #quote-content {
     margin: 0 0 0 -10vw;
   }
-}
-
-@media (max-width: 1000px) {
-  #quote-container {
-    margin: 8vw 0 10vw -10vw;
-    width: 100%;
-  }
 
   #quote-text {
     font-size: 2.7vw;
     line-height: 2.8vw;
   }
-
+  
   #quote-author {
-    font-size: 2.4vw;
+    font-size: 2.2vw;
     line-height: 2.5vw;
   }
 }

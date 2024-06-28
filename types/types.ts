@@ -1,4 +1,3 @@
-
 export interface Person {
     person_id: number;
     name: string;
@@ -12,6 +11,36 @@ export interface Person {
     project?: string[]; 
     responsible_service?: string[]; 
     offering_service?: string[];
+}
+
+export interface Sponsor {
+    sponsor_name: string;
+    logo_url: string;
+}
+
+export interface Manager {
+    name: string;
+    surname: string;
+}
+
+export interface Image {
+    image_url: string;
+}
+
+export interface Project {
+    project_id: string;
+    project_name: string;
+    description: string;
+    short_description: string;
+    location_info: string;
+    date_info: string;
+    status?: boolean;
+    participants_info?: string;
+    additional_info?: string;
+    image: Image[];
+    sponsor?: Sponsor[];
+    person?: Manager;
+
 }
 
 export interface Service {
@@ -35,13 +64,4 @@ export interface Offer{
 export interface Testimonial{
     name: string;
     description: string;
-}
-
-export interface Project {
-    project_id: string;
-    project_name: string;
-}
-
-export interface Image{
-    image_url: string;
 }
