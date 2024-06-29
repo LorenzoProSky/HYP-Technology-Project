@@ -58,6 +58,13 @@
 
   /* Transition */
   --transition: 0.25s ease;
+
+  /* Manager card styling */
+  --manager-card-mobile-font-size: 16px;
+  --manager-card-tablet-font-size: 20px;
+  --manager-card-desktop-font-size: 24px;
+  --manager-card-font-family-text: 'Montserrat', sans-serif;
+  --manager-card-font-family-title: 'Playfair Display', serif;
 }
 
 

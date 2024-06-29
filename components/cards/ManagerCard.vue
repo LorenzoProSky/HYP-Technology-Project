@@ -41,34 +41,22 @@ export default defineComponent({
   },
   // Compute the height of the button based on the number of descriptions
   computed: {
-    cardHeightStyle() {
-      const descriptionCount = this.text.length;
-      let extraHeight = 0;
-
-      // Calculate the extra height based on the number of descriptions
-      if (descriptionCount > 1) {
-        extraHeight = Math.floor(descriptionCount - 1) * 252;
-      }
-
-      // Return an object with the calculated height
-      return {
-        '--extra-height': `${extraHeight}px`,
-      };
-    },
   },
 });
 </script>
 
 <template>
   <!-- Wrapper for the entire component -->
-  <div class="card-wrapper">
+  <div id="card-wrapper">
     <div class="icon-container-div">
-        <Icon :name="type === 'project' ? 'ProjectIcon' : 'ServiceIcon'" size="32" />
+        <Icon class="manager-icon" :name="type === 'project' ? 'ProjectIcon' : 'ServiceIcon'" size="32" />
     </div>
     <h3 class="card-title">{{ type === 'project' ? 'Project Manager' : 'Service Manager' }}</h3>
     <NuxtLink class="link-activity" v-for="(item, index) in text" :key="index" :to="to[index]">
       <p class="card-description">{{ managerName }} is the main responsible for the {{ type }} {{ item }}</p>
+      <Icon class="arrow-icon" name="ForwardArrowIcon" size="32"/>
       <hr v-if="text[index+1]" class="text-divisor-hr"/>
+      
     </NuxtLink>
 
 
@@ -80,24 +68,33 @@ export default defineComponent({
 
 <style scoped>
 
-.card-wrapper {
+
+#card-wrapper {
+  /* SIZING PROPERTIES OF THE COMPONENT
+   * The wrapper only has a min and a max width, so that it can be resized according to the screen
+   * width. The max width is the one usable for the desktop version, the min width is suitable for mobile.
+   */
   display: inline-block;
   min-width: 200px;
-  max-width: 500px;
-  padding: 1.6em 3em 1.6em 1.6em;
+  max-width: 600px;
+  padding: 1.6em 6em 1.6em 1.6em;
 
-  overflow: hidden;
+  /* Basic properties to be inherited and referenced by all children elements
+   * The default-font size is the one for a mobile-version.
+   */
+   font-size: var(--manager-card-mobile-font-size);
+  
+
   background-color: var(--white);
   border-radius: var(--border-radius-card);
   box-shadow: 0px 5px 20px var(--black-shadow);
   transition: transform var(--transition) ease-in-out;
 }
 
-.icon-container-div {
-  /*
-    Icon is responsive because it starts from a default value that depends on the 
-    viewport width and has upper and lower bounds to prevent it from becoming too large or too small.
-  */
+/* Icon is responsive because it starts from a default value that depends on the 
+ * viewport width and has upper and lower bounds to prevent it from becoming too large or too small. 
+ */
+#card-wrapper .icon-container-div {
   height: 18vw;
   width: 18vw;
   min-width: 50px;
@@ -111,42 +108,55 @@ export default defineComponent({
   align-items: center;
   color: var(--white);
   background-color: var(--purple);
-  
 }
 
-.card-title {
-  font-family: var(--font-playfair);
-  font-size: var(--h3);
+#card-wrapper .card-title {
+  font-family: var(--manager-card-font-family-title);
+  font-size: 1.66em;
   color: var(--black);
   font-weight: var(--semibold);
   margin-top: 1em;
 }
 
-.link-activity {
+#card-wrapper .link-activity {
   display: block;
   margin-top: 16px;
+  font-size: inherit;
 }
 
-.text-divisor-hr{
+#card-wrapper .text-divisor-hr{
   /* Total width of the divisor is the width of the NuxtLink containing the divisor
    * plus the 4.6em amount of the padding on the left and right of the card-wrapper.
    */
-  width: calc(100% + 4.6em);  
+  width: calc(100% + 7.6em);  
   margin-left: -1.6em;
   background-color: var(--grey2);
   height: 1px;
   border: none;
+  margin-bottom: 3.5em;
+  margin-top: 1.7em;
+}
+
+#card-wrapper .card-description {
+  font-family: var(--manager-card-font-family-text);
+  color: var(--black);
+  font-size: 1em;
+  font-weight: var(--medium);
+}
+
+#card-wrapper .arrow-icon {
+  color: var(--black);
+  margin-left: 100%;
 }
 
 
-
-
+/* HOVER AND ACTIVE EFFECTS ON THE COMPONENT */
 
 /* Hover effect on card */
-.card:hover:not(.is-disabled) {
+#card-wrapper:hover {
   background-color: var(--beige-hover);
 
-  .icon-container {
+  .icon-container-div {
     background-color: var(--purple-hover);
   }
 
@@ -160,11 +170,12 @@ export default defineComponent({
 }
 
 /* Active effect on card */
-.card:active:not(.is-disabled) {
+#card-wrapper:active {
+
   transform: scale(0.98);
   background-color: var(--beige-active);
 
-  .icon-container {
+  .icon-container-div {
     background-color: var(--purple-active);
   }
 
@@ -177,71 +188,20 @@ export default defineComponent({
   }
 }
 
-/* Disabled effect on card */
-.card.is-disabled {
-  opacity: 0.5;
-  background-color: var(--grey3);
-  cursor: not-allowed;
+/* RESPONSIVE COMPONENT WITH MEDIA QUERIES */
+
+@media (min-width: 700px) {
+  #card-wrapper {
+    font-size: var(--manager-card-tablet-font-size);
+  }
+}
+
+@media (min-width: 1200px) {
+  #card-wrapper {
+    font-size: var(--manager-card-desktop-font-size);
+  }
 }
 
 
 
-
-
-/* Content styling */
-.card-content {
-  padding: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  color: var(--black);
-  padding-left: 64px;
-  padding-right: 110px;
-  margin-top: -30px;
-  min-height: 225px;
-}
-
-/* Title styling */
-
-
-/* Details styling */
-.card-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  margin-top: 16px;
-}
-
-/* Description styling */
-.card-description {
-  flex-grow: 1;
-  font-family: var(--font-montserrat);
-  color: var(--black);
-  font-size: var(--body4);
-  font-weight: var(--medium);
-  text-align: left;
-  margin-top: 0px;
-  cursor: pointer;
-}
-
-/* Line between descriptions */
-.card-details+.card-details::before {
-  content: "";
-  margin-left: -64px;
-  margin-right: -110px;
-  border-top: 1px solid ;
-  margin-top: 16px;
-  margin-bottom: 64px;
-  cursor: pointer;
-}
-
-/* Arrow icon styling */
-.arrow-icon {
-  color: var(--black);
-  align-self: center;
-  margin-top: 46px;
-  margin-left: 453px;
-}
 </style>
