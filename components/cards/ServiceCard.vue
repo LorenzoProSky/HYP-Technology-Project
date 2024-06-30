@@ -201,8 +201,33 @@ export default defineComponent({
 
 /* Icon styling */
 .icon {
+  position: relative;
   align-self: center;
-  margin-bottom: 37px;
+  bottom: 37px;
   margin-left: 497px;
+}
+
+
+
+@media (max-width: 650px){  
+  .card{
+    width: 80vw;
+    height: auto;
+  }
+  .card .icon{
+    margin-left: 80%;
+    bottom: 30px;
+    margin-top: 20px;
+  }
+  .card-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .card-content{
+    padding: 0 20px;
+  }
+  .card-title{
+    margin-top: 10px;
+  }
 }
 </style>

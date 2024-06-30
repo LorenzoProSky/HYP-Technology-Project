@@ -142,7 +142,7 @@ function toggleViewMode(mode: string) {
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
         <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
-          :title="project.project_name" :text="project.description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
+          :title="project.project_name" :text="project.short_description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
           :type="project.status === true ? 'present' : 'past'" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
