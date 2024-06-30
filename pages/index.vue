@@ -51,7 +51,7 @@ const visibleProjects = computed(() => {
     <h3>Our Services</h3>
     <div class="grid-3">
       <ActivityCard v-for="(service, index) of services" :key="index" :imageSrc="service.image[0].image_url" 
-      :title="service.service_name" :text="service.short_description" :to="`/activities/services/${service.service_id}`" />
+      :title="service.service_name" :text="service.description" :to="`/activities/services/${service.service_id}`" />
     </div>
   </div>
 
