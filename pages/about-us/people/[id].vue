@@ -119,7 +119,7 @@ console.log(offeredServiceList);
 
           <!-- Text in cover section -->
           <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
-          <p id="job-title-cover-p">{{ personData.job_title }}</p>
+          <h4 id="job-title-cover-p">{{ personData.job_title }}</h4>
       
       </div>
 
@@ -130,25 +130,25 @@ console.log(offeredServiceList);
     </div>
 
     <!-- Text section under the cover: know more section about the employee -->
-    <div class="know-more-div vertical-spacing">
+    <div class="horizontal-padding vertical-spacing">
       <h3> Know more about {{ completeName }}</h3>
       <p id="description-text">{{ personData.description }}</p>
     </div>
       
     <!-- Section containing the links to CV and email -->
-    <div class="cv-email-div">
+    <div class="cv-email-div horizontal-padding">
       <a :href="personData.cv_url">Download CV</a>
       <a :href="`mailto:${personData.email}`">{{ personData.email }}</a>
     </div>
 
     <!-- Conditional rendering of services and projects managed by the employee -->
-    <div class="manager-card-container vertical-spacing" v-if="managesServices || managesProjects">
+    <div class="manager-card-container vertical-spacing horizontal-padding" v-if="managesServices || managesProjects">
       <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceURLs" ></ManagerCard>
       <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectURLs" ></ManagerCard>
     </div>
 
     <!-- Circular image and description of the role of the employee -->
-    <div class="person-role-div vertical-spacing">
+    <div class="person-role-div vertical-spacing horizontal-padding">
       <img class="circular-image-img" :src="personData.profile_image_url"></img>
       <div id="role-description">
         <h3>Role at MiLa</h3>
@@ -204,16 +204,21 @@ console.log(offeredServiceList);
   box-sizing: border-box;
 }
 .page-wrapper h1 {
-  font-size: 4em;    
+  font-size: 2.4em;    
   line-height: 1.2em;
 }
 .page-wrapper h2 {
-  font-size: 1.5em; 
+  font-size: 2em; 
   line-height: 1.2em;
 }
 .page-wrapper h3 {
+  font-size: 1.6em;
+  line-height: 1.2em;
+}
+.page-wrapper h4 {
   font-size: 1.2em;
   line-height: 1.2em;
+  font-weight: 200;
 }
 .page-wrapper p, .page-wrapper span {
   font-size: 1em;
@@ -225,6 +230,10 @@ console.log(offeredServiceList);
 /* ------------------------General classes for grouping common style -------------------------------------*/
 .vertical-spacing {
   margin-top: 6em;
+}
+
+.horizontal-padding {
+  padding: 0 2.3em;
 }
 
 
@@ -248,7 +257,7 @@ console.log(offeredServiceList);
   min-height: 100%;
   width: 50%;
   background-color: var(--purple);
-  padding: 35% 0 5% 6%;
+  padding: 35% 0 12% 8%;
 }
 
 #job-title-cover-p{
@@ -276,14 +285,10 @@ console.log(offeredServiceList);
 
 /*----------------------------Know More section-----------------------------------*/
 
-.know-more-div {
-  padding: 0 2.3em;
-}
-
 .cv-email-div {
   display: flex;
   flex-direction: column;
-  align-items: center;;
+  align-items: center;
   gap: 2em;
   margin-top: 3em;
 }
@@ -302,7 +307,6 @@ console.log(offeredServiceList);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0 2.3em;
   gap: 3em;
 }
 
@@ -312,7 +316,8 @@ console.log(offeredServiceList);
 /*------------------------------------Person role section--------------------------------*/
 .person-role-div{
   display: flex;
-  padding: 0 2.3em;
+  align-items: start;
+  gap: 8em;
 }
 
 /* Only appears for the tablet and desktop versions for resposiveness */
@@ -320,7 +325,11 @@ console.log(offeredServiceList);
   border-color: var(--purple-hover);
   border: 15px solid var(--lilac); /* Purple border */
   object-fit: cover;
+  border-radius: 100%;
   display: none;
+  max-width: 500px;
+  width: 40%;
+  
 }
 
 .offered-service-nuxt-link {
@@ -376,18 +385,38 @@ nav {
   .page-wrapper {
     font-size: 20px;
   }
+  .page-wrapper h1 {
+    font-size: 4em;
+  }
+  .page-wrapper h3 {
+    font-size: 2em;
+  }
+  .page-wrapper h4 {
+    font-size: 1.4em;
+  }
+
+  .vertical-spacing {
+    margin-top: 8em;
+  }
+
+  .horizontal-padding {
+    padding: 0 6em;
+  }
 
   .cv-email-div {
     flex-direction: row;
-    padding: 0 2.3em;
   }
 
   .manager-card-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 0 4.5em;
     gap: 3em;
+  }
+  
+  nav.vertical-spacing {
+    gap: 4em;
+    margin: 15em 0 11em 0;
   }
 
 }
@@ -395,23 +424,55 @@ nav {
 /*-------------------------------Media queries for responsive design-DESKTOP-----------------------------*/
 @media (min-width: 1100px) {
 
-.page-wrapper {
-  font-size: 24px;
+  .page-wrapper {
+    font-size: 24px;
+  }
+  .page-wrapper h1 {
+    font-size: 4em;    
+  }
+  .page-wrapper h2 {
+    font-size: 1.5em; 
+    line-height: 1.2em;
+  }
+  .page-wrapper h3 {
+    font-size: 1.75em;
+    line-height: 1.2em;
+  }
+  .page-wrapper h4 {
+    font-size: 1.75em;
+  }
+  .page-wrapper p, .page-wrapper span {
+    font-size: 1em;
+  }
+
+  .horizontal-padding {
+    padding: 0 11em;
+  }
+
+  .vertical-spacing {
+    margin-top: 9em;
+  }
+
+  .purple-background-cover-div{
+    padding: 30% 0 12% 11%;
+  }
+
+  .manager-card-container{
+    flex-wrap: nowrap;
+  }
+
+
 }
 
-.cv-email-div {
-  flex-direction: row;
-  padding: 0 2.3em;
-}
+@media (min-width: 1400px) {
+  .circular-image-img{
+    display: inline;
+  }
 
-.manager-card-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0 4.5em;
-  gap: 3em;
-}
-
+  
+  .person-role-div{
+    padding-right: 3.5em;
+  }
 }
 
 

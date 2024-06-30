@@ -75,9 +75,10 @@ export default defineComponent({
    * width. The max width is the one usable for the desktop version, the min width is suitable for mobile.
    */
   display: inline-block;
-  min-width: 200px;
+  min-width: 270px;
   max-width: 600px;
   padding: 1.6em 6em 1.6em 1.6em;
+  box-sizing: border-box;
 
   /* Basic properties to be inherited and referenced by all children elements
    * The default-font size is the one for a mobile-version.
