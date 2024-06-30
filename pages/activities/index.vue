@@ -80,12 +80,15 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   }
 }
 
+@media (max-width: 650px){
+  #page-section{
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: center;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 

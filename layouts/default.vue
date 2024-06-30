@@ -6,7 +6,8 @@ function openMenu() {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
   if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.display = "flex";
+    mobileContainer.style.marginTop = "0";
+    mobileContainer.style.transition = "margin-top 0.5s ease";
     mobileMenu.style.display = "none";
     mobileMenuClose.style.display = "block";
   }
@@ -16,13 +17,26 @@ function closeMenu(){
   let mobileContainer = document.getElementById('mobile-container');
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
+  let subMenus = document.getElementsByClassName('subMenu');
+  let plus = document.getElementsByClassName('plus');
+  let minus = document.getElementsByClassName('minus');
   if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.display = "none";
+    mobileContainer.style.marginTop = "-500px";
+    mobileContainer.style.transition = "margin-top 0.5s ease";
     mobileMenu.style.display = "block";
     mobileMenuClose.style.display = "none";
     if (window.screen.width > 900) {    
       mobileMenu.style.display = "none";    
     }
+  }
+  for(let i = 0; i < subMenus.length; i++){
+    let closing = subMenus[i] as HTMLElement;
+    let plusi = plus[i] as HTMLElement;
+    let minusi = minus[i] as HTMLElement;
+    closing.style.display = "none";
+    plusi.style.display = "block";
+    minusi.style.display = "none";
+    
   }
   
 }
@@ -329,6 +343,16 @@ header {
   height: var(--header-height);
   z-index: 10; /* Ensure the header is on top */
 }
+header::before { /* set a z-index for the background */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  z-index: -1; 
+}
 
 #logo {
   text-decoration: none;
@@ -376,7 +400,7 @@ header nav #contactUs{
   width: 42px;
 }
 #mobile-container{
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
@@ -390,6 +414,8 @@ header nav #contactUs{
   right: 0;
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
+  margin-top: -500px;
+  z-index: -2 !important;
 }
 #mobile-container .dropdown-mobile{
   width: 80%;
