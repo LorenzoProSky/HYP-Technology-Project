@@ -9,6 +9,13 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/general.css'],
 
-  modules: ['nuxt-icon']
+  modules: ['nuxt-icon'],
   // modules: ['@nuxtjs/supabase']
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => tag === 'backward-button-wrapper'
+    }
+  }
+
 })

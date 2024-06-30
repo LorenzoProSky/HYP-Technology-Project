@@ -46,6 +46,7 @@ export interface Project {
 export interface Service {
     service_id: number;
     service_name: string;
+    short_description: string;
     description: string;
     additional_info: string;
     image: Image[];

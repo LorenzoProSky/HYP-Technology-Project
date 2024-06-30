@@ -142,7 +142,7 @@ function toggleViewMode(mode: string) {
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
         <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
-          :title="project.project_name" :text="project.description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
+          :title="project.project_name" :text="project.short_description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
           :type="project.status === true ? 'present' : 'past'" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
@@ -205,20 +205,20 @@ function toggleViewMode(mode: string) {
   }
 }
 
+@media (max-width: 650px){
+  #page-section{
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: left;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 #section-description {
   text-align: left;
   margin-top: 32px;
-  font-family: var(--font-montserrat);
-  font-weight: var(--regular);
-  font-size: var(--body4);
 }
 
 @media (max-width: 1500px) {
@@ -245,6 +245,12 @@ function toggleViewMode(mode: string) {
   #toggle-buttons {
     margin: 99px auto;
     margin-bottom: 0px;
+  }
+}
+@media (max-width: 500px){
+  #toggle-buttons{
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

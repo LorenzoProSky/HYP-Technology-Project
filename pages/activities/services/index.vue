@@ -101,7 +101,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
       <div id="page-cards">
         <!-- Loop through visibleServices to render ServiceCard components -->
         <ServiceCard v-for="service in visibleServices" :key="service.service_id" :imageSrc="service.image[0].image_url"
-          :title="service.service_name" :text="service.description" :when="['']" :where="['']" :to="`/activities/services/${service.service_id}`" />
+          :title="service.service_name" :text="service.short_description" :when="['']" :where="['']" :to="`/activities/services/${service.service_id}`" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
     </div>
@@ -162,20 +162,20 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   }
 }
 
+@media (max-width: 650px){
+  #page-section{
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: left;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 #section-description {
   text-align: left;
   margin-top: 32px;
-  font-family: var(--font-montserrat);
-  font-weight: var(--regular);
-  font-size: var(--body4);
 }
 
 @media (max-width: 1500px) {
