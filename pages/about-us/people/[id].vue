@@ -119,7 +119,7 @@ console.log(offeredServiceList);
 
           <!-- Text in cover section -->
           <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
-          <h4 id="job-title-cover-p">{{ personData.job_title }}</h4>
+          <h4 id="job-title-cover">{{ personData.job_title }}</h4>
       
       </div>
 
@@ -171,7 +171,7 @@ console.log(offeredServiceList);
 
       <!-- Even if the link is static here, a button is used to have consistency in layout -->
       <button class="navigation-link" @click="navigateTo('/about-us/people')">
-        <span> All people </span>
+        <span> All People </span>
       </button>
 
       <!-- Next button -->
@@ -201,6 +201,8 @@ console.log(offeredServiceList);
  */
 .page-wrapper {
   font-size: 16px;
+}
+.page-wrapper * {
   box-sizing: border-box;
 }
 .page-wrapper h1 {
@@ -260,7 +262,7 @@ console.log(offeredServiceList);
   padding: 35% 0 12% 8%;
 }
 
-#job-title-cover-p{
+#job-title-cover {
   color:white;
   margin-top: 5%;
 }
@@ -347,12 +349,11 @@ nav {
   display: flex;
   justify-content: center;
   gap: 2.2em;
-  margin-bottom: 3.5em;
+  margin-bottom: 10em;
 }
 
 .navigation-link {
   display: flex;
-  justify-content: center;
   align-items: center;
   border: none;
   background-color: white;
@@ -360,6 +361,7 @@ nav {
   color: var(--purple);
   cursor: pointer;
   font-size: inherit;
+  font-family: var(--font-montserrat);
 }
 .navigation-link:disabled {
   color: var(--grey3);
@@ -369,12 +371,8 @@ nav {
 .navigation-link:hover:not(:disabled) {
   color: var(--purple-hover);
 }
-.navigation-link:active {
+.navigation-link:active:not(:disabled) {
   color: var(--purple-active);
-}
-.navigation-link span {
-  font-family: var(--font-montserrat);
-  font-size: 1em;
 }
 
 
@@ -454,7 +452,7 @@ nav {
   }
 
   .purple-background-cover-div{
-    padding: 30% 0 12% 11%;
+    padding: 25% 0 12% 11%;
   }
 
   .manager-card-container{
