@@ -68,18 +68,22 @@
 }
 
 
-
 /* Reset some default styles */
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
 html,
 body {
-  height: 100% !important;
-  width: 100% !important;
   margin: 0;
   padding: 0;
 }
 
+
+
+
 main {
-  width: 100%;
   font-size: var(--body4);
   line-height: var(--l-height4);
 }
@@ -93,17 +97,6 @@ main {
   main{
     font-size: var(--body1);
   }
-}
-
-#__nuxt {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: var(--white);
 }
 
 /* Styling for Text */
@@ -204,12 +197,6 @@ backward-button-wrapper {
 }
 
 
-/* Basic styling for Header and Footer */
-header {
-  background-color: var(--white);
-  text-align: center;
-  width: 100%;
-}
 footer {
   background-color: var(--white);
   padding: 50px 0;

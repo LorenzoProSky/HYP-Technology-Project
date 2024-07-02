@@ -4,7 +4,7 @@ export default{
   ssr: true,
   app: {
     head: {
-      title: 'WebApp Name'
+      title: 'Centro MiLA'
     }
   },
   css: ['~/assets/styles/general.css'],

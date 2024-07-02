@@ -121,6 +121,25 @@ onMounted(() => {
   if (chatClose) {
     chatClose.addEventListener('click', closeChat);
   }
+
+  /* ARIA attributes handling for expandable dropdown menus
+   * The "a" element created by the NuxtLink is extracted and the listeners for
+   * focus and hovering events modify the aria-expanded attributes */
+  document.querySelectorAll('.menu-container > a').forEach( link => {
+    link.addEventListener('mouseover', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+    link.addEventListener('mouseout', (event) => {
+      link.setAttribute('aria-expanded', 'false');
+    });
+    link.addEventListener('focus', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+    link.addEventListener('blur', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+  });
+
   
 
 });
@@ -146,42 +165,54 @@ export default defineComponent({
 
 <!-- TEMPLATE --------------------------------------------------------------------------------->
 <template>
+  
   <header>
-    <NuxtLink to="/" id="logo">
-      <Icon class="header-logo" name="CentreLogoIcon" size="180" />
+    
+    <!-- Home page link -->
+    <NuxtLink to="/" class="logo" aria-label="Go back to Home page">
+      <Icon name="CentreLogoIcon" size="180" />
     </NuxtLink>
+    
+    <!-- Navigation bar top-left -->
     <nav>
+
       <div class="menu-container">
-        <NuxtLink to="/about-us">About Us</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false">
+          About Us
+        </NuxtLink>
+        <ul id="about-us-dropdown" class="dropdown-menu" >
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/about-us/people">Our People</NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/activities">Our Activities</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false">
+          Our Activities
+        </NuxtLink>
+        <ul id="our-activities-dropdown" class="dropdown-menu">
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/activities/projects">Projects</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/activities/services">Services</NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/what-you-can-do">What You Can Do</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false">
+          What You Can Do
+        </NuxtLink>
+        <ul id="what-you-can-do-dropdown" class="dropdown-menu">
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
           </li>
         </ul>
@@ -193,10 +224,12 @@ export default defineComponent({
       <ExitButton />
     </nav>
 
-    <!-- header for mobile -->
-    <Icon name="MenuIcon" color=var(--purple) id="mobileMenu" />
-    <Icon name="MobileExitIcon" color=var(--purple) id="mobileMenuClose" />
-    <div id="mobile-container" >
+
+    <!-- MOBILE HEADER -->
+    <Icon id="mobileMenu" name="MenuIcon" color=var(--purple) />
+    <Icon id="mobileMenuClose" name="MobileExitIcon" color=var(--purple)  />
+    
+    <div id="mobile-container">
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
         <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
@@ -302,38 +335,34 @@ export default defineComponent({
 
 
 <style scoped>
+
 /* HEADER **************************************************************************/
+
 header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   height: var(--header-height);
   z-index: 10; /* Ensure the header is on top */
-}
-
-#logo {
-  text-decoration: none;
-  margin-left: 5.2%;
-  /* equal to 100px on a screen that is 1920px wide */
-  margin-right: 10px;
-  min-width: 114px;
+  padding: 0 3rem;
+  width: 100%;
+  background-color: var(--white);
+  top: 0;   /* Place the header at the top of the page without adding any space */
 }
 
 /* Navigation Bar */
-header nav{
+header nav {
   display: flex;
-  flex-direction: row;
-  justify-content: right;
+  justify-content: space-between;
   align-items: center;
-  gap: 2.917vw;
-  /* equal to 56px on a screen that is 1920px wide */
-  margin-right: 4.17%;
-  /* equal to 80px on a screen that is 1920px wide */
+  width: 60%;
+  min-width: 750px;
+  max-width: 900px;
+  gap: 1.8rem;
+  
   font-size: var(--body2);
   line-height: var(--l-height-header);
-  min-width: 539px;
 }
 
 nav a {
@@ -345,39 +374,113 @@ header nav #contactUs{
   margin-right: 1.25vw; /* equal to 24px on a screen that is 1920px wide */
 }
 
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.dropdown-menu {
+  opacity: 0;
+  transition: opacity 0.5s;
+  position: absolute;
+  top: 16px;  
+  background-color: var(--white);
+  width: 187px;
+  border: 1px, solid, var(--lilac);
+  border-radius: var(--border-radius-card);
+  z-index: 1;
+  padding: 0;
+  margin: 15px 0;
+  list-style: none;
+}
+
+/* Show the dropdown menu on hover and on focus
+ * If the link (a), child of .menu-container is hovered or focused, the .dropdown-menu
+ * that is its sibling becomes visible.
+ * Moreover, if the dropdown menu itself is hovered or if any of the children are focused, the opacity
+ * stays set to 1.
+ */
+.menu-container a:hover + .dropdown-menu,
+.menu-container a:focus + .dropdown-menu,
+.dropdown-menu:hover,
+.dropdown-menu:focus-within {
+  opacity: 1;
+}
+
+.menu-container a:hover,
+.menu-container a:focus {
+  color: var(--purple);
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu li {
+  padding: 16px 0 24px 0;
+}
+.dropdown-menu li:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.dropdown-menu li:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Background color for the single links in the dropdown menus
+ * both in case of hovering with the mouse and in case of focusing on the link wrapped inside 
+ * the li element of the list.
+*/
+.dropdown-menu li:hover,
+.dropdown-menu li:focus-within {
+  background-color: var(--lilac);
+}
+
+
+
+
+
+
 /**Header for mobile devices */
+
 #mobileMenu{
   display: none;
-  margin-right: var(--mobile-size2);
+  margin-right: calc(10% - 2rem);   /* Align with plus signs of the dropdown menu */
   height: var(--mobile-size2);
   width: var(--mobile-size2);
 }
+
 #mobileMenuClose{
   display: none;
-  margin-right: var(--mobile-size2);
-  height: 42px;
-  width: 42px;
+  margin-right: calc(10% - 2rem);
+  height: var(--mobile-size2);
+  width: var(--mobile-size2);
 }
+
 #mobile-container{
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 2rem;
   font-size: var(--body2);
   line-height: var(--l-height-header);
   background-color: var(--white);
-  padding-top: 54px;
-  width: 100vw;
+  padding-top: 3.4rem;
+
   position: fixed;
+  width: 100%;
   top: var(--mobile-header2);
-  right: 0;
+  left: 0;
+
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
 }
+
+
 #mobile-container .dropdown-mobile{
   width: 80%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
 #mobile-container a{
@@ -396,7 +499,7 @@ header nav #contactUs{
   display: none;
   flex-direction: column;
   align-items: start;
-  gap: 16px;
+  gap: 1rem;
   width: 75%;
   margin-top: -12px;
   margin-bottom: 16px;
@@ -416,71 +519,15 @@ header nav #contactUs{
   margin: var(--mobile-size2);
   display: none;
 }
-#mobile-exit{
-  display: none;
+
+
+@media screen and (max-width: 1050px) {
+  header {
+    padding: 0 2rem;
+  }
 }
 
-/* DROPDOWN MENU ********************************************************/
-.menu-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  height: calc(var(--header-height)/2);
-  /**Increase the height to ensure the hover works*/
-  top: calc(var(--header-height)/4 - var(--l-height-header)/2);
-  /**centering the element horizontally*/
-}
 
-.dropdown-menu {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s, visibility 0.5s;
-
-  position: absolute;
-  top: 16px;
-  padding: 0;
-  background-color: var(--white);
-  width: 187px;
-  border: 1px, solid, var(--lilac);
-  border-radius: var(--border-radius-card);
-  z-index: 1;
-}
-
-/* Dropdown Menu Items */
-.dropdown-menu li {
-  padding: 16px 0 24px 0;
-  display: block;
-}
-
-.dropdown-menu .first-li {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.dropdown-menu .last-li {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-.dropdown-menu li:hover {
-  background-color: color-mix(in srgb, var(--purple-hover) 20%, transparent);
-}
-
-/* Show the dropdown menu on hover */
-.menu-container:hover .dropdown-menu {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s;
-}
-
-.menu-container:hover a {
-  color: var(--purple) !important;
-}
-
-.menu-container:hover .dropdown-menu a {
-  color: var(--black) !important;
-}
 
 /* FOOTER ************************************************************/
 footer {
