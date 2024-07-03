@@ -1,70 +1,93 @@
 <script lang="ts" setup>
+
 import { onMounted } from 'vue';
 import ChatUser from '~/components/chatbot/ChatUser.vue'
+import MainButton from '~/components/buttons/MainButton.vue';
+import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
+import ExitButton from '~/components/buttons/ExitButton.vue';
+import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
+import Chat from '~/components/chatbot/Chat.vue';
+import MobileHeaderOpenCloseButton from '~/components/buttons/MobileHeaderOpenCloseButton.vue';
+import MobileHeaderPlusMinusButton from '~/components/buttons/MobileHeaderPlusMinusButton.vue';
+
+
+/* Reactive data for the layout */
+
+/* 
+ * This variable keeps track of whether the layout is for a mobile or desktop target 
+ * it is constantly updated using an event listener on the window element
+ */
+const isMobile = ref(false);
+
+
 
 function openMenu() {
-  let mobileContainer = document.getElementById('mobile-container');
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  if (mobileContainer && mobileMenu && mobileMenuClose) {
+  let mobileContainer = document.querySelector('.mobile-container') as HTMLElement | null;
+  if (mobileContainer) {
     mobileContainer.style.display = "flex";
-    mobileMenu.style.display = "none";
-    mobileMenuClose.style.display = "block";
   }
 }
 
 function closeMenu(){
-  let mobileContainer = document.getElementById('mobile-container');
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  if (mobileContainer && mobileMenu && mobileMenuClose) {
+  let mobileContainer = document.querySelector('.mobile-container') as HTMLElement | null;
+  if (mobileContainer) {
+    console.log("Closing the menu");
     mobileContainer.style.display = "none";
-    mobileMenu.style.display = "block";
-    mobileMenuClose.style.display = "none";
-    if (window.screen.width > 900) {    
-      mobileMenu.style.display = "none";    
-    }
-  }
-  
-}
-
-function openDrop(num: number){
-  let subMenus = document.getElementsByClassName('subMenu');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  if(subMenus[num] && plus[num] && minus[num]){
-    let subMenu = subMenus[num] as HTMLElement;
-    let plusi = plus[num] as HTMLElement;
-    let minusi = minus[num] as HTMLElement;
-    subMenu.style.display = "flex";
-    plusi.style.display = "none";
-    minusi.style.display = "block";
-  }
-  for(let i = 0; i < subMenus.length; i++){
-    if (i != num) {
-      let closing = subMenus[i] as HTMLElement;
-      let plusi = plus[i] as HTMLElement;
-      let minusi = minus[i] as HTMLElement;
-      closing.style.display = "none";
-      plusi.style.display = "block";
-      minusi.style.display = "none";
-    }
   }
 }
 
-function closeDrop(num: number){
-  let subMenus = document.getElementsByClassName('subMenu');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  if(subMenus[num] && plus[num] && minus[num]){
-    let subMenu = subMenus[num] as HTMLElement;
-    let plusi = plus[num] as HTMLElement;
-    let minusi = minus[num] as HTMLElement;
-    subMenu.style.display = "none";
-    plusi.style.display = "block";
-    minusi.style.display = "none";
+function openSubmenu(index: number) {
+  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
+  if(subMenu){
+    subMenu.style.display='flex';
   }
 }
+
+function closeSubmenu(index: number) {
+  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
+  if(subMenu){
+    subMenu.style.display='none';
+  }
+}
+
+
+/* Function to handle the responsive design of the header, 
+ * switching between mobile and desktop versions 
+ */
+function handleResizeWindow() {
+      let currentScreenWidth = window.innerWidth;
+
+      let mobileMenuOpenButton = document.querySelector('.mobile-menu-open-button') as HTMLElement | null;
+      let mobileMenuCloseButton = document.querySelector('.mobile-menu-close-button') as HTMLElement | null;
+      let mobileMenuContainer = document.querySelector('.mobile-container') as HTMLElement | null;
+      let mobileExitButton = document.querySelector('.mobile-exit') as HTMLElement | null;
+
+      if(currentScreenWidth > 1050) {
+        if(mobileMenuOpenButton) {
+          mobileMenuOpenButton.style.display = 'none';
+        }
+        if(mobileMenuCloseButton) {
+          mobileMenuCloseButton.style.display = 'none';
+        }
+        if(mobileMenuContainer) {
+          mobileMenuContainer.style.display = 'none';
+        }
+        if(mobileExitButton) {
+          mobileExitButton.style.display = 'none';
+        }
+      } else {
+        /* Coming from resizing down the page desktop -> mobile */
+        if(mobileMenuOpenButton?.style.display === 'none' && mobileMenuCloseButton?.style.display === 'none') {
+          if(mobileMenuOpenButton) {
+            mobileMenuOpenButton.style.display = 'block';
+          }
+        }
+        if(mobileExitButton) {
+          mobileExitButton.style.display = 'block';
+        }
+      }
+      
+    };
 
 function openChat(){
   let chatL = document.getElementById('chatbot-label');
@@ -93,10 +116,19 @@ function closeChat(){
 }
 
 onMounted(() => {
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
+
+  isMobile.value = window.innerWidth < 1050;
+
+  /* Recalculate the state of the page on resizing for conditional rendering of elements on the page */
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth < 1050;
+  });
+
+
+
+
+
+
   let links = document.getElementsByTagName('a');
   let chatB = document.getElementById('chatbot-button');
   let chatClose = document.getElementById('chat-close-button');
@@ -105,22 +137,14 @@ onMounted(() => {
     links[i].addEventListener('click', closeMenu);
     links[i].addEventListener('click', closeChat); 
   }
-  if (mobileMenu && mobileMenuClose) {
-    mobileMenu.addEventListener('click', openMenu);
-    mobileMenuClose.addEventListener('click', closeMenu);
-  }
-  for (let i = 0; i < plus.length; i++) {
-    plus[i].addEventListener('click', () => {openDrop(i)});
-  }
-  for (let i = 0; i < minus.length; i++) {
-    minus[i].addEventListener('click', () => {closeDrop(i)});
-  }
   if (chatB) {
     chatB.addEventListener('click', openChat);
   }
   if (chatClose) {
     chatClose.addEventListener('click', closeChat);
   }
+
+
 
   /* ARIA attributes handling for expandable dropdown menus
    * The "a" element created by the NuxtLink is extracted and the listeners for
@@ -138,28 +162,14 @@ onMounted(() => {
     link.addEventListener('blur', (event) => {
       link.setAttribute('aria-expanded', 'true');
     });
+
+    /* Handling the switch between desktop and mobile header */
+    window.addEventListener('resize', handleResizeWindow);
+
   });
 
   
 
-});
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MainButton from '~/components/buttons/MainButton.vue';
-import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
-import ExitButton from '~/components/buttons/ExitButton.vue';
-import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
-import Chat from '~/components/chatbot/Chat.vue';
-
-export default defineComponent({
-  components: {
-    MainButton,
-    SecondaryButton,
-    ExitButton,
-    Chat
-  },
 });
 </script>
 
@@ -174,7 +184,7 @@ export default defineComponent({
     </NuxtLink>
     
     <!-- Navigation bar top-left -->
-    <nav>
+    <nav class="desktop-nav" v-if="!isMobile">
 
       <div class="menu-container">
         <NuxtLink to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false">
@@ -221,49 +231,52 @@ export default defineComponent({
       <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contacts" id="contactUs"
         style="font-size: var(--body2); line-height: var(--l-height-header); width: 137px; height: 50px;" />
 
-      <ExitButton />
+      <ExitButton/>
     </nav>
 
 
     <!-- MOBILE HEADER -->
-    <Icon id="mobileMenu" name="MenuIcon" color=var(--purple) />
-    <Icon id="mobileMenuClose" name="MobileExitIcon" color=var(--purple)  />
-    
-    <div id="mobile-container">
+    <MobileHeaderOpenCloseButton class="mobile-menu-open-close-button" v-if="isMobile" @open-menu="openMenu" @close-menu="closeMenu"></MobileHeaderOpenCloseButton>
+
+    <nav id="mobile-nav" class="mobile-container" v-if="isMobile">
+
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
+        <MobileHeaderPlusMinusButton :index="0" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
         <NuxtLink to="/about-us/people">Our People</NuxtLink>
-      </div>
+      </div>   
+
       <div class="dropdown-mobile">
         <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <MobileHeaderPlusMinusButton :index="1" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/activities/projects">Projects</NuxtLink>        
         <NuxtLink to="/activities/services">Services</NuxtLink>
       </div>
+
       <div class="dropdown-mobile">
         <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <MobileHeaderPlusMinusButton :index="2" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
         <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
       </div>
-      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contactUsT"
+
+      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contact-us-button-mobile"
          style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-      <SecondaryButton buttonText="Contact Us" buttonLength="smartphone" to="/contacts" id="contactUsS"
-         style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-    </div>
-    <ExitButton id="mobile-exit"/>
+    
+    </nav>
+
+    <ExitButton class="mobile-exit" v-if="isMobile"/>
+
   </header>
+
+
 
   <main>
     <!-- Chatbot -->
@@ -352,7 +365,7 @@ header {
 }
 
 /* Navigation Bar */
-header nav {
+.desktop-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -393,7 +406,7 @@ header nav #contactUs{
   border-radius: var(--border-radius-card);
   z-index: 1;
   padding: 0;
-  margin: 15px 0;
+  margin: 32  px 0;
   list-style: none;
 }
 
@@ -444,22 +457,9 @@ header nav #contactUs{
 
 /**Header for mobile devices */
 
-#mobileMenu{
-  display: none;
-  margin-right: calc(10% - 2rem);   /* Align with plus signs of the dropdown menu */
-  height: var(--mobile-size2);
-  width: var(--mobile-size2);
-}
-
-#mobileMenuClose{
-  display: none;
-  margin-right: calc(10% - 2rem);
-  height: var(--mobile-size2);
-  width: var(--mobile-size2);
-}
-
-#mobile-container{
-  display: none;
+/* Wrapper for the dropdown menu */
+.mobile-container {
+  display:flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
@@ -477,55 +477,151 @@ header nav #contactUs{
   border-bottom-right-radius: 24px;
 }
 
-
-#mobile-container .dropdown-mobile{
+/* Top-level links */
+.mobile-container .dropdown-mobile {
+  max-width: 550px;
   width: 80%;
   display: flex;
   justify-content: space-between;
 }
-#mobile-container a{
+.mobile-container a {
   color: var(--black);
 }
-.plus{
-  height: 28px;
-  width: 28px;
-}
-.minus{
-  display: none;
-  height: 28px;
-  width: 28px;
-}
-.subMenu{
+
+
+/* Sub-menus under the top-level links */
+.subMenu {
   display: none;
   flex-direction: column;
   align-items: start;
   gap: 1rem;
   width: 75%;
+  max-width: 500px;
   margin-top: -12px;
   margin-bottom: 16px;
   font-size: var(--body1);
   line-height: var(--l-height1);
   font-weight: var(--medium);
 }
-.subMenu a{
-  color: var(--grey1)!important;
+.subMenu a {
+  color: var(--grey1);
 }
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: none;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: none;
+
+main {
+  margin-top: var(--header-height);
 }
 
 
+
+
+/* Media queries for header (desktop-first approach) */
+
+/* TABLET */
 @media screen and (max-width: 1050px) {
   header {
-    padding: 0 2rem;
+    padding: 0 2rem 0 8%;
+    height: var(--mobile-header2);
   }
+
+  .mobile-exit {
+    display: block;
+    position: fixed;
+    right: 72px;
+    bottom: 54px;
+    border-radius: 100%;
+    z-index: 11;
+  }
+
+  main{
+    margin-top: var(--mobile-header2);
+  }
+
+
+  #contact-us-button-mobile{
+    margin: var(--mobile-size2);
+    display: block;
+    min-width: 200px;
+    max-width: 350px;
+  }
+
 }
+
+/* SMARTPHONE */
+@media only screen and (max-width: 430px){
+  header{
+    height: var(--mobile-header1);
+  }
+  main{
+    margin-top: var(--mobile-header1);
+  }
+
+  .logo svg{
+    height: 45px;
+  }
+
+  .mobile-container{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+    top: var(--mobile-header1);
+  }
+
+  .mobile-container .dropdown-mobile{
+    width: 70.8%;
+  }
+
+  .mobile-exit {
+    position: fixed;
+    right: 40px;
+    bottom: 32px;
+  }
+
+  .subMenu{
+    gap: 12px;
+    width: 65%;
+    margin-top: -14px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  #contact-us-button-mobile {
+    margin: var(--mobile-size2);
+    margin-bottom: 48px;
+    max-width: 70vw;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -742,9 +838,7 @@ footer .body4 {
   line-height: var(--l-height4);
 }
 
-main {
-  margin-top: var(--header-height);
-}
+
 
 .semiboldText {
   font-weight: var(--semibold)
@@ -755,39 +849,6 @@ p {
 }
 
 
-
-/**Dynamic header */
-@media (max-width: 1084px) and (min-device-width: 901px){
-  .dropdown-menu {
-    top: 38px;
-  }
-  #logo svg{
-    width: 130px;
-  }
-}
-
-@media (max-width: 1019.2px){
-  .menu-container{
-    top: calc(var(--header-height)/4 - var(--l-height-header)); /**centering the element horizontally*/
-  }
-
-}
-
-@media (max-width: 968px){
-  #logo {
-    margin-left: 10px;
-  }
-}
-
-@media (max-width: 851px) and (min-device-width: 901px){
-  header nav {
-    font-size: var(--body1);
-    margin-right: 10px;
-  }
-  #logo svg{
-    width: 100px;
-  }
-}
 
 /**Dynamic footer */
 @media (max-width: 1600px) {
@@ -881,39 +942,8 @@ p {
 /**Stylings for mobile devices */
 /**tablet */
 @media only screen and (max-device-width:900px){
-header{
-  height: var(--mobile-header2);
-}
-main{
-  margin-top: var(--mobile-header2);
-}
-#logo{
-  margin-left: var(--mobile-size2);
-}
-#logo img{
-  height: var(--mobile-size2);
-}
-header nav{
-  display: none;
-}
-#mobileMenu{
-  display: block;
-}
-#mobile-exit{
-  display: block!important;
-  position: fixed;
-  right: 72px;
-  bottom: 54px;
-}
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: block;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: none;
-}
+
+
 
 footer #info img{
   height: 54px!important;
@@ -933,65 +963,5 @@ border-width: 2px 0 0 0;
 }
 
 /**smartphones */
-@media only screen and (max-device-width: 430px){
-header{
-  height: var(--mobile-header1);
-}
-main{
-  margin-top: var(--mobile-header1);
-}
-#logo{
-  margin-left: var(--mobile-size1);
-}
-#logo img{
-  height: 27px;
-}
-#mobileMenu{
-  margin-right: var(--mobile-size1);
-  height: var(--mobile-size1);
-  width: var(--mobile-size1);
-}
-#mobileMenuClose{
-  margin-right: var(--mobile-size1);
-  height: 32px;
-  width: 32px;
-}
-#mobile-container{
-  font-size: var(--body1);
-  line-height: var(--l-height1);
-  top: var(--mobile-header1);
-}
-#mobile-container .dropdown-mobile{
-  width: 70.8%;
-}
-#mobile-exit{
-  position: fixed;
-  right: 40px;
-  bottom: 32px;
-}
-.plus{
-  height: 24px;
-  width: 24px;
-}
-.minus{
-  height: 24px;
-  width: 24px;
-}
-.subMenu{
-  gap: 12px;
-  width: 65%;
-  margin-top: -14px;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: none;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: block;
-}
-}
+
 </style>
