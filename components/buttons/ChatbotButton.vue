@@ -1,44 +1,29 @@
-<script lang="ts">
-// Import necessary functions from Vue
-import { defineComponent, ref } from 'vue';
+<script lang="ts" setup>
 
-// Define the ExitButton component
-export default defineComponent({
-  // Component name
-  name: 'ChatbotButton',
-  // Setup reactive data for the component
-  setup() {
-    const hover = ref(false); // Tracks whether the mouse is over the button
-    const active = ref(false); // Tracks whether the button is being pressed
-    const focused = ref(false); // Tracks whether the button has focus
+  const emit = defineEmits(['chatbotButtonClicked']);
 
-    return { hover, active, focused }; // Expose reactive data to the template
-  },
-});
 </script>
 
+
+
 <template>
-    <!-- Exit button element -->
-    <button class="chatbot-button" @mouseover="hover = true" @mouseleave="hover = false" @mousedown="active = true"
-    @mouseup="active = false" @focus="focused = true" @blur="focused = false" v-bind="$attrs">
-        <!-- Text for the button -->
-        <span>{{ "Chat with us" }}</span>
-        <!-- Icon for the button on top -->
-        <div class="icon-container">
-            <Icon name="ChatHeartIcon" size="34" />
-        </div>
-    </button>
+
+  <button type="button" class="chatbot-button" @click="emit('chatbotButtonClicked')">
+      <span> Chat with us </span>
+      <Icon name="ChatHeartIcon" size="34" />
+  </button>
+
 </template>
   
 <style scoped>
-/* Default style for the button */
+
 .chatbot-button {
   height: 64px;
   width: 248px;
   padding: 0 10px;
   background-color: var(--orange);
   color: var(--white);
-  font-size: inherit;
+  font-size: var(--body4);
   font-weight: var(--semibold);
   font-family: var(--font-montserrat);
   border: none;
@@ -49,7 +34,6 @@ export default defineComponent({
   right: 60px;
   z-index: 100;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 12px;
@@ -68,13 +52,7 @@ export default defineComponent({
   filter: brightness(0.95);
 }
 
-@media(max-width:1000px){
-  .chatbot-button{
-    width: 200px;
-  }
-}
-
-@media only screen and (max-device-width:900px){
+@media only screen and (max-width: 1050px){
   .chatbot-button{
     height: 84px;
     width: 84px;
@@ -86,7 +64,7 @@ export default defineComponent({
   } 
   .chatbot-button span{
     display: none;
-  }
+  } 
   .icon{
     min-height: 42px;
     min-width: 42px;

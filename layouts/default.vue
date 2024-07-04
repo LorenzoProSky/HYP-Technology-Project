@@ -10,31 +10,39 @@ import Chat from '~/components/chatbot/Chat.vue';
 import MobileHeaderOpenCloseButton from '~/components/buttons/MobileHeaderOpenCloseButton.vue';
 import MobileHeaderPlusMinusButton from '~/components/buttons/MobileHeaderPlusMinusButton.vue';
 
-
-/* Reactive data for the layout */
-
 /* 
- * This variable keeps track of whether the layout is for a mobile or desktop target 
- * it is constantly updated using an event listener on the window element
+ * Variable that keeps track of whether the layout is for a mobile or desktop target 
+ * it is constantly updated using an event listener on the window element.
  */
 const isMobile = ref(false);
 
+/* Variable to keep track of whether the mobile menus is opened or not */
+const isMobileMenuOpened = ref(false);
+
+/* Variable to keep track of the appearance of the chatbot dialogue */
+const isChatbotDialogOpened = ref(false);
 
 
-function openMenu() {
-  let mobileContainer = document.querySelector('.mobile-container') as HTMLElement | null;
-  if (mobileContainer) {
-    mobileContainer.style.display = "flex";
+
+watch(isMobile, () => {
+  /* Keep the mobile menu closed if the layout is not for mobile */
+  if(!isMobile.value){
+    isMobileMenuOpened.value = false;
   }
+});
+
+
+/* Open and close mobile menu based on the boolean ref isMobileMenuOpened */
+function toggleMobileMenu() {
+  isMobileMenuOpened.value = isMobileMenuOpened.value === true ? false : true;
 }
 
-function closeMenu(){
-  let mobileContainer = document.querySelector('.mobile-container') as HTMLElement | null;
-  if (mobileContainer) {
-    console.log("Closing the menu");
-    mobileContainer.style.display = "none";
-  }
+function toggleChatbotDialogue() {
+  isChatbotDialogOpened.value = isChatbotDialogOpened.value === true ? false : true;
+  console.log("value: "+isChatbotDialogOpened.value);
 }
+
+
 
 function openSubmenu(index: number) {
   let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
@@ -51,69 +59,8 @@ function closeSubmenu(index: number) {
 }
 
 
-/* Function to handle the responsive design of the header, 
- * switching between mobile and desktop versions 
- */
-function handleResizeWindow() {
-      let currentScreenWidth = window.innerWidth;
 
-      let mobileMenuOpenButton = document.querySelector('.mobile-menu-open-button') as HTMLElement | null;
-      let mobileMenuCloseButton = document.querySelector('.mobile-menu-close-button') as HTMLElement | null;
-      let mobileMenuContainer = document.querySelector('.mobile-container') as HTMLElement | null;
-      let mobileExitButton = document.querySelector('.mobile-exit') as HTMLElement | null;
 
-      if(currentScreenWidth > 1050) {
-        if(mobileMenuOpenButton) {
-          mobileMenuOpenButton.style.display = 'none';
-        }
-        if(mobileMenuCloseButton) {
-          mobileMenuCloseButton.style.display = 'none';
-        }
-        if(mobileMenuContainer) {
-          mobileMenuContainer.style.display = 'none';
-        }
-        if(mobileExitButton) {
-          mobileExitButton.style.display = 'none';
-        }
-      } else {
-        /* Coming from resizing down the page desktop -> mobile */
-        if(mobileMenuOpenButton?.style.display === 'none' && mobileMenuCloseButton?.style.display === 'none') {
-          if(mobileMenuOpenButton) {
-            mobileMenuOpenButton.style.display = 'block';
-          }
-        }
-        if(mobileExitButton) {
-          mobileExitButton.style.display = 'block';
-        }
-      }
-      
-    };
-
-function openChat(){
-  let chatL = document.getElementById('chatbot-label');
-  let chatB = document.getElementById('chatbot-button');
-  if (chatL) {
-    chatL.style.visibility = 'visible';
-    chatL.style.opacity = '1';
-    chatL.style.transition = 'opacity 0.25s';
-  }
-  if (chatB) {
-    chatB.removeEventListener('click', openChat);
-  }
-}
-
-function closeChat(){
-  let chatL = document.getElementById('chatbot-label');
-  let chatB = document.getElementById('chatbot-button');
-  if (chatL) {
-    chatL.style.visibility = 'hidden';
-    chatL.style.opacity = '0';
-    chatL.style.transition = 'opacity 0.25s, visibility 0.25s';
-  }
-  if (chatB) {
-    chatB.addEventListener('click', openChat);
-  }
-}
 
 onMounted(() => {
 
@@ -124,25 +71,6 @@ onMounted(() => {
     isMobile.value = window.innerWidth < 1050;
   });
 
-
-
-
-
-
-  let links = document.getElementsByTagName('a');
-  let chatB = document.getElementById('chatbot-button');
-  let chatClose = document.getElementById('chat-close-button');
-  let chatForm = document.getElementById('chat-form');
-  for (let i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', closeMenu);
-    links[i].addEventListener('click', closeChat); 
-  }
-  if (chatB) {
-    chatB.addEventListener('click', openChat);
-  }
-  if (chatClose) {
-    chatClose.addEventListener('click', closeChat);
-  }
 
 
 
@@ -163,8 +91,6 @@ onMounted(() => {
       link.setAttribute('aria-expanded', 'true');
     });
 
-    /* Handling the switch between desktop and mobile header */
-    window.addEventListener('resize', handleResizeWindow);
 
   });
 
@@ -236,9 +162,9 @@ onMounted(() => {
 
 
     <!-- MOBILE HEADER -->
-    <MobileHeaderOpenCloseButton class="mobile-menu-open-close-button" v-if="isMobile" @open-menu="openMenu" @close-menu="closeMenu"></MobileHeaderOpenCloseButton>
+    <MobileHeaderOpenCloseButton class="mobile-menu-open-close-button" v-if="isMobile" @toggle-mobile-menu="toggleMobileMenu"></MobileHeaderOpenCloseButton>
 
-    <nav id="mobile-nav" class="mobile-container" v-if="isMobile">
+    <nav id="mobile-nav" class="mobile-container" v-if="isMobileMenuOpened && isMobile">
 
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
@@ -276,29 +202,11 @@ onMounted(() => {
 
   </header>
 
-
+  <!-- Chatbot -->
+  <ChatbotButton id="chatbot-button" @chatbot-button-clicked="toggleChatbotDialogue" aria-controls="chat" :aria-expanded="isChatbotDialogOpened"/>
+  <Chat v-if="isChatbotDialogOpened" @close-chatbot="toggleChatbotDialogue" id="chat"></Chat>
 
   <main>
-    <!-- Chatbot -->
-    <ChatbotButton id="chatbot-button" />
-    <div id="chatbot-label">
-      <div id="chat-left">
-        <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px;" />
-        <h4>We are here to <br> help you.</h4>
-        <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
-          While you won't be interacting with a person directly, the answers provided have been carefully crafted by trained professionals from Anti-Violence Centers.</p>
-      </div>
-
-      <div id="chat-right" >
-        <div id="chat-close">
-          <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1);
-           width: 120px; height: 40px;" id="secondaryButton-mobile"/>
-          <Icon name="MobileExitIcon" color="var(--purple)" size="32" style="margin-right: 40px; cursor: pointer" id="chat-close-button" />
-        </div>
-        <Chat></Chat>
-      </div>
-    </div>
-
     <slot />
   </main>
 
@@ -595,36 +503,6 @@ main {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* FOOTER ************************************************************/
 footer {
   display: flex;
@@ -717,119 +595,7 @@ footer .arrow{
   min-height: 24px;
 }
 
-/** CHATBOT **********************************************************/
-#chatbot-label{
-  position: fixed;
-  top: 26.5vh;
-  right: 59px;
-  z-index: 100;
-  width: 1416px;
-  max-width: 90vw;
-  height: 70vh;
-  border-radius: 24px;
-  box-shadow: 0px 16px 40px rgba(26, 20, 31, 0.15);
-  display: flex;
-  flex-direction: row;
-  background-color: var(--white);
-  visibility: hidden;
-  opacity: 0;
-}
 
-#chat-left{
-  width: 27%;
-  height: 100%;
-  background-color: var(--purple);
-  border-top-left-radius: 24px;
-  border-bottom-left-radius: 24px;
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-}
-#chat-left h4{
-  width: 68.8%;
-}
-#chat-left p{
-  font-size: var(--body1);
-  line-height: var(--l-height1);
-  margin-top: 24px;
-  margin-bottom: 72px;
-  width: 68.8%;
-}
-#chat-left a{
-  position: absolute;
-  top: 48px;
-  left: 4.2%;
-}
-
-#secondaryButton-mobile{
-  display: none;
-}
-#chat-right{
-  width: 73%;
-  height: 100%;
-}
-#chat-close{
-  height: 80px;
-  border-bottom: 1px solid var(--grey1);
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
-  gap: 32px;
-}
-#chat-conversation{
-  height: calc(100% - 80px - 72px - 6.8vh);
-  background-color: var(--white);
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-/* scrollbar per browser WebKit */
-#chat-conversation::-webkit-scrollbar {
-  width: 12px;
-}
-#chat-conversation::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--white) 80%, transparent);
-  border-radius: 10px;
-}
-#chat-conversation::-webkit-scrollbar-thumb {
-  background: var(--grey2);
-  border-radius: 10px;
-  border: 1px solid var(--white);
-}
-/* scrollbar per Firefox */
-/*
-#chat-conversation {
-  scrollbar-width: thin;
-  scrollbar-color: var(--grey2) var(--white);
-}*/
-
-form{
-  position: absolute;
-  bottom: 6.8vh;
-  right: 3.5vw;
-  width: 883px;
-  max-width: calc(100vw * 90/100 * 73/100 * 90/100);
-  height: 72px;
-  background-color: var(--white);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  font-size: var(--body1);
-}
-#chat-input{
-  height: calc(100% - 20px);
-  width: 88.45%;
-  margin: 0;
-  border: 2px solid var(--grey2);
-  border-radius: 12px;
-}
-#chat-input:focus{
-  outline: none;
-}
 
 
 /**other general stylings */
@@ -928,7 +694,7 @@ p {
   #chat-left{
     display: none;
   }
-  #chat-right{
+  .chat-right{
     width: 100%;
   }
   form{

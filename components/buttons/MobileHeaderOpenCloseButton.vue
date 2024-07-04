@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 
 const props = defineProps(['controlsId']);
-const emit = defineEmits(['close-menu', 'open-menu']);
+const emit = defineEmits(['toggleMobileMenu']);
 
 let iconName = ref('MenuIcon');
 let menuExpanded = ref(false);
@@ -20,8 +20,8 @@ function buttonClicked() {
     /* Change the aria attribute */
     menuExpanded.value = iconName.value === 'MenuIcon' ? false : true;
     
-    /* Emit the event to open or close the menu based on the current iconName */
-    iconName.value === 'MenuIcon' ? emit('close-menu') : emit('open-menu');
+    /* Emit the event to inform parent to change the visibility of the mobile menu */
+    emit('toggleMobileMenu'); 
 
 }
 

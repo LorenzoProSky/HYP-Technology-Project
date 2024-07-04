@@ -28,7 +28,7 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     justify-content: start;
-    align-items: start;
+    align-items: center;
     gap: 40px;
     margin: 18px 0;
 }
