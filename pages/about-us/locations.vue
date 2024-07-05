@@ -11,7 +11,7 @@
   </div>
   
   <div id="locations-intro" >
-    <h3>One Centre, Two Locations</h3>
+    <h2>One Centre, Two Locations</h2>
     <p class="dynamic-p">You can find us in Bovisa and in Zona Farini, choose the location closest to you. We are to help you.</p>
   </div>
 
@@ -19,7 +19,7 @@
   <div class="location-container" >
     <div class="location-flex" >
       <div>
-        <h4 style="margin-bottom: 22px;" >Centro MiLA Farini</h4>
+        <h3 style="margin-bottom: 22px;" >Centro MiLA Farini</h3>
         <p style="margin-bottom: 60px;" >Via Valtellina 20, 20159 Milano (MI)</p>
         <p class="semiboldText" style="margin-bottom: 16px;" >Contact Us</p>
         <div style="display: flex; flex-direction: row; gap: 5px; margin-bottom:8px; font-size: var(--body3);" ><p class="semiboldText">Phone: </p><p>+39 344677462</p></div>
@@ -67,7 +67,7 @@
   <div class="location-container" >
     <div class="location-flex" >
       <div>
-        <h4 style="margin-bottom: 22px;" >Centro MiLA Bovisa</h4>
+        <h3 style="margin-bottom: 22px;" >Centro MiLA Bovisa</h3>
         <p style="margin-bottom: 60px;" >Via Candiani 72, 20158 Milano (MI)</p>
         <p class="semiboldText" style="margin-bottom: 16px;" >Contact Us</p>
         <div style="display: flex; flex-direction: row; gap: 5px; margin-bottom:8px; font-size: var(--body3);" ><p class="semiboldText">Phone: </p><p>+39 345697365</p></div>
@@ -155,7 +155,17 @@
   width: 41%;
   text-align: center;
   padding: 20px;
+  margin: 18px 0;
 }
+
+h2 {
+  font-size: var(--h3);
+}
+
+h3 {
+  font-size: var(--h4);
+}
+
 
 .location-container{
   width: 66.9vw;

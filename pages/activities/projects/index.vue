@@ -255,7 +255,7 @@ function toggleViewMode(mode: string) {
   border-radius: 24px;
   background-color: var(--grey4);
   font-family: var(--font-montserrat);
-  color: var(--grey2);
+  color: var(--black);
   font-size: var(--body3);
   font-weight: var(--medium);
   cursor: pointer;

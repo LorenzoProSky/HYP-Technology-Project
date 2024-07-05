@@ -149,7 +149,7 @@ console.log(offeredServiceList);
 
     <!-- Circular image and description of the role of the employee -->
     <div class="person-role-div vertical-spacing horizontal-padding">
-      <img class="circular-image-img" :src="personData.profile_image_url"></img>
+      <img class="circular-image-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"></img>
       <div id="role-description">
         <h3>Role at MiLa</h3>
         <p>{{ personData.role_description }}</p>

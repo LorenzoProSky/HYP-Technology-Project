@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 
 import { onMounted } from 'vue';
-import ChatUser from '~/components/chatbot/ChatUser.vue'
 import MainButton from '~/components/buttons/MainButton.vue';
 import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
@@ -113,7 +112,7 @@ onMounted(() => {
     <nav class="desktop-nav" v-if="!isMobile">
 
       <div class="menu-container">
-        <NuxtLink to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false">
           About Us
         </NuxtLink>
         <ul id="about-us-dropdown" class="dropdown-menu" >
@@ -127,7 +126,7 @@ onMounted(() => {
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false">
           Our Activities
         </NuxtLink>
         <ul id="our-activities-dropdown" class="dropdown-menu">
@@ -141,7 +140,7 @@ onMounted(() => {
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false">
           What You Can Do
         </NuxtLink>
         <ul id="what-you-can-do-dropdown" class="dropdown-menu">
@@ -198,12 +197,12 @@ onMounted(() => {
     
     </nav>
 
-    <ExitButton class="mobile-exit" v-if="isMobile"/>
+    <ExitButton class="mobile-exit" v-if="isMobile" aria-label="Exit from the website"/>
 
   </header>
 
   <!-- Chatbot -->
-  <ChatbotButton id="chatbot-button" @chatbot-button-clicked="toggleChatbotDialogue" aria-controls="chat" :aria-expanded="isChatbotDialogOpened"/>
+  <ChatbotButton id="chatbot-button" @chatbot-button-clicked="toggleChatbotDialogue" aria-controls="chat" :aria-expanded="isChatbotDialogOpened" aria-label="Open chatbot"/>
   <Chat v-if="isChatbotDialogOpened" @close-chatbot="toggleChatbotDialogue" id="chat"></Chat>
 
   <main>
@@ -313,6 +312,13 @@ nav a {
   color: var(--black);
 }
 
+/* Making the link area larger to improve accessibility for 
+  people with mobility impairments */
+.high-level-link {
+  min-height: 40px;
+  margin-top: 20px
+}
+
 header nav #contactUs{
   margin-left: 4px;
   margin-right: 1.25vw; /* equal to 24px on a screen that is 1920px wide */
@@ -330,7 +336,7 @@ header nav #contactUs{
   opacity: 0;
   transition: opacity 0.5s;
   position: absolute;
-  top: 16px;  
+  top: 42px;  
   background-color: var(--white);
   width: 187px;
   border: 1px, solid, var(--lilac);

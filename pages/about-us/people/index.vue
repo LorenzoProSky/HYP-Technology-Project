@@ -88,7 +88,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 
     <!-- Section content -->
     <div id="page-section" ref="targetSection"> <!-- Target section for smooth scroll -->
-      <h3 id="section-title">MiLA’s Team</h3>
+      <h2 id="section-title">MiLA’s Team</h2>
       <div id="section-description">
         Our compassionate team of counselors, legal experts, social workers, and
         volunteers is dedicated to empowering women and children facing domestic violence.
@@ -145,6 +145,10 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
+}
+
+h2 {
+  font-size: var(--h3);
 }
 
 #page-section {

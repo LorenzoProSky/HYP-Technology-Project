@@ -4,7 +4,10 @@ export default{
   ssr: true,
   app: {
     head: {
-      title: 'Centro MiLA'
+      title: 'Centro MiLA',
+      htmlAttrs: {
+        lang: 'en'
+      }
     }
   },
   css: ['~/assets/styles/general.css'],
