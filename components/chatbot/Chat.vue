@@ -28,12 +28,20 @@ export default defineComponent({
             openai: new OpenAI( {apiKey: this.$config.public.openaiApiKey, dangerouslyAllowBrowser: true }),
             assistantId: 'asst_1zbW4JTNBND59Max3CW5YvM5',
             conversationRef: null as any,
+            showLeftPanel: false,
         }
     },
     async mounted() {
         await this.createThread();
         this.conversationRef = this.$refs.chatContainerRef;
         console.log(this.$config.public.openaiApiKey);
+
+        /* Verify conditions to show the left panel or not */
+        this.showLeftPanel = window.innerWidth >= 1150;
+        window.addEventListener('resize', () => {
+            this.showLeftPanel = window.innerWidth >= 1150;
+        });
+
     },
     methods: {
         async createThread() {
@@ -100,10 +108,10 @@ export default defineComponent({
 
 <template>
 
-    <div class="chatbot-dialogue">
-      
-        <div class="chat-left">
-            <SecondaryButton button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px;" />
+    <div class="chatbot-dialogue">   
+          
+        <div class="chat-left" v-if="showLeftPanel">
+            <SecondaryButton button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" />
             <div class="chatbot-text-div">
                 <h4>We are here to <br> help you.</h4>
                 <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
@@ -113,6 +121,7 @@ export default defineComponent({
 
         <div class="chat-right" >
             <div class="chat-close">
+                <SecondaryButton v-if="!showLeftPanel" button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" />
                 <button type="button" class="close-chat-button" aria-label="Close the chat" @click="$emit('closeChatbot')">
                     <Icon name="MobileExitIcon" color="var(--purple)" size="32" />
                 </button>
@@ -149,7 +158,6 @@ export default defineComponent({
   right: 59px;
   z-index: 100;
 
-  min-width: 1000px;
   max-width: 1800px;
   max-height: calc(100vh - 24.5vh);
   min-height: 200px;
@@ -163,7 +171,7 @@ export default defineComponent({
 }
 
 .chat-left {
-  width: 32%;
+    flex: 0 1 32%;
   background-color: var(--purple);
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
@@ -173,7 +181,7 @@ export default defineComponent({
   justify-content: space-between;
   padding: 3rem 3rem 4.5rem 3rem;
   gap: 1.5rem;
-  overflow-y:hidden;
+  overflow-y: hidden;
 }
 
 .chatbot-text-div {
@@ -186,14 +194,14 @@ export default defineComponent({
 
 
 .chat-right {
-  width: 68%;
+    flex: 1 0.7 68%;    /* Take up the whole width when chat-left is removed from the flex container */
   display: flex;
   flex-direction: column;
 }
 
 .chat-close {
     height: 5rem;
-    padding: 0 4rem 0 0;
+    padding: 0 4rem 0 3rem;
     border-bottom: 1px solid var(--grey1);
     display: flex;
     justify-content: end;
@@ -249,6 +257,26 @@ form input {
     border: 2px solid var(--grey2);
     border-radius: 12px;
     width: 83%;
+}
+
+
+/* Responsive design */
+@media screen and (max-width: 1150px) {
+    .chat-close {
+        justify-content: space-between;
+    }
+}
+
+/* Smartphones */
+/* The chatbot takes up the whole screen  for better visibility and usability*/
+@media screen and (max-width: 500px) {
+    .chatbot-dialogue {
+        top: 13vh;
+        right: 0;
+        width: 100vw;
+        height: 87vh;
+        max-height: none;
+    }
 }
 
 </style>

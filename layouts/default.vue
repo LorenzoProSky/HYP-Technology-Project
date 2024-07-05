@@ -207,34 +207,57 @@ onMounted(() => {
   <Chat v-if="isChatbotDialogOpened" @close-chatbot="toggleChatbotDialogue" id="chat"></Chat>
 
   <main>
-    <slot />
+    <slot></slot>
   </main>
 
   <footer>
     <div id="info">
-      <Icon class="footer-logo" name="CentreLogoIcon" size="283" />
+      <Icon class="footer-logo" aria-label="Centro MiLA logo" name="CentreLogoIcon" size="283" />
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
       <MainButton buttonText="Donate" buttonLength="short" to="/what-you-can-do/donate" />
     </div>
 
     <nav class="body4">
-      <div>
-        <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
-        <NuxtLink to="/about-us/people">Our People</NuxtLink>
-      </div>
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/about-us/people">Our People</NuxtLink>
+        </li>
+      </ul>
+      
       <div class="vertical-line"></div>
-      <div>
-        <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <NuxtLink to="/activities/services">Our Services</NuxtLink>
-        <NuxtLink to="/activities/projects">Our Projects</NuxtLink>
-      </div>
+      
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/activities/services">Our Services</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/activities/projects">Our Projects</NuxtLink>
+        </li>
+      </ul>
+
       <div class="vertical-line"></div>
-      <div>
-        <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
-        <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
-      </div>
+
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
+        </li>
+      </ul>
+
     </nav>
 
     <div id="contacts">
@@ -503,6 +526,14 @@ main {
 
 
 
+
+
+
+
+
+
+
+
 /* FOOTER ************************************************************/
 footer {
   display: flex;
@@ -541,18 +572,17 @@ footer #info a {
 footer nav {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
+  align-items: start;
 }
 
-footer nav div {
+footer nav ul {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
   align-items: start;
+  justify-content: start;
   gap: 20px;
   padding: 20px 40px;
+  list-style: none;
 }
 
 footer nav .vertical-line {
@@ -634,7 +664,7 @@ p {
     flex-direction: column;
   }
 
-  footer nav div {
+  footer nav ul {
     padding: 20px;
   }
 
@@ -666,7 +696,7 @@ p {
     flex-direction: row;
   }
 
-  footer nav div {
+  footer nav ul {
     padding: 20px 40px;
   }
 
@@ -681,29 +711,7 @@ p {
   }
 }
 
-/**Dynamic Chatbot */
-@media(max-width: 1100px){
-  #chat-left p{
-    width: 90%;
-  }
-}
-@media(max-width: 900px){
-  #chatbot-label{
-    right: 3vw;
-  }
-  #chat-left{
-    display: none;
-  }
-  .chat-right{
-    width: 100%;
-  }
-  form{
-    max-width: calc(100vw * 90/100 * 90/100);
-  }
-  #secondaryButton-mobile{
-    display: block !important;
-  }
-}
+
 
 /**Stylings for mobile devices */
 /**tablet */
@@ -718,7 +726,7 @@ footer nav{
 flex-direction: column;
 margin-left: 5.73vw;
 }
-footer nav div{
+footer nav ul{
 padding: 20px;
 }
 footer nav .vertical-line{
@@ -727,7 +735,5 @@ height: 0;
 border-width: 2px 0 0 0;
 }
 }
-
-/**smartphones */
 
 </style>
