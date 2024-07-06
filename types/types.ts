@@ -9,9 +9,26 @@ export interface Person {
     cv_url: string; 
     email: string; 
     role_description: string; 
-    project?: string[]; 
-    responsible_service?: string[]; 
-    offering_service?: string[];
+    project: [{
+        project_id: string;
+        project_name: string;
+    }]; 
+    responsible_service: [{
+        service_id: string;
+        service_name: string;
+    }]; 
+    offering_service: [{
+        service_id: string;
+        service_name: string;
+    }];
+    short_description?: string;
+}
+
+export interface ServiceOfferingInfo {
+    location: {
+        name: string,
+    };
+    schedule: String;
 }
 
 export interface Service {
@@ -19,6 +36,7 @@ export interface Service {
     service_name: string;
     short_description: string;
     image: Image[];
+    service_offering_info: ServiceOfferingInfo[];
 }
 
 export interface Sponsor {

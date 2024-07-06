@@ -7,29 +7,51 @@ import ManagerCard from '~/components/cards/ManagerCard.vue';
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
 import type { Person, Service, Project } from '~/types/types';
+import { useRuntimeConfig } from 'nuxt/app';
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
 // Retrieve Id of person from url and build the server url for api request
 const route = useRoute();
 let id = ref(Number(route.params.id)); 
-const personDataUrl = `http://localhost:3005/people/${id.value}`;
-const countPeopleUrl = "http://localhost:3005/count-people";
+
+const countPeopleURL = `${baseBackendURL}count-people`;
+const personDataURL = `${baseBackendURL}people/${id.value}`;
 
 // Variable ref<Person> holding all the data for the person with the specified id
-let personData = ref();
-let peopleCounter = ref();
+let personData = ref() as Ref<Person>;
+let peopleCounter = ref() as Ref<number>;
+
 try {
-  const { data: fetchPerson } = await useFetch<Person[]>(personDataUrl);  
-  const { data: countPpl } = await useFetch<Number>(countPeopleUrl);
-  const people: Person[] | null= fetchPerson.value;
+  /* Count people */
+  const { data: countPpl } = await useFetch<Number>(countPeopleURL);
   peopleCounter.value = Number(countPpl.value);
-  if(people){
-    personData.value = people[0];
+
+  /* Fetch person data */
+  const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
+  if(fetchPersonData.value){
+    personData.value = fetchPersonData.value[0];
   }
-  } catch (error) {
-    console.error('Error while fetching data for person ${id}', error);
+} catch (error) {
+  console.error('Error while fetching data for person ${id}', error);
 }
 
-// Some computed properties that are extracted from the data
+watch(id, async () =>  {
+  try {
+    const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
+    console.log("id value: "+  id);
+    if(fetchPersonData.value){
+      personData.value = fetchPersonData.value[0];
+    }
+  } catch (error) {
+    console.error('Error while fetching data for person ${id}', error);
+  }
+});
+
 const completeName = computed(()=>{return personData.value.name + " " + personData.value.surname});
+
 const managesProjects = computed(() => {
   return personData.value.project.length > 0;
 });
@@ -57,12 +79,12 @@ const nextLink = computed(() => {
 
 
 // Build the arrays necessary to create the ManagerCards
-let managedProjects: Project[] = personData.value.project;
-let managedServices: Service[] = personData.value.responsible_service;
-let managedProjectNames = [];
-let managedProjectURLs = [];
-let managedServiceNames = [];
-let managedServiceURLs = [];
+let managedProjects = personData.value.project;
+let managedServices = personData.value.responsible_service;
+let managedProjectNames = [] as string[];
+let managedProjectURLs = [] as string[];
+let managedServiceNames = [] as string[];
+let managedServiceURLs = [] as string[];
 
 if(managesProjects){
   for(let project of managedProjects){
@@ -71,9 +93,6 @@ if(managesProjects){
     }
 }
 
-let reactive_managedProjectNames = ref(managedProjectNames);
-let reactive_managedProjectURLs = ref(managedProjectURLs);
-
 if(managesServices){
   for(let service of managedServices){
     managedServiceNames.push(service.service_name);
@@ -81,22 +100,23 @@ if(managesServices){
   }
 }
 
-let reactive_managedServiceNames = ref(managedServiceNames);
-let reactive_managedServiceURLs = ref(managedServiceURLs);
-
 /* Build links for offered services */
+
 
 interface offeredService {
   link: string;
   name: string;
 }
 
+
 let offeredServiceList = ref([] as offeredService[]);
+
 
 for(let service of personData.value.offering_service) {
   offeredServiceList.value.push({link: `/activities/services/${service.service_id}`, name: service.service_name});
 }
-console.log(offeredServiceList);
+
+
 
 
 </script>
@@ -143,8 +163,8 @@ console.log(offeredServiceList);
 
     <!-- Conditional rendering of services and projects managed by the employee -->
     <div class="manager-card-container vertical-spacing horizontal-padding" v-if="managesServices || managesProjects">
-      <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceURLs" ></ManagerCard>
-      <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectURLs" ></ManagerCard>
+      <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="managedServiceNames" :to="managedServiceURLs" ></ManagerCard>
+      <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="managedProjectNames" :to="managedProjectURLs" ></ManagerCard>
     </div>
 
     <!-- Circular image and description of the role of the employee -->
@@ -153,8 +173,8 @@ console.log(offeredServiceList);
       <div id="role-description">
         <h3>Role at MiLa</h3>
         <p>{{ personData.role_description }}</p>
-        <NuxtLink v-for="(service, index) in offeredServiceList" :to="service.link" :key="index" class="offered-service-nuxt-link">
-          Discover {{ service.name }} 
+        <NuxtLink v-for="(service, index) in []" to="/" :key="index" class="offered-service-nuxt-link">
+          Discover {{ }} 
           <Icon name="ForwardArrowIcon" size="19"> </Icon>
         </NuxtLink>
       </div>

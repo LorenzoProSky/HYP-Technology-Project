@@ -2,12 +2,16 @@
 // Import necessary components
 import ServiceCard from '~/components/cards/ServiceCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import serviceImage from '~/assets/images/service-image.png';
+import { useRuntimeConfig } from 'nuxt/app';
 
 
-import type { Service } from '~/types/types';
+import type { Service, ServiceOfferingInfo } from '~/types/types';
 
-const fetchServicesURL = 'http://localhost:3005/services';
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
+const fetchServicesURL = baseBackendURL + "services";
 
 const services = ref([]) as Ref<Service[]>;
 const servicesPerPage = ref(6);
@@ -101,7 +105,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
       <div id="page-cards">
         <!-- Loop through visibleServices to render ServiceCard components -->
         <ServiceCard v-for="service in visibleServices" :key="service.service_id" :imageSrc="service.image[0].image_url"
-          :title="service.service_name" :text="service.short_description" :when="['']" :where="['']" :to="`/activities/services/${service.service_id}`" />
+          :title="service.service_name" :text="service.short_description" :when="[service.service_offering_info[0].schedule, service.service_offering_info[1].schedule ]" :where="[service.service_offering_info[0].location.name, service.service_offering_info[1].location.name ]" :to="`/activities/services/${service.service_id}`" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
     </div>

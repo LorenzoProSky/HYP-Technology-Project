@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 
-import { useRoute, useFetch } from 'nuxt/app';
+import { useRoute, useFetch, useRuntimeConfig } from 'nuxt/app';
 
 // Import interfaces for handling data conversion from json server response
 import type { Project, Manager, Image, Sponsor } from '~/types/types';
+
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
 
 // Reactive variable containing all the data coming from the server
 const projectData = ref() as Ref<Project>;
@@ -11,7 +16,7 @@ const projectData = ref() as Ref<Project>;
 
 // Extract project id from url and build api server call
 const projectID = useRoute().params.id as string;
-const projectURL = "http://localhost:3005/projects/" + projectID;
+const projectURL = baseBackendURL + "projects/" + projectID;
 
 // Fetch data of the current project from the server
 const { data, error } = await useFetch(projectURL);

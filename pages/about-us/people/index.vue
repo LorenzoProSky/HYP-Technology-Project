@@ -2,12 +2,15 @@
 // Import necessary components
 import PersonCard from '~/components/cards/PersonCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import profileImage from '~/assets/images/profile-image.jpeg';
-
+import { ref } from 'vue';
+import { useRuntimeConfig } from 'nuxt/app';
 // Import custom types to handle person data
 import type { Person } from '~/types/types'
-import { ref } from 'vue';
 
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL; 
 
 // Create references for data to be observed
 const people = ref([] as Person[]);
@@ -15,7 +18,7 @@ let peoplePerPage = ref(12);
 let startCount = ref(0);
 let endCount = ref(12);
 const targetSection = ref(null);  // reference to fixed element for scrolling
-const peopleUrl = "http://localhost:3005/people";
+const peopleUrl = baseBackendURL + "people";
 
 // Fetch data from the api
 const { data, error } = await useFetch(peopleUrl);
@@ -101,7 +104,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
       <div id="page-cards">
         <!-- Loop through visiblePeople to render PersonCard components -->
         <PersonCard v-for="(person, index) in visiblePeople" :key="index" :imageSrc="person.profile_image_url"
-          :name="person.name + ' ' + person.surname" :job="person.job_title" :to="`/about-us/people/${person.person_id}`"/>
+          :name="person.name + ' ' + person.surname" :job="person.job_title" :to="`/about-us/people/${person.person_id}`" :text="person.short_description === null ? '' : person.short_description"/>
       </div>
       <div id="bottom-space" v-if="totalPages == 1"/> <!-- Add space at the bottom if there is only one page -->
     </div>

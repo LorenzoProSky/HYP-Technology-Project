@@ -57,6 +57,19 @@ function closeSubmenu(index: number) {
   }
 }
 
+function hideDropDown(id: number) {
+  let dropDownMenus = document.querySelectorAll('.dropdown-menu');
+  if(dropDownMenus) {
+    (dropDownMenus[id] as HTMLElement).style.opacity = '0';
+  }
+}
+
+function showDropDown(id: number) {
+  let dropDownMenus = document.querySelectorAll('.dropdown-menu');
+  if(dropDownMenus) {
+    (dropDownMenus[id] as HTMLElement).style.opacity = '1';
+  }
+}
 
 
 
@@ -112,10 +125,10 @@ onMounted(() => {
     <nav class="desktop-nav" v-if="!isMobile">
 
       <div class="menu-container">
-        <NuxtLink class="high-level-link" to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false" @mouseover="showDropDown(0)" @mouseleave="hideDropDown(0)">
           About Us
         </NuxtLink>
-        <ul id="about-us-dropdown" class="dropdown-menu" >
+        <ul id="about-us-dropdown" class="dropdown-menu" @click="hideDropDown(0)" @mouseover="showDropDown(0)" @mouseleave="hideDropDown(0)" >
           <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
           </li>
@@ -126,10 +139,10 @@ onMounted(() => {
       </div>
 
       <div class="menu-container">
-        <NuxtLink class="high-level-link" to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false" @mouseover="showDropDown(1)" @mouseleave="hideDropDown(1)">
           Our Activities
         </NuxtLink>
-        <ul id="our-activities-dropdown" class="dropdown-menu">
+        <ul id="our-activities-dropdown" class="dropdown-menu" @click="hideDropDown(1);" @mouseover="showDropDown(1)" @mouseleave="hideDropDown(1)">
           <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/activities/projects">Projects</NuxtLink>
           </li>
@@ -140,10 +153,10 @@ onMounted(() => {
       </div>
 
       <div class="menu-container">
-        <NuxtLink class="high-level-link" to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false">
+        <NuxtLink class="high-level-link" to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false" @mouseover="showDropDown(2)" @mouseleave="hideDropDown(2)">
           What You Can Do
         </NuxtLink>
-        <ul id="what-you-can-do-dropdown" class="dropdown-menu">
+        <ul id="what-you-can-do-dropdown" class="dropdown-menu" @click="hideDropDown(2)" @mouseover="showDropDown(2)" @mouseleave="hideDropDown(2)">
           <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
           </li>

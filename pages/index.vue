@@ -3,11 +3,16 @@ import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import MainButton from '~/components/buttons/MainButton.vue';
 import ActivityCard from '~/components/cards/ActivityCard.vue';
 import MapCardSmall from '~/components/cards/MapCardSmall.vue';
+import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Project, Service } from '~/types/types';
 
-const fetchServicesURL = "http://localhost:3005/services";
-const fetchOngoingProjectsURL = "http://localhost:3005/projects?status=ongoing";
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
+const fetchServicesURL = baseBackendURL + "services";
+const fetchOngoingProjectsURL = baseBackendURL + "projects?status=ongoing";
 
 const services = ref([]) as Ref<Service[]>;
 const projects = ref([]) as Ref<Project[]>;

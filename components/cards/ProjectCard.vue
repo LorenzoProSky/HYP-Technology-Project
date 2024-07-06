@@ -107,7 +107,7 @@ export default defineComponent({
 /* Card styling */
 .card {
   width: 606px;
-  height: 810px;
+  height: 890px;
   border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
@@ -187,7 +187,7 @@ export default defineComponent({
 /* Text styling */
 .card-text {
   font-family: var(--font-montserrat);
-  font-size: var(--body3);
+  font-size: var(--body2);
   color: var(--black);
   font-weight: var(--medium);
   margin-top: 12px;
@@ -237,7 +237,6 @@ export default defineComponent({
   padding: 0px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: center;
 }
 

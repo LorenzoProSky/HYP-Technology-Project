@@ -2,11 +2,15 @@
 // Import necessary components
 import ProjectCard from '~/components/cards/ProjectCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import projectImage from '~/assets/images/project-image.png';
+import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Project } from '~/types/types';
 
-const fetchProjectsURL = "http://localhost:3005/projects";
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
+const fetchProjectsURL = baseBackendURL + "projects";
 
 const allProjects = ref([]) as Ref<Project[]>;
 const projectsPerPage = ref(6);
@@ -142,7 +146,7 @@ function toggleViewMode(mode: string) {
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
         <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
-          :title="project.project_name" :text="project.description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
+          :title="project.project_name" :text="project.short_description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
           :type="project.status === true ? 'present' : 'past'" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->

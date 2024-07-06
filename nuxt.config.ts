@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-export default{
+export default {
   devtools: { enabled: true },
   ssr: true,
   app: {
@@ -15,6 +15,7 @@ export default{
   runtimeConfig: {
     public: {
       openaiApiKey: process.env.OPENAI_API_KEY,
+      baseBackendURL: process.env.BASE_BACKEND_URL,
     }
   },
 
