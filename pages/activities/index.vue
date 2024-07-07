@@ -26,10 +26,10 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
       <div id="page-cards">
         <DiscoverCard title="Discover all the Services"
           text="Discover our wide array of supportive services, including counseling, legal assistance, and safe housing, all aimed at empowering women to build safe, empowered and independent lives."
-          to="/activities/services/index" />
+          to="/activities/services" />
         <DiscoverCard title="Discover all the Projects"
           text="Explore the diverse projects we fund and organize, designed to create meaningful experiences, joyful moments for children, and impactful advocacy and awareness for women's rights."
-          to="/activities/projects/index" />
+          to="/activities/projects" />
       </div>
     </div>
 
@@ -84,12 +84,15 @@ h2 {
   }
 }
 
+@media (max-width: 650px){
+  #page-section{
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: center;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 

@@ -146,14 +146,16 @@ export default defineComponent({
   font-family: var(--font-montserrat);
   color: var(--grey1);
   font-size: var(--body3);
+  line-height: var(--l-height3);
   font-weight: var(--medium);
   text-align: left;
 }
 
 /* Icon styling */
 .icon {
+  position: relative;
   align-self: center;
-  margin-bottom: 36px;
+  bottom: 36px;
   margin-left: 409px;
 }
 
@@ -166,7 +168,8 @@ export default defineComponent({
   }
   .card .icon{
     margin-left: 80%;
-    margin-bottom: 30px;
+    bottom: 30px;
+    margin-top: 20px;
   }
   .card-text{
     font-size: var(--body1);

@@ -216,6 +216,7 @@ export default defineComponent({
 .when-text {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
+  line-height: var(--l-height2);
   color: var(--grey1);
   font-weight: var(--semibold);
   margin-bottom: 0px;
@@ -226,6 +227,7 @@ export default defineComponent({
 .when-content {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
+  line-height: var(--l-height2);
   color: var(--grey1);
   font-weight: var(--medium);
   margin-top: 5px;
@@ -244,6 +246,7 @@ export default defineComponent({
 .where-text {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
+  line-height: var(--l-height2);
   color: var(--grey1);
   font-weight: var(--semibold);
   margin-bottom: 0px;
@@ -254,6 +257,7 @@ export default defineComponent({
 .where-content {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
+  line-height: var(--l-height2);
   color: var(--grey1);
   font-weight: var(--medium);
   margin-top: 5px;
@@ -262,15 +266,17 @@ export default defineComponent({
 
 /* End row styling */
 .card-end-row {
+  position: relative;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 37px;
+  bottom: 37px;
 }
 
 /* Past project text styling */
 .past-project-text {
   font-family: var(--font-montserrat);
   font-size: var(--body2);
+  line-height: var(--l-height2);
   color: var(--orange);
   font-weight: var(--semibold);
   text-align: left;
@@ -283,5 +289,47 @@ export default defineComponent({
   align-self: center;
   margin-top: -13px;
   margin-left: 458px;
+}
+
+
+
+@media (max-width: 650px){  
+  .card{
+    width: 80vw;
+    height: auto;
+  }
+  .card .icon{
+    margin-left: 80%;
+  }
+  .card-end-row{
+    bottom: 30px;
+    margin-top: 20px;
+  }
+  .card-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .card-content{
+    padding: 0 20px;
+  }
+  .card-title{
+    margin-top: 10px;
+  }
+  .when-content{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .when-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .where-content{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  .where-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
 }
 </style>

@@ -425,6 +425,8 @@ header nav #contactUs{
 
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
+  margin-top: -500px;
+  z-index: -2 !important;
 }
 
 /* Top-level links */
@@ -731,13 +733,20 @@ p {
 }
 
 
-
 /**Stylings for mobile devices */
 /**tablet */
 @media only screen and (max-device-width:900px){
 
 
 
+footer {
+  align-items: center;
+}
+footer #info {
+  max-width: 95%;
+  align-items: center;
+  margin: 0;
+}
 footer #info img{
   height: 54px!important;
 }
@@ -752,6 +761,9 @@ footer nav .vertical-line{
 width: 200px;
 height: 0;
 border-width: 2px 0 0 0;
+}
+footer #contacts {
+  margin: 0;
 }
 }
 

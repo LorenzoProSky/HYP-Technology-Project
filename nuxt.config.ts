@@ -27,4 +27,11 @@ export default {
   // modules: ['@nuxtjs/supabase']
 
   plugins: ['~/plugins/openai'],
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => tag === 'backward-button-wrapper'
+    }
+  }
 }
+
