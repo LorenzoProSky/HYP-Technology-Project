@@ -14,13 +14,6 @@ export interface Person {
     offering_service?: string[];
 }
 
-export interface Service {
-    service_id: number;
-    service_name: string;
-    short_description: string;
-    image: Image[];
-}
-
 export interface Sponsor {
     sponsor_name: string;
     logo_url: string;
@@ -49,4 +42,29 @@ export interface Project {
     sponsor?: Sponsor[];
     person?: Manager;
 
+}
+
+export interface Service {
+    service_id: number;
+    service_name: string;
+    short_description: string;
+    description: string;
+    additional_info: string;
+    image: Image[];
+    manager: Person;
+    testimonial: Testimonial[];
+    offering_person: Person[];
+    offers: Offer[];
+}
+
+export interface Offer{
+    person_id: number;
+    location_id: number;
+    service_id: string;
+    schedule: string;
+}
+
+export interface Testimonial{
+    name: string;
+    description: string;
 }

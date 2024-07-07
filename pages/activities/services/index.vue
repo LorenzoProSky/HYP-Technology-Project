@@ -162,20 +162,20 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   }
 }
 
+@media (max-width: 650px){
+  #page-section{
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: left;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 #section-description {
   text-align: left;
   margin-top: 32px;
-  font-family: var(--font-montserrat);
-  font-weight: var(--regular);
-  font-size: var(--body4);
 }
 
 @media (max-width: 1500px) {

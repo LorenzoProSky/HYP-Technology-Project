@@ -6,7 +6,8 @@ function openMenu() {
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
   if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.display = "flex";
+    mobileContainer.style.marginTop = "0";
+    mobileContainer.style.transition = "margin-top 0.5s ease";
     mobileMenu.style.display = "none";
     mobileMenuClose.style.display = "block";
   }
@@ -16,13 +17,26 @@ function closeMenu(){
   let mobileContainer = document.getElementById('mobile-container');
   let mobileMenu = document.getElementById('mobileMenu');
   let mobileMenuClose = document.getElementById('mobileMenuClose');
+  let subMenus = document.getElementsByClassName('subMenu');
+  let plus = document.getElementsByClassName('plus');
+  let minus = document.getElementsByClassName('minus');
   if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.display = "none";
+    mobileContainer.style.marginTop = "-500px";
+    mobileContainer.style.transition = "margin-top 0.5s ease";
     mobileMenu.style.display = "block";
     mobileMenuClose.style.display = "none";
     if (window.screen.width > 900) {    
       mobileMenu.style.display = "none";    
     }
+  }
+  for(let i = 0; i < subMenus.length; i++){
+    let closing = subMenus[i] as HTMLElement;
+    let plusi = plus[i] as HTMLElement;
+    let minusi = minus[i] as HTMLElement;
+    closing.style.display = "none";
+    plusi.style.display = "block";
+    minusi.style.display = "none";
+    
   }
   
 }
@@ -113,7 +127,7 @@ onMounted(() => {
   }
   if (mobileMenu && mobileMenuClose) {
     mobileMenu.addEventListener('click', openMenu);
-    mobileMenuClose.addEventListener('click', closeMenu);
+    mobileMenuClose.addEventListener('click', closeMenu); /**forse non serve */
   }
   for (let i = 0; i < plus.length; i++) {
     plus[i].addEventListener('click', () => {openDrop(i)});
@@ -146,6 +160,13 @@ export default defineComponent({
     SecondaryButton,
     ExitButton
   },
+  /*
+  watch: {
+    // Quando il percorso cambia, esegui la funzione
+    '$route'(to, from) {
+      closeChat();
+    },
+  },*/
 });
 </script>
 
@@ -204,8 +225,8 @@ export default defineComponent({
     <div id="mobile-container" >
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />        
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />        
       </div>
       <div class="subMenu">
         <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
@@ -213,8 +234,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/activities/projects">Projects</NuxtLink>        
@@ -222,8 +243,8 @@ export default defineComponent({
       </div>
       <div class="dropdown-mobile">
         <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) size=var(--mobile-size2) class="minus" />
+        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
+        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
       </div>
       <div class="subMenu">
         <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
@@ -333,6 +354,16 @@ header {
   height: var(--header-height);
   z-index: 10; /* Ensure the header is on top */
 }
+header::before { /* set a z-index for the background */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  z-index: -1; 
+}
 
 #logo {
   text-decoration: none;
@@ -380,7 +411,7 @@ header nav #contactUs{
   width: 42px;
 }
 #mobile-container{
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
@@ -394,6 +425,8 @@ header nav #contactUs{
   right: 0;
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
+  margin-top: -500px;
+  z-index: -2 !important;
 }
 #mobile-container .dropdown-mobile{
   width: 80%;
@@ -850,6 +883,9 @@ p {
   #secondaryButton-mobile{
     display: block !important;
   }
+  footer{
+    padding-bottom: 200px;
+  }
 }
 
 /**Stylings for mobile devices */
@@ -889,6 +925,14 @@ header nav{
   display: none;
 }
 
+footer {
+  align-items: center;
+}
+footer #info {
+  max-width: 95%;
+  align-items: center;
+  margin: 0;
+}
 footer #info img{
   height: 54px!important;
 }
@@ -903,6 +947,9 @@ footer nav .vertical-line{
 width: 200px;
 height: 0;
 border-width: 2px 0 0 0;
+}
+footer #contacts {
+  margin: 0;
 }
 }
 

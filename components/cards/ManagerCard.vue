@@ -76,7 +76,7 @@ export default defineComponent({
         <!-- Activity description -->
         <div class="card-details" v-for="(item, index) in text" :key="index">
           <!-- Wrap the single description in a NuxtLink for navigation -->
-          <NuxtLink :to="to[index]">
+            <NuxtLink :to="to[index] as RouteLocationRaw">
             <p class="card-description">{{ managerName }} is the main resposible for the {{ type }} {{ item }}</p>
             <!-- Forward arrow icon -->
             <Icon class="arrow-icon" name="ForwardArrowIcon" size="32" />

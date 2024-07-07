@@ -4,11 +4,18 @@ export default defineNuxtConfig({
   ssr: true,
   app: {
     head: {
-      title: 'WebApp Name'
+      title: 'Centro MiLA'
     }
   },
   css: ['~/assets/styles/general.css'],
 
-  modules: ['nuxt-icon']
+  modules: ['nuxt-icon'],
   // modules: ['@nuxtjs/supabase']
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => tag === 'backward-button-wrapper'
+    }
+  }
+
 })

@@ -18,27 +18,27 @@ const targetSection = ref(null);
 
 
 const { data } = await useFetch(fetchProjectsURL);
-if(data.value){
+if (data.value) {
   allProjects.value = data.value as Project[];
 }
 
 // Divide present and past projects into different arrays
 const ongoingProjects = computed(() => {
-  let ongoingProjects: Project [] = [];
-  for(let project of allProjects.value){
-      if(project.status === true){
-        ongoingProjects.push(project);
-      }
+  let ongoingProjects: Project[] = [];
+  for (let project of allProjects.value) {
+    if (project.status === true) {
+      ongoingProjects.push(project);
+    }
   }
   return ongoingProjects;
 });
 
 const pastProjects = computed(() => {
-  let pastProjects: Project [] = [];
-  for(let project of allProjects.value){
-      if(project.status === false){
-        pastProjects.push(project);
-      }
+  let pastProjects: Project[] = [];
+  for (let project of allProjects.value) {
+    if (project.status === false) {
+      pastProjects.push(project);
+    }
   }
   return pastProjects;
 });
@@ -48,9 +48,9 @@ const visibleProjects = computed(() => {
 });
 
 const totalPages = computed(() => {
-  return viewMode.value === 'present' 
-  ? Math.ceil(ongoingProjects.value.length / projectsPerPage.value) 
-  : Math.ceil(pastProjects.value.length / projectsPerPage.value);
+  return viewMode.value === 'present'
+    ? Math.ceil(ongoingProjects.value.length / projectsPerPage.value)
+    : Math.ceil(pastProjects.value.length / projectsPerPage.value);
 })
 
 const currentPage = computed(() => {
@@ -66,12 +66,12 @@ function showMore() {
 
 function showLess() {
   startCount.value -= projectsPerPage.value;
-  if(startCount.value < 0){
+  if (startCount.value < 0) {
     startCount.value = 0;
   }
 
   endCount.value -= projectsPerPage.value;
-  if(endCount.value < projectsPerPage.value){
+  if (endCount.value < projectsPerPage.value) {
     endCount.value = projectsPerPage.value;
   }
 
@@ -86,8 +86,8 @@ function scrollToTarget() {
 }
 
 function shouldDisplaySeparator(pageNumber: number): boolean {
-  if(pageNumber === totalPages.value){
-      return false;
+  if (pageNumber === totalPages.value) {
+    return false;
   }
   return true;
 }
@@ -141,8 +141,9 @@ function toggleViewMode(mode: string) {
     <div id="cards-container">
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
-        <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
-          :title="project.project_name" :text="project.description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
+        <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index"
+          :imageSrc="project.image[0].image_url" :title="project.project_name" :text="project.short_description"
+          :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
           :type="project.status === true ? 'present' : 'past'" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
@@ -205,20 +206,20 @@ function toggleViewMode(mode: string) {
   }
 }
 
+@media (max-width: 650px) {
+  #page-section {
+    width: 80vw;
+  }
+}
+
 #section-title {
   text-align: left;
   margin-top: 0px;
-  font-family: var(--font-playfair);
-  font-weight: var(--bold);
-  font-size: 42px;
 }
 
 #section-description {
   text-align: left;
   margin-top: 32px;
-  font-family: var(--font-montserrat);
-  font-weight: var(--regular);
-  font-size: var(--body4);
 }
 
 @media (max-width: 1500px) {
@@ -245,6 +246,13 @@ function toggleViewMode(mode: string) {
   #toggle-buttons {
     margin: 99px auto;
     margin-bottom: 0px;
+  }
+}
+
+@media (max-width: 500px) {
+  #toggle-buttons {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

@@ -89,7 +89,7 @@ if(managesServices){
     managedServiceNames.push(service.service_name);
 
     // Extract the id of the service
-    let match = service.service_id.match(regex);
+    let match = String(service.service_id).match(regex);
     if(match){
       managedServiceIds.push("/activities/services/" + match[1]);
     }
@@ -159,7 +159,7 @@ let reactive_managedServiceIds = ref(managedServiceIds);
     <!-- Navigation buttons for pagination -->
     <div id="navigation-button">
       <!-- Backward button element -->
-      <router-link :to="previousLink">
+      <router-link :to="previousLink || ''">
         <button class="nav-button" :disabled="id <= 1">
           <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
           <p> Previous </p>
@@ -173,7 +173,7 @@ let reactive_managedServiceIds = ref(managedServiceIds);
       </router-link>
 
       <!-- Next button element -->
-      <router-link :to="nextLink">
+      <router-link :to="nextLink || ''">
         <button class="nav-button" :disabled="id >= peopleCounter">
           <p> Next </p>
           <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
