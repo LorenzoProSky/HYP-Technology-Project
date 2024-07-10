@@ -202,4 +202,18 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
     line-height: 2.5vw;
   }
 }
+
+@media (max-width: 500px){
+  #quote-text{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  #quote-author{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  #quote-section{
+    height: auto;
+  }
+}
 </style>

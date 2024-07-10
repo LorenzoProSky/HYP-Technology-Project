@@ -43,7 +43,7 @@ const previousLink = computed(() => {
     const previousId = id.value - 1;
     return "/about-us/people/" + previousId;
   } else {
-    return null;
+    return "/about-us/people/";
   }
 });
 
@@ -52,7 +52,7 @@ const nextLink = computed(() => {
     const nextId = id.value + 1;
     return "/about-us/people/" + nextId;
   } else {
-    return null;
+    return "/about-us/people/";
   }
 });
 
