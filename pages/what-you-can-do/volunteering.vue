@@ -22,13 +22,13 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
       <div>
         <p>Volunteering at Centro MiLA has been one of the most rewarding experiences of my life. The love, strength, and resilience I see every day 
           inspire me to be a better person. Centro MiLA is truly a place where we all grow together.</p>
-        <p style="font-style: italic; font-size: var(--body3);">Elena, MiLA volunteer</p>
+        <p style="font-style: italic; font-size: var(--body3);" id="quote-author">Elena, MiLA volunteer</p>
       </div>
     </div>
   </div>
 
-  <div id="volunteer-role">
-    <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; transform: scaleX(-1); opacity: 0.25;">
+  <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; transform: scaleX(-1); opacity: 0.25;">
+  <div id="volunteer-role" style="z-index: 1; position: relative;">
     <img src="/assets/images/volunteer-pic2.jpeg" alt="volunteer-pic2" id="volunteer-pic2">
     <div>
       <h4>Who We Are Looking For</h4>
@@ -124,6 +124,8 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 }
 #quote-container div{
   width: 30.5vw;
+  font-size: var(--h4);
+  line-height: 40px;
 }
 
 #volunteer-role{
@@ -133,7 +135,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   align-items: center;
 }
 #volunteer-pic2{
-  width: 69.8vw;
+  width: 64.8vw;
   height: auto;
   margin-left: -20vw;
 }
@@ -152,13 +154,13 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   overflow-x: hidden
 }
 #volunteer-training div{
-  margin-right: 7.9vw;
+  margin-right: 10.4vw;
   width: 30vw;
   font-size: var(--body3);
   line-height: var(--l-height3);
 }
 #volunteer-pic1{
-  width: 69.8vw;
+  width: 59.8vw;
   height: auto;
   margin-right: -12vw;
 }
@@ -172,6 +174,34 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 }
 #volunteering-form p{
   max-width: 38.2vw;
+}
+
+@media (max-width: 1700px){
+  #quote-container{
+    padding-left: 10vw;
+  }
+  #quote-container div{
+    width: 80vw;
+    font-size: 2.7vw;
+    line-height: 2.8vw;
+  }
+  #quote-author {
+    font-size: 2.2vw!important;
+    line-height: 2.5vw!important;
+  }
+}
+
+@media (max-width:1300px){
+  #volunteer-role div{
+    font-size: var(--body2);
+    width: 40vw;
+    margin-left: 20px;
+  }
+  #volunteer-training div{
+    font-size: var(--body2);
+    width: 40vw;
+    margin-right: 20px;
+  }
 }
 
 @media(max-width:900px){
@@ -216,6 +246,21 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 
   form{
     width: 90vw !important;
+  }
+}
+
+@media (max-width: 500px){
+  #quote-container{
+    padding-left: 10vw;
+  }
+  #quote-container div{
+    width: 80vw;
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+  #quote-author {
+    font-size: var(--body1)!important;
+    line-height: var(--l-height1)!important;
   }
 }
 </style>

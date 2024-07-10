@@ -3,9 +3,13 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import { onMounted } from 'vue';
 import type { Person, Service } from '~/types/types';
 
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
 // service id from url
 const serviceId = useRoute().params.id as string;
-const serviceUrl = "http://localhost:3005/services/" + serviceId;
+const serviceUrl = baseBackendURL + "services/" + serviceId;
 const regex = /service\_(\d+)/;
 const find_id = serviceUrl.match(regex);
 let id: number = 0;
