@@ -10,7 +10,7 @@
   --beige: #FFF8EB;
   --beige-hover: #FFFDF9;
   --beige-active: #FFF9EF;
-  --orange: #FF7960;
+  --orange: #e62200;
   --white: #FFFFFF;
   --grey4: #F5F3F7;
   --grey3: #D4D2D5;
@@ -58,21 +58,32 @@
 
   /* Transition */
   --transition: 0.25s ease;
+
+  /* Manager card styling */
+  --manager-card-mobile-font-size: 16px;
+  --manager-card-tablet-font-size: 20px;
+  --manager-card-desktop-font-size: 24px;
+  --manager-card-font-family-text: 'Montserrat', sans-serif;
+  --manager-card-font-family-title: 'Playfair Display', serif;
 }
 
 
-
 /* Reset some default styles */
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
 html,
 body {
-  height: 100% !important;
-  width: 100% !important;
   margin: 0;
   padding: 0;
 }
 
+
+
+
 main {
-  width: 100%;
   font-size: var(--body4);
   line-height: var(--l-height4);
 }
@@ -86,17 +97,6 @@ main {
   main{
     font-size: var(--body1);
   }
-}
-
-#__nuxt {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: var(--white);
 }
 
 /* Styling for Text */
@@ -197,12 +197,6 @@ backward-button-wrapper {
 }
 
 
-/* Basic styling for Header and Footer */
-header {
-  background-color: var(--white);
-  text-align: center;
-  width: 100%;
-}
 footer {
   background-color: var(--white);
   padding: 50px 0;

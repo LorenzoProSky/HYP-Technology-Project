@@ -50,11 +50,11 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
       we will get in touch soon!</h4>
     <!--Cambiare action-->  
     <form action="/" style="width: 800px; margin-top: 92px;">
-      <input type="text" name="name" placeholder="Name and Surname" required>
-      <input type="text" name="age" placeholder="Your age" required>
-      <input type="text" name="e-mail" placeholder="E-mail address" required>
-      <input type="text" name="phone" placeholder="Phone number" required>
-      <textarea name="comment" placeholder="Write us a message." style="height: 282px;" required></textarea>
+      <input id="name-field" type="text" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
+      <input id="age-field" type="text" name="age" placeholder="Your age" required aria-label="Type here your age" aria-required="true">
+      <input id="email-field" type="text" name="e-mail" placeholder="E-mail address" required aria-label="Type here your email" aria-required="true">
+      <input type="text" name="phone" placeholder="Phone number" required aria-label="Type here your phone number" aria-required="true">
+      <textarea name="comment" placeholder="Write us a message." style="height: 282px;" required aria-required="true" aria-label="Type here your message for us"></textarea>
       <button type="submit" 
       style="width: 163px; height: 64px; background-color: var(--purple); border: 0; border-radius: 12px; font-size: var(--body4); color: white;
        font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px"> Send</button>

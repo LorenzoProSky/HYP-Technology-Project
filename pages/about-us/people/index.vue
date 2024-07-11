@@ -2,12 +2,15 @@
 // Import necessary components
 import PersonCard from '~/components/cards/PersonCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import profileImage from '~/assets/images/profile-image.jpeg';
-
+import { ref } from 'vue';
+import { useRuntimeConfig } from 'nuxt/app';
 // Import custom types to handle person data
 import type { Person } from '~/types/types'
-import { ref } from 'vue';
 
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL; 
 
 // Create references for data to be observed
 const people = ref([] as Person[]);
@@ -15,10 +18,10 @@ let peoplePerPage = ref(12);
 let startCount = ref(0);
 let endCount = ref(12);
 const targetSection = ref(null);  // reference to fixed element for scrolling
-const peopleUrl = "http://localhost:3005/people";
+const peopleUrl = baseBackendURL + "people";
 
 // Fetch data from the api
-const { data, error } = useFetch(peopleUrl);
+const { data, error } = await useFetch(peopleUrl);
 if(data.value !== null){
   people.value = data.value as Person[];
 } else { 
@@ -88,7 +91,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 
     <!-- Section content -->
     <div id="page-section" ref="targetSection"> <!-- Target section for smooth scroll -->
-      <h3 id="section-title">MiLA’s Team</h3>
+      <h2 id="section-title">MiLA’s Team</h2>
       <div id="section-description">
         Our compassionate team of counselors, legal experts, social workers, and
         volunteers is dedicated to empowering women and children facing domestic violence.
@@ -101,7 +104,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
       <div id="page-cards">
         <!-- Loop through visiblePeople to render PersonCard components -->
         <PersonCard v-for="(person, index) in visiblePeople" :key="index" :imageSrc="person.profile_image_url"
-          :name="person.name + ' ' + person.surname" :job="person.job_title" :to="`/about-us/people/${person.person_id}`"/>
+          :name="person.name + ' ' + person.surname" :job="person.job_title" :to="`/about-us/people/${person.person_id}`" :text="person.short_description === null ? '' : person.short_description"/>
       </div>
       <div id="bottom-space" v-if="totalPages == 1"/> <!-- Add space at the bottom if there is only one page -->
     </div>
@@ -145,6 +148,10 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
+}
+
+h2 {
+  font-size: var(--h3);
 }
 
 #page-section {

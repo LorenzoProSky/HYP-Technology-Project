@@ -13,7 +13,7 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 
     <!-- Section content -->
     <div id="page-section">
-      <h3 id="section-title">MiLA Activities</h3>
+      <h2 id="section-title">MiLA Activities</h2>
       <div id="section-description">
         At MiLA, we are dedicated to helping women and children affected by
         domestic violence through a variety of impactful services and projects.<br />Explore
@@ -65,6 +65,10 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
+}
+
+h2 {
+  font-size: var(--h3);
 }
 
 #page-section {

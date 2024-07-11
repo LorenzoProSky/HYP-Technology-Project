@@ -23,3 +23,6 @@ logs
 .env.*
 !.env.example
 app.env
+
+# Package.lock file shouldn't be pushed for deployment on Vercel
+package-lock.json

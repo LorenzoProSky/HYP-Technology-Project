@@ -1,202 +1,166 @@
 <script lang="ts" setup>
+
 import { onMounted } from 'vue';
-
-function openMenu() {
-  let mobileContainer = document.getElementById('mobile-container');
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.marginTop = "0";
-    mobileContainer.style.transition = "margin-top 0.5s ease";
-    mobileMenu.style.display = "none";
-    mobileMenuClose.style.display = "block";
-  }
-}
-
-function closeMenu(){
-  let mobileContainer = document.getElementById('mobile-container');
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  let subMenus = document.getElementsByClassName('subMenu');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  if (mobileContainer && mobileMenu && mobileMenuClose) {
-    mobileContainer.style.marginTop = "-500px";
-    mobileContainer.style.transition = "margin-top 0.5s ease";
-    mobileMenu.style.display = "block";
-    mobileMenuClose.style.display = "none";
-    if (window.screen.width > 900) {    
-      mobileMenu.style.display = "none";    
-    }
-  }
-  for(let i = 0; i < subMenus.length; i++){
-    let closing = subMenus[i] as HTMLElement;
-    let plusi = plus[i] as HTMLElement;
-    let minusi = minus[i] as HTMLElement;
-    closing.style.display = "none";
-    plusi.style.display = "block";
-    minusi.style.display = "none";
-    
-  }
-  
-}
-
-function openDrop(num: number){
-  let subMenus = document.getElementsByClassName('subMenu');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  if(subMenus[num] && plus[num] && minus[num]){
-    let subMenu = subMenus[num] as HTMLElement;
-    let plusi = plus[num] as HTMLElement;
-    let minusi = minus[num] as HTMLElement;
-    subMenu.style.display = "flex";
-    plusi.style.display = "none";
-    minusi.style.display = "block";
-  }
-  for(let i = 0; i < subMenus.length; i++){
-    if (i != num) {
-      let closing = subMenus[i] as HTMLElement;
-      let plusi = plus[i] as HTMLElement;
-      let minusi = minus[i] as HTMLElement;
-      closing.style.display = "none";
-      plusi.style.display = "block";
-      minusi.style.display = "none";
-    }
-  }
-}
-
-function closeDrop(num: number){
-  let subMenus = document.getElementsByClassName('subMenu');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  if(subMenus[num] && plus[num] && minus[num]){
-    let subMenu = subMenus[num] as HTMLElement;
-    let plusi = plus[num] as HTMLElement;
-    let minusi = minus[num] as HTMLElement;
-    subMenu.style.display = "none";
-    plusi.style.display = "block";
-    minusi.style.display = "none";
-  }
-}
-
-function openChat(){
-  let chatL = document.getElementById('chatbot-label');
-  let chatB = document.getElementById('chatbot-button');
-  if (chatL) {
-    chatL.style.visibility = 'visible';
-    chatL.style.opacity = '1';
-    chatL.style.transition = 'opacity 0.25s';
-  }
-  if (chatB) {
-    chatB.removeEventListener('click', openChat);
-  }
-}
-
-function closeChat(){
-  let chatL = document.getElementById('chatbot-label');
-  let chatB = document.getElementById('chatbot-button');
-  if (chatL) {
-    chatL.style.visibility = 'hidden';
-    chatL.style.opacity = '0';
-    chatL.style.transition = 'opacity 0.25s, visibility 0.25s';
-  }
-  if (chatB) {
-    chatB.addEventListener('click', openChat);
-  }
-}
-
-onMounted(() => {
-  let mobileMenu = document.getElementById('mobileMenu');
-  let mobileMenuClose = document.getElementById('mobileMenuClose');
-  let plus = document.getElementsByClassName('plus');
-  let minus = document.getElementsByClassName('minus');
-  let links = document.getElementsByTagName('a');
-  let chatB = document.getElementById('chatbot-button');
-  let chatClose = document.getElementById('chat-close-button');
-  for (let i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', closeMenu);
-    links[i].addEventListener('click', closeChat); 
-  }
-  if (mobileMenu && mobileMenuClose) {
-    mobileMenu.addEventListener('click', openMenu);
-    mobileMenuClose.addEventListener('click', closeMenu); /**forse non serve */
-  }
-  for (let i = 0; i < plus.length; i++) {
-    plus[i].addEventListener('click', () => {openDrop(i)});
-  }
-  for (let i = 0; i < minus.length; i++) {
-    minus[i].addEventListener('click', () => {closeDrop(i)});
-  }
-  if (chatB) {
-    chatB.addEventListener('click', openChat);
-  }
-  if (chatClose) {
-    chatClose.addEventListener('click', closeChat);
-  }
-});
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
 import MainButton from '~/components/buttons/MainButton.vue';
 import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
 import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
+import Chat from '~/components/chatbot/Chat.vue';
+import MobileHeaderOpenCloseButton from '~/components/buttons/MobileHeaderOpenCloseButton.vue';
+import MobileHeaderPlusMinusButton from '~/components/buttons/MobileHeaderPlusMinusButton.vue';
 
-export default defineComponent({
-  components: {
-    MainButton,
-    SecondaryButton,
-    ExitButton
-  },
-  /*
-  watch: {
-    // Quando il percorso cambia, esegui la funzione
-    '$route'(to, from) {
-      closeChat();
-    },
-  },*/
+/* 
+ * Variable that keeps track of whether the layout is for a mobile or desktop target 
+ * it is constantly updated using an event listener on the window element.
+ */
+const isMobile = ref(false);
+
+/* Variable to keep track of whether the mobile menus is opened or not */
+const isMobileMenuOpened = ref(false);
+
+/* Variable to keep track of the appearance of the chatbot dialogue */
+const isChatbotDialogOpened = ref(false);
+
+
+
+watch(isMobile, () => {
+  /* Keep the mobile menu closed if the layout is not for mobile */
+  if(!isMobile.value){
+    isMobileMenuOpened.value = false;
+  }
+});
+
+
+/* Open and close mobile menu based on the boolean ref isMobileMenuOpened */
+function toggleMobileMenu() {
+  isMobileMenuOpened.value = isMobileMenuOpened.value === true ? false : true;
+}
+
+function toggleChatbotDialogue() {
+  isChatbotDialogOpened.value = isChatbotDialogOpened.value === true ? false : true;
+  console.log("value: "+isChatbotDialogOpened.value);
+}
+
+
+
+function openSubmenu(index: number) {
+  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
+  if(subMenu){
+    subMenu.style.display='flex';
+  }
+}
+
+function closeSubmenu(index: number) {
+  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
+  if(subMenu){
+    subMenu.style.display='none';
+  }
+}
+
+function hideDropDown(id: number) {
+  let dropDownMenus = document.querySelectorAll('.dropdown-menu');
+  if(dropDownMenus) {
+    (dropDownMenus[id] as HTMLElement).style.opacity = '0';
+  }
+}
+
+function showDropDown(id: number) {
+  let dropDownMenus = document.querySelectorAll('.dropdown-menu');
+  if(dropDownMenus) {
+    (dropDownMenus[id] as HTMLElement).style.opacity = '1';
+  }
+}
+
+
+
+
+onMounted(() => {
+
+  isMobile.value = window.innerWidth < 1050;
+
+  /* Recalculate the state of the page on resizing for conditional rendering of elements on the page */
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth < 1050;
+  });
+
+
+
+
+  /* ARIA attributes handling for expandable dropdown menus
+   * The "a" element created by the NuxtLink is extracted and the listeners for
+   * focus and hovering events modify the aria-expanded attributes */
+  document.querySelectorAll('.menu-container > a').forEach( link => {
+    link.addEventListener('mouseover', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+    link.addEventListener('mouseout', (event) => {
+      link.setAttribute('aria-expanded', 'false');
+    });
+    link.addEventListener('focus', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+    link.addEventListener('blur', (event) => {
+      link.setAttribute('aria-expanded', 'true');
+    });
+
+
+  });
+
+  
+
 });
 </script>
 
 <!-- TEMPLATE --------------------------------------------------------------------------------->
 <template>
+  
   <header>
-    <NuxtLink to="/" id="logo">
-      <Icon class="header-logo" name="CentreLogoIcon" size="180" />
+    
+    <!-- Home page link -->
+    <NuxtLink to="/" class="logo" aria-label="Go back to Home page">
+      <Icon name="CentreLogoIcon" size="180" />
     </NuxtLink>
-    <nav>
+    
+    <!-- Navigation bar top-left -->
+    <nav class="desktop-nav" v-if="!isMobile">
+
       <div class="menu-container">
-        <NuxtLink to="/about-us">About Us</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink class="high-level-link" to="/about-us" aria-controls="about-us-dropdown" aria-expanded="false" @mouseover="showDropDown(0)" @mouseleave="hideDropDown(0)">
+          About Us
+        </NuxtLink>
+        <ul id="about-us-dropdown" class="dropdown-menu" @click="hideDropDown(0)" @mouseover="showDropDown(0)" @mouseleave="hideDropDown(0)" >
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/about-us/people">Our People</NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/activities">Our Activities</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink class="high-level-link" to="/activities" aria-controls="our-activities-dropdown" aria-expanded="false" @mouseover="showDropDown(1)" @mouseleave="hideDropDown(1)">
+          Our Activities
+        </NuxtLink>
+        <ul id="our-activities-dropdown" class="dropdown-menu" @click="hideDropDown(1);" @mouseover="showDropDown(1)" @mouseleave="hideDropDown(1)">
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/activities/projects">Projects</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/activities/services">Services</NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="menu-container">
-        <NuxtLink to="/what-you-can-do">What You Can Do</NuxtLink>
-        <ul class="dropdown-menu">
-          <li class="first-li">
+        <NuxtLink class="high-level-link" to="/what-you-can-do" aria-controls="what-you-can-do-dropdown" aria-expanded="false" @mouseover="showDropDown(2)" @mouseleave="hideDropDown(2)">
+          What You Can Do
+        </NuxtLink>
+        <ul id="what-you-can-do-dropdown" class="dropdown-menu" @click="hideDropDown(2)" @mouseover="showDropDown(2)" @mouseleave="hideDropDown(2)">
+          <li aria-posinset="1" aria-setsize="2">
             <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
           </li>
-          <li class="last-li">
+          <li aria-posinset="2" aria-setsize="2">
             <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
           </li>
         </ul>
@@ -205,113 +169,107 @@ export default defineComponent({
       <SecondaryButton buttonText="Contact Us" buttonLength="short" to="/contacts" id="contactUs"
         style="font-size: var(--body2); line-height: var(--l-height-header); width: 137px; height: 50px;" />
 
-      <ExitButton />
+      <ExitButton/>
     </nav>
 
-    <!-- header for mobile -->
-    <Icon name="MenuIcon" color=var(--purple) id="mobileMenu" />
-    <Icon name="MobileExitIcon" color=var(--purple) id="mobileMenuClose" />
-    <div id="mobile-container" >
+
+    <!-- MOBILE HEADER -->
+    <MobileHeaderOpenCloseButton class="mobile-menu-open-close-button" v-if="isMobile" @toggle-mobile-menu="toggleMobileMenu"></MobileHeaderOpenCloseButton>
+
+    <nav id="mobile-nav" class="mobile-container" v-if="isMobileMenuOpened && isMobile">
+
       <div class="dropdown-mobile">
         <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />        
+        <MobileHeaderPlusMinusButton :index="0" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
         <NuxtLink to="/about-us/people">Our People</NuxtLink>
-      </div>
+      </div>   
+
       <div class="dropdown-mobile">
         <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
+        <MobileHeaderPlusMinusButton :index="1" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/activities/projects">Projects</NuxtLink>        
         <NuxtLink to="/activities/services">Services</NuxtLink>
       </div>
+
       <div class="dropdown-mobile">
         <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <Icon name="MobilePlusIcon" color=var(--purple-hover) class="plus" />
-        <Icon name="MobileMinusIcon" color=var(--purple-hover) class="minus" />
+        <MobileHeaderPlusMinusButton :index="2" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
       </div>
       <div class="subMenu">
         <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
         <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
       </div>
-      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contactUsT"
+
+      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contact-us-button-mobile"
          style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-      <SecondaryButton buttonText="Contact Us" buttonLength="smartphone" to="/contacts" id="contactUsS"
-         style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-    </div>
-    <ExitButton id="mobile-exit"/>
+    
+    </nav>
+
+    <ExitButton class="mobile-exit" v-if="isMobile" aria-label="Exit from the website"/>
+
   </header>
 
+  <!-- Chatbot -->
+  <ChatbotButton id="chatbot-button" @chatbot-button-clicked="toggleChatbotDialogue" aria-controls="chat" :aria-expanded="isChatbotDialogOpened" aria-label="Open chatbot"/>
+  <Chat v-if="isChatbotDialogOpened" @close-chatbot="toggleChatbotDialogue" id="chat"></Chat>
+
   <main>
-    <!-- Chatbot -->
-    <ChatbotButton id="chatbot-button" />
-    <div id="chatbot-label">
-      <div id="chat-left">
-        <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px;" />
-        <h4>We are to <br> help you.</h4>
-        <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
-          While you won't be interacting with a person directly, the answers provided have been carefully crafted by trained professionals from Anti-Violence Centers.</p>
-      </div>
-
-      <div id="chat-right" >
-        <div id="chat-close">
-          <SecondaryButton buttonText="Clear Chat" buttonLength="short" style="font-size: var(--body1); line-height: var(--l-height1);
-           width: 120px; height: 40px;" id="secondaryButton-mobile"/>
-          <Icon name="MobileExitIcon" color="var(--purple)" size="32" style="margin-right: 40px; cursor: pointer" id="chat-close-button" />
-        </div>
-        <div id="chat-conversation" >
-          <!--la conversazione con il chatbot va inserita qui-->
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatUser text="ciao" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-          <ChatbotChatAgent text="ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" />
-        </div>
-        <form>
-          <input type="text" name="input" placeholder="Here you can write" id="chat-input" required>
-          <button type="submit" style="width: 80px; height: 40px; border: 1px solid var(--purple); border-radius: 8px; font-size: var(--body1); 
-          background-color: var(--white); color: var(--purple); cursor: pointer;" >Send</button>
-        </form>
-      </div>
-    </div>
-
-    <slot />
+    <slot></slot>
   </main>
 
   <footer>
     <div id="info">
-      <Icon class="footer-logo" name="CentreLogoIcon" size="283" />
+      <Icon class="footer-logo" aria-label="Centro MiLA logo" name="CentreLogoIcon" size="283" />
       <p>Since 2004, the point of reference in Milan for all women in difficulty.</p>
       <MainButton buttonText="Donate" buttonLength="short" to="/what-you-can-do/donate" />
     </div>
 
     <nav class="body4">
-      <div>
-        <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
-        <NuxtLink to="/about-us/people">Our People</NuxtLink>
-      </div>
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/about-us/locations">Our Location</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/about-us/people">Our People</NuxtLink>
+        </li>
+      </ul>
+      
       <div class="vertical-line"></div>
-      <div>
-        <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <NuxtLink to="/activities/services">Our Services</NuxtLink>
-        <NuxtLink to="/activities/projects">Our Projects</NuxtLink>
-      </div>
+      
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/activities/services">Our Services</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/activities/projects">Our Projects</NuxtLink>
+        </li>
+      </ul>
+
       <div class="vertical-line"></div>
-      <div>
-        <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
-        <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
-      </div>
+
+      <ul>
+        <li aria-setsize="3" aria-posinset="1">
+          <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="2">
+          <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>
+        </li>
+        <li aria-setsize="3" aria-posinset="3">
+          <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
+        </li>
+      </ul>
+
     </nav>
 
     <div id="contacts">
@@ -333,52 +291,45 @@ export default defineComponent({
 
 
 <style scoped>
+
 /* HEADER **************************************************************************/
+
 header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   height: var(--header-height);
   z-index: 10; /* Ensure the header is on top */
-}
-header::before { /* set a z-index for the background */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding: 0 3rem;
   width: 100%;
-  height: 100%;
   background-color: var(--white);
-  z-index: -1; 
-}
-
-#logo {
-  text-decoration: none;
-  margin-left: 5.2%;
-  /* equal to 100px on a screen that is 1920px wide */
-  margin-right: 10px;
-  min-width: 114px;
+  top: 0;   /* Place the header at the top of the page without adding any space */
 }
 
 /* Navigation Bar */
-header nav{
+.desktop-nav {
   display: flex;
-  flex-direction: row;
-  justify-content: right;
+  justify-content: space-between;
   align-items: center;
-  gap: 2.917vw;
-  /* equal to 56px on a screen that is 1920px wide */
-  margin-right: 4.17%;
-  /* equal to 80px on a screen that is 1920px wide */
+  width: 60%;
+  min-width: 750px;
+  max-width: 900px;
+  gap: 1.8rem;
+  
   font-size: var(--body2);
   line-height: var(--l-height-header);
-  min-width: 539px;
 }
 
 nav a {
   color: var(--black);
+}
+
+/* Making the link area larger to improve accessibility for 
+  people with mobility impairments */
+.high-level-link {
+  min-height: 40px;
+  margin-top: 20px
 }
 
 header nav #contactUs{
@@ -386,144 +337,223 @@ header nav #contactUs{
   margin-right: 1.25vw; /* equal to 24px on a screen that is 1920px wide */
 }
 
-/**Header for mobile devices */
-#mobileMenu{
-  display: none;
-  margin-right: var(--mobile-size2);
-  height: var(--mobile-size2);
-  width: var(--mobile-size2);
-}
-#mobileMenuClose{
-  display: none;
-  margin-right: var(--mobile-size2);
-  height: 42px;
-  width: 42px;
-}
-#mobile-container{
+.menu-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  text-align: center;
+  position: relative;
+}
+
+.dropdown-menu {
+  opacity: 0;
+  transition: opacity 0.5s;
+  position: absolute;
+  top: 42px;  
+  background-color: var(--white);
+  width: 187px;
+  border: 1px, solid, var(--lilac);
+  border-radius: var(--border-radius-card);
+  z-index: 1;
+  padding: 0;
+  margin: 32  px 0;
+  list-style: none;
+}
+
+/* Show the dropdown menu on hover and on focus
+ * If the link (a), child of .menu-container is hovered or focused, the .dropdown-menu
+ * that is its sibling becomes visible.
+ * Moreover, if the dropdown menu itself is hovered or if any of the children are focused, the opacity
+ * stays set to 1.
+ */
+.menu-container a:hover + .dropdown-menu,
+.menu-container a:focus + .dropdown-menu,
+.dropdown-menu:hover,
+.dropdown-menu:focus-within {
+  opacity: 1;
+}
+
+.menu-container a:hover,
+.menu-container a:focus {
+  color: var(--purple);
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu li {
+  padding: 16px 0 24px 0;
+}
+.dropdown-menu li:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.dropdown-menu li:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Background color for the single links in the dropdown menus
+ * both in case of hovering with the mouse and in case of focusing on the link wrapped inside 
+ * the li element of the list.
+*/
+.dropdown-menu li:hover,
+.dropdown-menu li:focus-within {
+  background-color: var(--lilac);
+}
+
+
+
+
+
+
+/**Header for mobile devices */
+
+/* Wrapper for the dropdown menu */
+.mobile-container {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
   font-size: var(--body2);
   line-height: var(--l-height-header);
   background-color: var(--white);
-  padding-top: 54px;
-  width: 100vw;
+  padding-top: 3.4rem;
+
   position: fixed;
+  width: 100%;
   top: var(--mobile-header2);
-  right: 0;
+  left: 0;
+
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
   margin-top: -500px;
   z-index: -2 !important;
 }
-#mobile-container .dropdown-mobile{
+
+/* Top-level links */
+.mobile-container .dropdown-mobile {
+  max-width: 550px;
   width: 80%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
-#mobile-container a{
+.mobile-container a {
   color: var(--black);
 }
-.plus{
-  height: 28px;
-  width: 28px;
-}
-.minus{
-  display: none;
-  height: 28px;
-  width: 28px;
-}
-.subMenu{
+
+
+/* Sub-menus under the top-level links */
+.subMenu {
   display: none;
   flex-direction: column;
   align-items: start;
-  gap: 16px;
+  gap: 1rem;
   width: 75%;
+  max-width: 500px;
   margin-top: -12px;
   margin-bottom: 16px;
   font-size: var(--body1);
   line-height: var(--l-height1);
   font-weight: var(--medium);
 }
-.subMenu a{
-  color: var(--grey1)!important;
-}
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: none;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: none;
-}
-#mobile-exit{
-  display: none;
+.subMenu a {
+  color: var(--grey1);
 }
 
-/* DROPDOWN MENU ********************************************************/
-.menu-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  height: calc(var(--header-height)/2);
-  /**Increase the height to ensure the hover works*/
-  top: calc(var(--header-height)/4 - var(--l-height-header)/2);
-  /**centering the element horizontally*/
+main {
+  margin-top: var(--header-height);
 }
 
-.dropdown-menu {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s, visibility 0.5s;
 
-  position: absolute;
-  top: 16px;
-  padding: 0;
-  background-color: var(--white);
-  width: 187px;
-  border: 1px, solid, var(--lilac);
-  border-radius: var(--border-radius-card);
-  z-index: 1;
+
+
+/* Media queries for header (desktop-first approach) */
+
+/* TABLET */
+@media screen and (max-width: 1050px) {
+  header {
+    padding: 0 2rem 0 8%;
+    height: var(--mobile-header2);
+  }
+
+  .mobile-exit {
+    display: block;
+    position: fixed;
+    right: 72px;
+    bottom: 54px;
+    border-radius: 100%;
+    z-index: 11;
+  }
+
+  main{
+    margin-top: var(--mobile-header2);
+  }
+
+
+  #contact-us-button-mobile{
+    margin: var(--mobile-size2);
+    display: block;
+    min-width: 200px;
+    max-width: 350px;
+  }
+
 }
 
-/* Dropdown Menu Items */
-.dropdown-menu li {
-  padding: 16px 0 24px 0;
-  display: block;
+/* SMARTPHONE */
+@media only screen and (max-width: 430px){
+  header{
+    height: var(--mobile-header1);
+  }
+  main{
+    margin-top: var(--mobile-header1);
+  }
+
+  .logo svg{
+    height: 45px;
+  }
+
+  .mobile-container{
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+    top: var(--mobile-header1);
+  }
+
+  .mobile-container .dropdown-mobile{
+    width: 70.8%;
+  }
+
+  .mobile-exit {
+    position: fixed;
+    right: 40px;
+    bottom: 32px;
+  }
+
+  .subMenu{
+    gap: 12px;
+    width: 65%;
+    margin-top: -14px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  #contact-us-button-mobile {
+    margin: var(--mobile-size2);
+    margin-bottom: 48px;
+    max-width: 70vw;
+  }
+
 }
 
-.dropdown-menu .first-li {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
 
-.dropdown-menu .last-li {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
 
-.dropdown-menu li:hover {
-  background-color: color-mix(in srgb, var(--purple-hover) 20%, transparent);
-}
 
-/* Show the dropdown menu on hover */
-.menu-container:hover .dropdown-menu {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s;
-}
 
-.menu-container:hover a {
-  color: var(--purple) !important;
-}
 
-.menu-container:hover .dropdown-menu a {
-  color: var(--black) !important;
-}
+
+
+
+
+
+
 
 /* FOOTER ************************************************************/
 footer {
@@ -563,18 +593,17 @@ footer #info a {
 footer nav {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
+  align-items: start;
 }
 
-footer nav div {
+footer nav ul {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
   align-items: start;
+  justify-content: start;
   gap: 20px;
   padding: 20px 40px;
+  list-style: none;
 }
 
 footer nav .vertical-line {
@@ -617,119 +646,7 @@ footer .arrow{
   min-height: 24px;
 }
 
-/** CHATBOT **********************************************************/
-#chatbot-label{
-  position: fixed;
-  top: 26.5vh;
-  right: 59px;
-  z-index: 100;
-  width: 1416px;
-  max-width: 90vw;
-  height: 70vh;
-  border-radius: 24px;
-  box-shadow: 0px 16px 40px rgba(26, 20, 31, 0.15);
-  display: flex;
-  flex-direction: row;
-  background-color: var(--white);
-  visibility: hidden;
-  opacity: 0;
-}
 
-#chat-left{
-  width: 27%;
-  height: 100%;
-  background-color: var(--purple);
-  border-top-left-radius: 24px;
-  border-bottom-left-radius: 24px;
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-}
-#chat-left h4{
-  width: 68.8%;
-}
-#chat-left p{
-  font-size: var(--body1);
-  line-height: var(--l-height1);
-  margin-top: 24px;
-  margin-bottom: 72px;
-  width: 68.8%;
-}
-#chat-left a{
-  position: absolute;
-  top: 48px;
-  left: 4.2%;
-}
-
-#secondaryButton-mobile{
-  display: none;
-}
-#chat-right{
-  width: 73%;
-  height: 100%;
-}
-#chat-close{
-  height: 80px;
-  border-bottom: 1px solid var(--grey1);
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
-  gap: 32px;
-}
-#chat-conversation{
-  height: calc(100% - 80px - 72px - 6.8vh);
-  background-color: var(--white);
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-/* scrollbar per browser WebKit */
-#chat-conversation::-webkit-scrollbar {
-  width: 12px;
-}
-#chat-conversation::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--white) 80%, transparent);
-  border-radius: 10px;
-}
-#chat-conversation::-webkit-scrollbar-thumb {
-  background: var(--grey2);
-  border-radius: 10px;
-  border: 1px solid var(--white);
-}
-/* scrollbar per Firefox */
-/*
-#chat-conversation {
-  scrollbar-width: thin;
-  scrollbar-color: var(--grey2) var(--white);
-}*/
-
-form{
-  position: absolute;
-  bottom: 6.8vh;
-  right: 3.5vw;
-  width: 883px;
-  max-width: calc(100vw * 90/100 * 73/100 * 90/100);
-  height: 72px;
-  background-color: var(--white);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  font-size: var(--body1);
-}
-#chat-input{
-  height: calc(100% - 20px);
-  width: 88.45%;
-  margin: 0;
-  border: 2px solid var(--grey2);
-  border-radius: 12px;
-}
-#chat-input:focus{
-  outline: none;
-}
 
 
 /**other general stylings */
@@ -738,9 +655,7 @@ footer .body4 {
   line-height: var(--l-height4);
 }
 
-main {
-  margin-top: var(--header-height);
-}
+
 
 .semiboldText {
   font-weight: var(--semibold)
@@ -751,39 +666,6 @@ p {
 }
 
 
-
-/**Dynamic header */
-@media (max-width: 1084px) and (min-device-width: 901px){
-  .dropdown-menu {
-    top: 38px;
-  }
-  #logo svg{
-    width: 130px;
-  }
-}
-
-@media (max-width: 1019.2px){
-  .menu-container{
-    top: calc(var(--header-height)/4 - var(--l-height-header)); /**centering the element horizontally*/
-  }
-
-}
-
-@media (max-width: 968px){
-  #logo {
-    margin-left: 10px;
-  }
-}
-
-@media (max-width: 851px) and (min-device-width: 901px){
-  header nav {
-    font-size: var(--body1);
-    margin-right: 10px;
-  }
-  #logo svg{
-    width: 100px;
-  }
-}
 
 /**Dynamic footer */
 @media (max-width: 1600px) {
@@ -803,7 +685,7 @@ p {
     flex-direction: column;
   }
 
-  footer nav div {
+  footer nav ul {
     padding: 20px;
   }
 
@@ -835,7 +717,7 @@ p {
     flex-direction: row;
   }
 
-  footer nav div {
+  footer nav ul {
     padding: 20px 40px;
   }
 
@@ -850,69 +732,12 @@ p {
   }
 }
 
-/**Dynamic Chatbot */
-@media(max-width: 1100px){
-  #chat-left p{
-    width: 90%;
-  }
-}
-@media(max-width: 900px){
-  #chatbot-label{
-    right: 3vw;
-  }
-  #chat-left{
-    display: none;
-  }
-  #chat-right{
-    width: 100%;
-  }
-  form{
-    max-width: calc(100vw * 90/100 * 90/100);
-  }
-  #secondaryButton-mobile{
-    display: block !important;
-  }
-  footer{
-    padding-bottom: 200px;
-  }
-}
 
 /**Stylings for mobile devices */
 /**tablet */
 @media only screen and (max-device-width:900px){
-header{
-  height: var(--mobile-header2);
-}
-main{
-  margin-top: var(--mobile-header2);
-}
-#logo{
-  margin-left: var(--mobile-size2);
-}
-#logo img{
-  height: var(--mobile-size2);
-}
-header nav{
-  display: none;
-}
-#mobileMenu{
-  display: block;
-}
-#mobile-exit{
-  display: block!important;
-  position: fixed;
-  right: 72px;
-  bottom: 54px;
-}
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: block;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: none;
-}
+
+
 
 footer {
   align-items: center;
@@ -929,7 +754,7 @@ footer nav{
 flex-direction: column;
 margin-left: 5.73vw;
 }
-footer nav div{
+footer nav ul{
 padding: 20px;
 }
 footer nav .vertical-line{
@@ -942,66 +767,4 @@ footer #contacts {
 }
 }
 
-/**smartphones */
-@media only screen and (max-device-width: 430px){
-header{
-  height: var(--mobile-header1);
-}
-main{
-  margin-top: var(--mobile-header1);
-}
-#logo{
-  margin-left: var(--mobile-size1);
-}
-#logo img{
-  height: 27px;
-}
-#mobileMenu{
-  margin-right: var(--mobile-size1);
-  height: var(--mobile-size1);
-  width: var(--mobile-size1);
-}
-#mobileMenuClose{
-  margin-right: var(--mobile-size1);
-  height: 32px;
-  width: 32px;
-}
-#mobile-container{
-  font-size: var(--body1);
-  line-height: var(--l-height1);
-  top: var(--mobile-header1);
-}
-#mobile-container .dropdown-mobile{
-  width: 70.8%;
-}
-#mobile-exit{
-  position: fixed;
-  right: 40px;
-  bottom: 32px;
-}
-.plus{
-  height: 24px;
-  width: 24px;
-}
-.minus{
-  height: 24px;
-  width: 24px;
-}
-.subMenu{
-  gap: 12px;
-  width: 65%;
-  margin-top: -14px;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
-#contactUsT{
-  margin: var(--mobile-size2);
-  margin-bottom: 48px;
-  display: none;
-}
-#contactUsS{
-  margin: var(--mobile-size2);
-  display: block;
-}
-}
 </style>

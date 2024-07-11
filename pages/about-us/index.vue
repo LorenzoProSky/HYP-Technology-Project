@@ -11,7 +11,7 @@
 
   <div id="container">
     <div id="intro">
-      <h3>A Safe Place Since 2004</h3>
+      <h2>A Safe Place Since 2004</h2>
       <p>Welcome to Centro MiLA, where we stand as a beacon of hope and support for women and children facing domestic violence
         in Milan. Since our opening in 2004, we have been a steadfast ally for women and children facing domestic violence. Our
           journey began with a small team of dedicated individuals who believed in the transformative power of compassion and advocacy.
@@ -115,6 +115,11 @@
 }
 
 /**Introductive section */
+
+h2 {
+  font-size: var(--h3);
+}
+
 #intro{
   margin: 100px 15%;
   width: 60vw;

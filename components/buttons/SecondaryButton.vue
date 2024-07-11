@@ -55,15 +55,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- Wrap the button in a NuxtLink for navigation -->
-  <NuxtLink :to="to">
-    <!-- Secondary button element -->
-    <button class="secondary-button" :class="{ 'is-disabled': isDisabled }" :style="{ width: buttonWidth }"
-      @mouseover="hover = true" @mouseleave="hover = false" @mousedown="active = true" @mouseup="active = false"
-      @focus="focused = true" @blur="focused = false" :disabled="isDisabled" v-bind="$attrs">
-      {{ buttonText }}
-    </button>
-  </NuxtLink>
+  <!-- Secondary button element -->
+  <button class="secondary-button" :class="{ 'is-disabled': isDisabled }" :style="{ width: buttonWidth }"
+    @mouseover="hover = true" @click="navigateTo(to)" @mouseleave="hover = false" @mousedown="active = true" @mouseup="active = false"
+    @focus="focused = true" @blur="focused = false" :disabled="isDisabled" v-bind="$attrs">
+    {{ buttonText }}
+  </button>
 </template>
 
 /* Styles for the Secondary button */

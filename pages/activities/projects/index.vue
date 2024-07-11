@@ -2,11 +2,15 @@
 // Import necessary components
 import ProjectCard from '~/components/cards/ProjectCard.vue';
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import projectImage from '~/assets/images/project-image.png';
+import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Project } from '~/types/types';
 
-const fetchProjectsURL = "http://localhost:3005/projects";
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
+
+const fetchProjectsURL = baseBackendURL + "projects";
 
 const allProjects = ref([]) as Ref<Project[]>;
 const projectsPerPage = ref(6);
@@ -18,27 +22,27 @@ const targetSection = ref(null);
 
 
 const { data } = await useFetch(fetchProjectsURL);
-if(data.value){
+if (data.value) {
   allProjects.value = data.value as Project[];
 }
 
 // Divide present and past projects into different arrays
 const ongoingProjects = computed(() => {
-  let ongoingProjects: Project [] = [];
-  for(let project of allProjects.value){
-      if(project.status === true){
-        ongoingProjects.push(project);
-      }
+  let ongoingProjects: Project[] = [];
+  for (let project of allProjects.value) {
+    if (project.status === true) {
+      ongoingProjects.push(project);
+    }
   }
   return ongoingProjects;
 });
 
 const pastProjects = computed(() => {
-  let pastProjects: Project [] = [];
-  for(let project of allProjects.value){
-      if(project.status === false){
-        pastProjects.push(project);
-      }
+  let pastProjects: Project[] = [];
+  for (let project of allProjects.value) {
+    if (project.status === false) {
+      pastProjects.push(project);
+    }
   }
   return pastProjects;
 });
@@ -48,9 +52,9 @@ const visibleProjects = computed(() => {
 });
 
 const totalPages = computed(() => {
-  return viewMode.value === 'present' 
-  ? Math.ceil(ongoingProjects.value.length / projectsPerPage.value) 
-  : Math.ceil(pastProjects.value.length / projectsPerPage.value);
+  return viewMode.value === 'present'
+    ? Math.ceil(ongoingProjects.value.length / projectsPerPage.value)
+    : Math.ceil(pastProjects.value.length / projectsPerPage.value);
 })
 
 const currentPage = computed(() => {
@@ -66,12 +70,12 @@ function showMore() {
 
 function showLess() {
   startCount.value -= projectsPerPage.value;
-  if(startCount.value < 0){
+  if (startCount.value < 0) {
     startCount.value = 0;
   }
 
   endCount.value -= projectsPerPage.value;
-  if(endCount.value < projectsPerPage.value){
+  if (endCount.value < projectsPerPage.value) {
     endCount.value = projectsPerPage.value;
   }
 
@@ -86,8 +90,8 @@ function scrollToTarget() {
 }
 
 function shouldDisplaySeparator(pageNumber: number): boolean {
-  if(pageNumber === totalPages.value){
-      return false;
+  if (pageNumber === totalPages.value) {
+    return false;
   }
   return true;
 }
@@ -205,8 +209,8 @@ function toggleViewMode(mode: string) {
   }
 }
 
-@media (max-width: 650px){
-  #page-section{
+@media (max-width: 650px) {
+  #page-section {
     width: 80vw;
   }
 }
@@ -247,8 +251,9 @@ function toggleViewMode(mode: string) {
     margin-bottom: 0px;
   }
 }
-@media (max-width: 500px){
-  #toggle-buttons{
+
+@media (max-width: 500px) {
+  #toggle-buttons {
     flex-direction: column;
     gap: 10px;
   }
@@ -261,7 +266,7 @@ function toggleViewMode(mode: string) {
   border-radius: 24px;
   background-color: var(--grey4);
   font-family: var(--font-montserrat);
-  color: var(--grey2);
+  color: var(--black);
   font-size: var(--body3);
   font-weight: var(--medium);
   cursor: pointer;

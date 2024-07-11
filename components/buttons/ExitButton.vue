@@ -18,22 +18,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- Wrap the button in a NuxtLink for navigation -->
-  <NuxtLink to="https://www.google.com">
-    <!-- Exit button element -->
-    <button class="exit-button" @mouseover="hover = true" @mouseleave="hover = false" @mousedown="active = true"
-      @mouseup="active = false" @focus="focused = true" @blur="focused = false" v-bind="$attrs">
-      <!-- Icon for the button on top -->
-      <div class="icon-container">
-        <Icon name="ExitIcon" size="34" />
-      </div>
-      <!-- Text for the button -->
-      <span>{{ "Exit" }}</span>
-    </button>
-  </NuxtLink>
+  <!-- Exit button element -->
+  <button class="exit-button" @click="navigateTo('https://www.google.com', {external: true})" @mouseover="hover = true" @mouseleave="hover = false" @mousedown="active = true"
+    @mouseup="active = false" @focus="focused = true" @blur="focused = false" v-bind="$attrs">
+    <!-- Icon for the button on top -->
+    <div class="icon-container">
+      <Icon name="ExitIcon" size="34" />
+    </div>
+    <!-- Text for the button -->
+    <span>{{ "Exit" }}</span>
+  </button>
 </template>
 
-/* Styles for the Exit button */
+
 <style scoped>
 /* Default style for the button */
 .exit-button {
@@ -70,7 +67,7 @@ export default defineComponent({
   }
 }
 
-@media only screen and (max-device-width:900px){
+@media only screen and (max-device-width:1050px){
   .exit-button{
     height: 84px;
     width: 84px;

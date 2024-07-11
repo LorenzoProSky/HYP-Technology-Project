@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 
-import { useRoute, useFetch } from 'nuxt/app';
+import { useRoute, useFetch, useRuntimeConfig } from 'nuxt/app';
 
 // Import interfaces for handling data conversion from json server response
 import type { Project, Manager, Image, Sponsor } from '~/types/types';
+
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
 
 // Reactive variable containing all the data coming from the server
 const projectData = ref() as Ref<Project>;
@@ -11,7 +16,7 @@ const projectData = ref() as Ref<Project>;
 
 // Extract project id from url and build api server call
 const projectID = useRoute().params.id as string;
-const projectURL = "http://localhost:3005/projects/" + projectID;
+const projectURL = baseBackendURL + "projects/" + projectID;
 
 // Fetch data of the current project from the server
 const { data, error } = await useFetch(projectURL);
@@ -27,11 +32,6 @@ if(data.value){
 // Objects for dynamic styling of elements
 const coverStyling = ref({
   backgroundImage: `url(${projectData.value.image[0].image_url})`,
-  minHeight: '50vw',
-  backgroundSize: 'cover',
-  backgroundPosition: 'top right',
-  backgroundRepeat: 'no-repeat',
-  fontSize: '1em',
 });
 
 
@@ -91,105 +91,104 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 <template>
 
   <!-- Wrapper for the whole page -->
-  <div class="flex-column-layout" id="page-wrapper">
+  <div class="page-wrapper">
 
-    <!-- Cover section -->
-    <div class="flex-column-layout"  :style="coverStyling">
-      
-      <!-- Title  and manager of the project-->
-       <h1 id="page-title"> {{ projectData.project_name }} </h1>
-       <p id="manager"> Manager: {{ managerFullName }}</p>
 
+    <!-- Cover section with the title -->
+    <div class="cover-section-div" :style="coverStyling">
+       <h1> {{ projectData.project_name }} </h1>
+       <h3 id="manager-subtitle"> Manager: {{ managerFullName }}</h3>
     </div>
 
 
-    <!-- Body of the page -->
-    <div id="page-body">
+    <!-- Project introduction section -->
+    <div class="project-description-div horizontal-padding vertical-spacing">
+      <h2> {{ projectData.project_name }} </h2>
+      <p> {{ projectData.description }}</p>
+    </div> 
 
-      <!-- Project description section -->
-      <div id="project-description-section">
-        <h4 class="sub-titles"> {{ projectData.project_name }} </h4>
-        <p class="project-description-text"> {{ projectData.description }}</p>
-      </div> 
 
-      <!-- Purple border section with info on location and date -->
-      <div id="event-info-section" class="flex-column-layout">
-        <div id="info-container" class="flex-column-layout">
-          <h4 id="event-description-title" class="sub-titles"> Event Description</h4>
-          <div id="flex-no-wrap">
-          <!-- Icon and icon title -->
-          <div class="icon-info" >
-            <Icon class="icon" name="ph:map-pin-fill" color="var(--purple)" size="1em"></Icon>
-            <strong class="icon-description"> Where  </strong>
-            <span class="info"> {{ projectData.location_info }} </span>
-          </div>
-     
-          
-
-          <div class="icon-info" >
-            <Icon class="icon" name="mingcute:time-fill" color="var(--purple)" size="1em"></Icon>
-            <strong class="icon-description"> When  </strong>
-            <span class="info"> {{ projectData.date_info }} </span>
-          </div>
-          
-
-          <div class="icon-info" >
-            <Icon class="icon" name="mdi:people" color="var(--purple)" size="1em"></Icon>
-            <strong class="icon-description"> Participants  </strong>
-            <span class="info"> {{ projectData.participants_info }} </span>
-          </div>
-
-        </div>
-          
-
-        </div>
-      </div>
-      </div>
-
+    <!-- Info section with info on location, date and participants -->
+    <div class="vertical-spacing" style="display: flex; justify-content: center">  <!-- Just to center the section -->
       
-      <!-- Additional Information section with purple background -->
-      <div id="additional-information-section" class="flex-column-layout">
-        <h4 class="sub-titles"> Additional Information </h4>
-        <p class="project-description-text"> {{ projectData.additional_info }}</p>
-      </div>
-
-      <h4 id="sponsor-title" class="sub-titles"> This project was possible thanks to </h4>
-      <!-- Sponsor section -->
-      <div id="sponsor-section" class="flex-column-layout">
+      <div class="purple-border">
+        <h2 class="event-info-title"> Event Description</h2>
+      
+        <div class="event-info-div">
         
-        <img class="sponsor-images" v-for="(sponsor, index) in projectData.sponsor" :key="index" :src="sponsor.logo_url" :alt="sponsor.sponsor_name">
+          <!-- Where info -->
+         <div class="single-info-container-div">
+            <div class="icon-and-title-info-div">
+              <Icon class="info-icon" name="MapPinIcon" size="25px"></Icon>
+              <span class="info-title">Where</span>
+            </div>
+           <span class="info-text"> {{ projectData.location_info }} </span>
+         </div>
+
+          <!-- When info -->
+          <div class="single-info-container-div">
+            <div class="icon-and-title-info-div">
+              <Icon class="info-icon" name="ClockIcon" size="25px"></Icon>
+              <span class="info-title">When</span>
+            </div>
+            <span class="info-text"> {{ projectData.date_info }} </span>
+          </div>
+
+          <!-- Participants info -->
+          <div id="participants-div" class="single-info-container-div">
+            <div class="icon-and-title-info-div">
+              <Icon class="info-icon" name="PeopleIcon" size="25px"></Icon>
+              <span class="info-title">Participants</span>
+            </div>
+            <span class="info-text"> {{ projectData.participants_info }} </span>
+          </div>
+        </div>
       </div>
-
-      <!-- Final section with descriptive images -->
-      <div id="final-images">
-        <img v-for="(image, index) in projectData.image.slice(1)" :key="index" :src="image.image_url" :alt="'Descriptive project image number ' + index" >
-      </div>
+    </div>
 
 
-      <!-- Navigation buttons bottom page -->
-      <div id="nav-button-section">
-        <nuxt-link :to="previousProjectURL">
-          <button type="button" class="nav-buttons" :disabled="!hasPrevious">
-            <Icon name="NavLeftArrowIcon" class="link-icon" size="1em"/>
-            <span class="nav-links-text">Previous</span>
-          </button>
-        </nuxt-link>
+    <!-- Additional Information section -->
+    <div class="additional-information-div vertical-spacing">
+      <h2> Additional Information </h2>
+      <p> {{ projectData.additional_info }}</p>
+      <button type="button" class="contact-us-button" @click="navigateTo('/contacts')"> Contact Us </button>
+    </div>
 
 
-        <nuxt-link to="/activities/projects">
-          <button type="button" class="nav-buttons" >
-            <span class="nav-links-text">All Projects</span>
-          </button>
-        </nuxt-link>
+    <!-- Sponsor section -->
+    <h2 class="sponsor-section-title vertical-spacing horizontal-padding"> This project was possible thanks to </h2>
+    <div class="sponsor-image-container-div horizontal-padding">      
+      <img class="sponsor-image" v-for="(sponsor, index) in projectData.sponsor" :key="index" :src="sponsor.logo_url" :alt="sponsor.sponsor_name">
+    </div>
+  
 
-        <nuxt-link :to="nextProjectURL" @click="!hasNext && $event.preventDefault()" >
-          <button type="button" class="nav-buttons" >
-            <span class="nav-links-text">Next</span>
-            <Icon name="NavRightArrowIcon" class="link-icon" size="1em"/>
-          </button>
-        </nuxt-link>
+    <!-- Final section with descriptive images -->
+    <div class="illustrative-images-container-div vertical-spacing">
+      <img v-for="(image, index) in projectData.image.slice(1)" :key="index" :src="image.image_url" :alt="'Descriptive project image number ' + index" >
+    </div>
 
-      </div>
+
+    <!-- Navigation links at the end of the page (enclosed in a nav section) -->
+    <nav class="vertical-spacing">
+      
+      <!-- Backward button  -->
+        <button type="button" class="navigation-link" :disabled="!hasPrevious" @click="navigateTo(previousProjectURL)">
+          <Icon name="NavLeftArrowIcon" size="19" />
+          <span> Previous </span>
+        </button>
+
+      <!-- Even if the link is static here, a button is used to have consistency in layout -->
+      <button class="navigation-link" @click="navigateTo('/activities/projects')">
+        <span> All Projects </span>
+      </button>
+
+      <!-- Next button -->
+      <button type="button" class="navigation-link" :disabled="!hasNext" @click="navigateTo(nextProjectURL)" style="margin-right:10px">
+        <span> Next </span>
+        <Icon name="NavRightArrowIcon" size="19" />
+      </button>
+
+    </nav>
 
 
   </div>
@@ -199,282 +198,473 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
 <style scoped>
 
-  #page-wrapper{
-    width: 100vw;
-    font-size: 32px;    /* TODO: Font size for mobile, to adjust and propagate to the rest of the project */
-    
+
+  /*-------------------------------Resetting some styles for the page (mobile-first design)-------------------------------*/
+  
+  .page-wrapper {
+    font-size: 16px;  /* Normal text font-size */
   }
-
-  #page-title {
-    font-size: 1em;
-    line-height: 1em;
-    padding-top: 25%;
-    padding-left: 0.6em;
-  }
-
-  #manager {
-    color: white;
-    font-size: 0.5em;
-    line-height: 3em;
-    padding-left: 1.2em;    /* Relative units calculated from element because set font-size */
-    margin-block-start: 0;
-  }
-
-
-  #page-body {
-    padding-inline: 1.2em;
-  }
-
-  #project-description-section {
-    margin-top: 2em;    /* division of elements fixed, change with ranges of screen resolution */
-  }
-
-
-
-  .project-description-text{
-    font-size: 0.5em;
-    line-height: 1.7em;
-  }
-
-  #event-info-section {
-    align-items: center;
-  }
-
-  #info-container {
+  .page-wrapper * {
     box-sizing: border-box;
-    flex-wrap: wrap;
-    max-width: 70%;
-    border: 1.5px solid var(--purple);
-    border-radius: 15px;
-    margin-top: 4em;
-    align-items: center;
-    padding: 1em;
-    gap: 0.5em;
+  }
+  .page-wrapper h1 {
+    font-size: 38px;  /* Title font-size */
+    line-height: 1.2em;
+    font-weight: 900;
+  }
+  .page-wrapper h2 {
+    font-size: 25px;  /* Sub-titles font-size */
+    line-height: 1.3em;
+    font-weight: 700;
+  }
+  .page-wrapper h3 {
+    font-size: 19px;  /* Manager name sub-title font-size */
+    font-weight: 600;
+  }
+  .page-wrapper p, 
+  .page-wrapper a,
+  .page-wrapper span
+  .page-wrapper button {
+    font-size: 16px;
+  }
+
+
+
+  /*----------------------------------General classes for consistent layout (mobile-first design)----------------------------------------*/
+  
+  .vertical-spacing {
+    margin-top: 96px;
+  }
+
+  .horizontal-padding {
+    padding: 0 36px;
+  }
+
+
+
+
+  /*--------------------------------------------------STYLING OF THE PAGE---------------------------------------------------------------*/
+
+
+  /*---------------------------------------------Cover section with the title----------------------------------------------------------*/
+  
+  .cover-section-div {    /* Cover image dynamically added in javascript */
+    background-size: cover;
+    background-position: top right;
+    padding: 30% 0 10% 7%;
+  }
+
+  #manager-subtitle {
+    color: white;
+    margin-top: 0.5em;
+  }
+
+
+
+  /*-------------------------------------Info section with info on location, date and participants---------------------------------------------*/
+
+  .purple-border {
+    min-width: 180px;
+    max-width: 230px;
+    border: 1px solid var(--purple);
+    border-radius: 1cap;
+    padding: 2.5em 2em;
+  }
+
+  .event-info-title {
     text-align: center;
-    padding-bottom: 2em;
-    padding-top: 2em;
+    margin-bottom: 1em;
+    font-weight: 600;
   }
 
-  #event-description-title {
-    flex-basis: 100%;
-  }
-
-  #flex-no-wrap {
+  .event-info-div {
     display: flex;
     flex-direction: column;
-  }
-
-  #additional-information-section {
-    text-align: center;
-    background-color: var(--lilac);
-    margin-top: 4em;
-    padding-top: 1.5em;
-    padding-bottom: 1.5em;
-    padding-inline: 1.2em;
-  }
-
-  #sponsor-section {
-    align-items: center;
-  }
-
-  #sponsor-section img {
-    margin-top: 2.3em;
-    width:30%
-  }
-
-  #final-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5em;
-    padding-inline: 0.7em;
-
-  }
-
-  #final-images img {
-    width: 100%;
-    height: auto;
-  }
-
-  #final-images img:nth-child(1) {
-    grid-column: span 2;
-    margin-top: 4em;
-  }
-
-  #nav-button-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5em;
-    margin-top: 30%;
-    margin-bottom: 30% ;
-    font-size: 0.45em;
-  }
-
-  #sponsor-title {
-    text-align: center;
-    margin-top: 4em;
-  }
-  
-
-
-
-
-  .flex-column-layout {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sub-titles {
-    font-size: 0.65em;
-    line-height: 1em;
-  }
-
-  .icon-info {
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    flex-wrap: wrap;
-    margin-top: 1.5em;
-    gap: 0.3em;
-    margin-right:0.4em;
-  }
-
-  .icon {
-    vertical-align: middle;
-  }
-
-  .icon-description {
-    font-size: 0.7em;
-    display: block;
-    line-height: 1em;
-    
-
-  }
-
-  .info {
-    font-size: 0.45em;
-    flex-basis: 100%;
-    line-height: 1.7em;
-  }
-
-  .nav-buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  font-family: var(--font-montserrat);
-  color: var(--black);
-  font-size: 1em;
-  font-weight: var(--regular);
-  cursor: pointer;
-  border: none;
-  transition: background-color var(--transition);
-}
-
-.nav-buttons:hover {
-  color: var(--purple-hover);
-}
-
-.nav-buttons:active {
-  color: var(--purple-active);
-}
-
-.nav-buttons[disabled] {
-  color: var(--grey3);
-  cursor: not-allowed;
-}
-
-.nav-buttons[disabled]:hover {
-  color: var(--grey3);
-  cursor: not-allowed;
-}
-
-
-/* Media queries for tablets, resolution over 768px */
-@media screen and (min-width: 850px){
-  #page-wrapper{
-    font-size: 64px;  
-  }
-
-  #info-container {
-    max-width: 80%;
-  }
-
-  #page-body {
-    padding-inline: 1.7em;
-  }
-
-  #additional-information-section {
-    padding-inline: 1.5em;
-  }
-
-  #sponsor-section img {
-    width:35%
-  }
-
-  #final-images {
-    padding-inline: 1em;
-
-  }
-
-
-}
-
-@media screen and (min-width: 1400px) {
-  #page-wrapper {
-    font-size: 96px;
-  }
-
-  #info-container {
-    max-width: 90%;
-  
-  }
-
-  #sponsor-section {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
     gap: 2em;
+  }
+ 
+  .single-info-container-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .icon-and-title-info-div {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.2em;
+  }
+
+  .info-icon {
+    color: var(--purple);
+  }
+
+  .single-info-container-div .info-title {
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+
+  .info-text {
+    text-align: center;
+  }
+
+  
+
+  /*--------------------------------------------Additional information section-------------------------------------------------*/
+
+  .additional-information-div {
+    background-color: var(--lilac);
+    padding: 4.8em 3.5em;
+    text-align: center;
+  }
+
+  .contact-us-button {
+    padding: 0.7em;
+    
+    background-color: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 0.7cap;
+
+    font-family: var(--font-montserrat);
+    font-size: inherit;
+
+    margin-top: 3em;
+    
+
+
+
+  }
+
+
+
+  /*---------------------------------------------------Sponsor section---------------------------------------------------------*/
+  
+  .sponsor-section-title {
+    text-align: center;
+  }
+
+  .sponsor-image-container-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
     margin-top: 2em;
   }
 
-  #sponsor-section img{
-    margin-top: 0;
-    
+  .sponsor-image {
+    width: 150px;
   }
-
-  #page-body {
-    padding-inline: 1.5em;
-  }
-
-}
-
-
-@media screen and (min-width: 1800px) {
-  #info-container {
-    flex-direction: row;
-    border-width: 3px;
-  }
-
-  #flex-no-wrap {
-    font-size: 0.5em;
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .icon-info {
-    margin: 0;
-  } 
   
-  #page-body {
-    padding-inline: 1.5em;
+
+
+  /*--------------------------------------------Final section with descriptive images------------------------------------------*/
+
+  .illustrative-images-container-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7em;
+    padding: 0 1.5em; 
+  }
+
+  .illustrative-images-container-div img:first-child{
+    grid-column: span 2;
+  }
+
+  .illustrative-images-container-div img {
+    height: 100%;
+    object-fit: cover;
   }
 
 
 
-}
+  /*------------------------------------------------Navigation links (end of page)---------------------------------------------*/
+
+  .page-wrapper nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-bottom: 10em;
+    gap: 2.2em;
+  }
+
+  .navigation-link {
+    border: none;
+    background-color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    color: var(--purple);
+    cursor: pointer;
+    font-size: inherit;
+    font-family: var(--font-montserrat);
+  }
+  .navigation-link:disabled {
+    color: var(--grey3);
+    cursor: not-allowed;
+  }
+  .navigation-link:hover:not(:disabled) {
+    color: var(--purple-hover);
+  }
+  .navigation-link:active:not(:disabled) {
+    color: var(--purple-active);
+  }
+
+
+
+
+  /*-------------------------------Media queries for responsive design-TABLET-----------------------------*/
+
+  @media screen and (min-width: 760px){
+    
+    /*--------------------------------Font size recalculation----------------------------*/
+    .page-wrapper {
+      font-size: 20px;  /* Normal text font-size */
+    }
+    .page-wrapper h1 {
+      font-size: 70px;  /* Title font-size */
+      line-height: 1.2em;
+    }
+    .page-wrapper h2 {
+      font-size: 40px;  /* Sub-titles font-size */
+      line-height: 1.3em;
+    }
+    .page-wrapper h3 {
+      font-size: 25px;  /* Manager name sub-title font-size */
+    }
+    .page-wrapper p, 
+    .page-wrapper a,
+    .page-wrapper span {
+      font-size: 20px;
+    }
+
+    /*----------------------------------------Spacing between elements-----------------------------*/
+
+    .vertical-spacing {
+      margin-top: 160px;
+    }
+    .horizontal-padding {
+      padding: 0 120px;
+    }
+
+    /*----------------------------------Info section horizontal refactoring------------------------*/
+
+    .purple-border {
+      min-width: none;
+      max-width: none;
+      width: 90%;
+      padding: 3em 1.5em;
+    }
+
+    .event-info-div {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: start;
+      gap: 3em;
+    }
+
+    .single-info-container-div {
+      align-items: start;
+    }
+    #participants-div {
+      align-items: center;
+    }
+
+    .info-text {
+      text-align: left;
+      max-width: 315px;
+    }
+
+
+    /*----------------------------------Additional Information section------------------------*/
+    .additional-information-div {
+      padding: 7em 9em;
+    }
+
+
+    /*----------------------------------------Sponsor section---------------------------------*/
+    .sponsor-image-container-div {
+      gap: 5em;
+      margin-top: 4em;
+    }
+
+    .sponsor-image {
+      width: 180px;
+    }
+
+
+    /*--------------------------------------Illustrative images------------------------------*/
+    .illustrative-images-container-div {
+      gap: 2.4em;
+      padding: 0 4.5em;
+    }
+  }
+
+
+  /*-------------------------------Media queries for responsive design-DESKTOP-----------------------------*/
+
+  @media screen and (min-width: 1100px) {
+      /*--------------------------------Font size recalculation----------------------------*/
+    .page-wrapper {
+      font-size: 24px;  /* Normal text font-size */
+    }
+    .page-wrapper h1 {
+      font-size: 96px;  /* Title font-size */
+      line-height: 1.2em;
+    }
+    .page-wrapper h2 {
+      font-size: 42px;  /* Sub-titles font-size */
+      line-height: 1.3em;
+    }
+    .page-wrapper h3 {
+      font-size: 42px;  /* Manager name sub-title font-size */
+    }
+    .page-wrapper p, 
+    .page-wrapper a,
+    .page-wrapper span {
+      font-size: 24px;
+    }
+
+
+    /*------------------------------------Spacing between elements-----------------------------*/
+
+    .vertical-spacing {
+      margin-top: 160px;
+    }
+    .horizontal-padding {
+      padding: 0 260px;
+    }
+
+
+    /*----------------------------------Additional Information section------------------------*/
+    .additional-information-div {
+      padding: 7em 12em;
+    }
+
+
+    /*----------------------------------------Sponsor section---------------------------------*/
+    .sponsor-image-container-div {
+      gap: 5em;
+      margin-top: 3em;
+    }
+
+    .sponsor-image {
+      width: 250px;
+    }
+
+    .illustrative-images-container-div {
+      margin-top: 13em;
+      gap: 4em;
+      padding: 0 10em;
+    }
+
+    /*-----------------------------------------Navigation section------------------------------*/
+    .page-wrapper nav {
+      margin-bottom: 14em;
+      gap: 3em;
+      margin-top: 11em
+    }
+  }
+
+  /*-------------------------Refactoring of the info section for very large screens------------------*/
+
+  @media screen and (min-width: 1500px) {
+    
+    .purple-border {
+      max-width: fit-content;
+      padding: 2.7em 4.5em;
+    }
+
+    .event-info-div {
+      gap: 6em;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  @media screen and (min-width: 1400px) {
+    #page-wrapper {
+      font-size: 96px;
+    }
+
+    #info-container {
+      max-width: 90%;
+    
+    }
+
+    #sponsor-section {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+  
+    }
+
+    #sponsor-section img{
+      margin-top: 0;
+
+    }
+
+    #page-body {
+      padding-inline: 1.5em;
+    }
+
+  }
+
+
+  @media screen and (min-width: 1800px) {
+    #info-container {
+      flex-direction: row;
+      border-width: 3px;
+    }
+
+    #flex-no-wrap {
+      font-size: 0.5em;
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .icon-info {
+      margin: 0;
+    } 
+
+    #page-body {
+      padding-inline: 1.5em;
+    }
+
+
+
+  }
 
 
 </style>

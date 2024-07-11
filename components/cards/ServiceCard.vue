@@ -175,6 +175,7 @@ export default defineComponent({
   justify-content: space-between;
   margin-top: 0px;
   margin-bottom: 30px;
+  gap: 30px;
 }
 
 /* When content styling */
@@ -186,6 +187,7 @@ export default defineComponent({
   margin-top: 5px;
   margin-bottom: 0px;
   text-align: left;
+  max-width: 190px;
 }
 
 /* Where content styling */

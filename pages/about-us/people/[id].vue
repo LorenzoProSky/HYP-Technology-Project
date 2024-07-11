@@ -7,30 +7,51 @@ import ManagerCard from '~/components/cards/ManagerCard.vue';
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
 import type { Person, Service, Project } from '~/types/types';
+import { useRuntimeConfig } from 'nuxt/app';
+
+// Import the server public URL
+const runtimeConfig = useRuntimeConfig();
+const baseBackendURL = runtimeConfig.public.baseBackendURL;
 
 // Retrieve Id of person from url and build the server url for api request
 const route = useRoute();
 let id = ref(Number(route.params.id)); 
-const personDataUrl = `http://localhost:3005/people/${id.value}`;
-const countPeopleUrl = "http://localhost:3005/count-people";
+
+const countPeopleURL = `${baseBackendURL}count-people`;
+const personDataURL = `${baseBackendURL}people/${id.value}`;
 
 // Variable ref<Person> holding all the data for the person with the specified id
-let personData = ref();
-let peopleCounter = ref();
+let personData = ref() as Ref<Person>;
+let peopleCounter = ref() as Ref<number>;
+
 try {
-  const { data: fetchPerson } = await useFetch<Person[]>(personDataUrl);  
-  const { data: countPpl } = await useFetch<Number>(countPeopleUrl);
-  const people: Person[] | null= fetchPerson.value;
+  /* Count people */
+  const { data: countPpl } = await useFetch<Number>(countPeopleURL);
   peopleCounter.value = Number(countPpl.value);
-  if(people){
-    personData.value = people[0];
+
+  /* Fetch person data */
+  const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
+  if(fetchPersonData.value){
+    personData.value = fetchPersonData.value[0];
   }
-  } catch (error) {
-    console.error('Error while fetching data for person ${id}', error);
+} catch (error) {
+  console.error('Error while fetching data for person ${id}', error);
 }
 
-// Some computed properties that are extracted from the data
+watch(id, async () =>  {
+  try {
+    const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
+    console.log("id value: "+  id);
+    if(fetchPersonData.value){
+      personData.value = fetchPersonData.value[0];
+    }
+  } catch (error) {
+    console.error('Error while fetching data for person ${id}', error);
+  }
+});
+
 const completeName = computed(()=>{return personData.value.name + " " + personData.value.surname});
+
 const managesProjects = computed(() => {
   return personData.value.project.length > 0;
 });
@@ -39,7 +60,7 @@ const managesServices = computed(() => {
 });
 
 const previousLink = computed(() => {
-  if(id.value > 0){
+  if(id.value > 1){
     const previousId = id.value - 1;
     return "/about-us/people/" + previousId;
   } else {
@@ -58,303 +79,421 @@ const nextLink = computed(() => {
 
 
 // Build the arrays necessary to create the ManagerCards
-let managedProjects: Project[] = personData.value.project;
-let managedServices: Service[] = personData.value.responsible_service;
-let managedProjectNames = [];
-let managedProjectIds = [];
-let managedServiceNames = [];
-let managedServiceIds = [];
+let managedProjects = personData.value.project;
+let managedServices = personData.value.responsible_service;
+let managedProjectNames = [] as string[];
+let managedProjectURLs = [] as string[];
+let managedServiceNames = [] as string[];
+let managedServiceURLs = [] as string[];
 
 if(managesProjects){
-
-  let regex = /project\_(\d+)/
   for(let project of managedProjects){
-    managedProjectNames.push(project.project_name);
-
-    // Extract the id of the project
-    let match = project.project_id.match(regex);
-    if(match){
-      managedProjectIds.push("/activities/projects/" + match[1]);
+      managedProjectNames.push(project.project_name);
+      managedProjectURLs.push(`/activities/projects/${project.project_id}`);
     }
-  }
-
 }
-let reactive_managedProjectNames = ref(managedProjectNames);
-let reactive_managedProjectIds = ref(managedProjectIds);
 
 if(managesServices){
-
-  let regex = /service\_(\d+)/
   for(let service of managedServices){
     managedServiceNames.push(service.service_name);
-
-    // Extract the id of the service
-    let match = service.service_id.match(regex);
-    if(match){
-      managedServiceIds.push("/activities/services/" + match[1]);
-    }
+    managedServiceURLs.push(`/activities/services/${service.service_id}`);
   }
 }
 
-let reactive_managedServiceNames = ref(managedServiceNames);
-let reactive_managedServiceIds = ref(managedServiceIds);
+/* Build links for offered services */
+
+
+interface offeredService {
+  link: string;
+  name: string;
+}
+
+
+let offeredServiceList = ref([] as offeredService[]);
+
+
+for(let service of personData.value.offering_service) {
+  offeredServiceList.value.push({link: `/activities/services/${service.service_id}`, name: service.service_name});
+}
+
+
 
 
 </script>
 
 
 <template>
-  <!-- container for the whole page -->
-  <div id="page-container">
+  <!-- Wrapper for the whole page, reset some styling for a mobile-first design -->
+  <div class="page-wrapper">
 
-    <!-- Top section (cover) -->
-    <div id="cover">
+    <!-- Cover section wrapper-->
+    <div class="cover-div">
 
-      <!-- Purple section on the left -->
-      <div id="purple-background">
-        <div id="align-text" >
+      <!-- Purple section on the left of the cover with the title -->
+      <div class="purple-background-cover-div">
+
+        <!-- TODO: FIX BACKWARD BUTTON FOR MOBILE VERSION -->
           <backward-button-wrapper>
-            <BackwardButton id="back-button" button-text="Our People" to="/about-us/people"></BackwardButton>
+            <BackwardButton button-text="Our People" to="/about-us/people"></BackwardButton>
           </backward-button-wrapper>
-          <h1 class="page-title">{{ personData.name }}<br>{{ personData.surname }}</h1>
-          <p id="job-title">{{ personData.job_title }}</p>
-        </div>
+
+          <!-- Text in cover section -->
+          <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
+          <h4 id="job-title-cover">{{ personData.job_title }}</h4>
+      
       </div>
 
-      <!-- Image on the right -->
-       <div id="profile-image" :style= "{ backgroundImage: `url('${personData.profile_image_url}')` }">
-          <!-- Purple overlay -->
-          <div class="purple-overlay"></div>
-       </div>
+      <!-- Person image on the right section of the cover -->
+      <img class="profile-image-cover-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"/>
+      <div class="purple-overlay-profile-image-div"></div>
+
     </div>
 
-    <!-- Text section under the cover -->
-    <div class="central-flow">
-
-      <!-- Initial description -->
-      <h3>Know more about {{ completeName }}</h3>
+    <!-- Text section under the cover: know more section about the employee -->
+    <div class="horizontal-padding vertical-spacing">
+      <h3> Know more about {{ completeName }}</h3>
       <p id="description-text">{{ personData.description }}</p>
+    </div>
       
-      <!-- Buttons for CV and email -->
-      <div id="button-container">
-        <a :href="personData.cv_url" class="cv-email-buttons">Download CV</a>
-        <a :href="`mailto:${personData.email}`" class="cv-email-buttons">{{ personData.email }}</a>
-      </div>
-      <!-- Conditional rendering of services and projects managed by the employee -->
-      <div id="manager-card-container" v-if="managesServices || managesProjects">
-        <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="reactive_managedServiceNames" :to="reactive_managedServiceIds" ></ManagerCard>
-        <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="reactive_managedProjectNames" :to="reactive_managedProjectIds" ></ManagerCard>
-      </div>
-      
-      <!-- Circular image and description of the role -->
-      <div id="person-role-container">
-        <div id="circular-image" :style="{ backgroundImage: `url('${personData.profile_image_url}')` }"></div>
-        <div id="role-description">
-          <h3>Role at MiLa</h3>
-          <p>{{ personData.role_description }}</p>
-        </div>
+    <!-- Section containing the links to CV and email -->
+    <div class="cv-email-div horizontal-padding">
+      <a :href="personData.cv_url">Download CV</a>
+      <a :href="`mailto:${personData.email}`">{{ personData.email }}</a>
+    </div>
+
+    <!-- Conditional rendering of services and projects managed by the employee -->
+    <div class="manager-card-container vertical-spacing horizontal-padding" v-if="managesServices || managesProjects">
+      <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="managedServiceNames" :to="managedServiceURLs" ></ManagerCard>
+      <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="managedProjectNames" :to="managedProjectURLs" ></ManagerCard>
+    </div>
+
+    <!-- Circular image and description of the role of the employee -->
+    <div class="person-role-div vertical-spacing horizontal-padding">
+      <img class="circular-image-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"></img>
+      <div id="role-description">
+        <h3>Role at MiLa</h3>
+        <p>{{ personData.role_description }}</p>
+        <NuxtLink v-for="(service, index) in []" to="/" :key="index" class="offered-service-nuxt-link">
+          Discover {{ }} 
+          <Icon name="ForwardArrowIcon" size="19"> </Icon>
+        </NuxtLink>
       </div>
     </div>
-        
-    <!-- Navigation buttons for pagination -->
-    <div id="navigation-button">
-      <!-- Backward button element -->
-      <router-link :to="previousLink">
-        <button class="nav-button" :disabled="id <= 1">
-          <Icon id="left-icon" name="NavLeftArrowIcon" size="19" />
-          <p> Previous </p>
-        </button>
-      </router-link>
 
-      <router-link :to="'/about-us/people'" >
-        <button class="nav-button">
-          <p> All People </p>
+    <!-- Navigation links at the end of the page (enclosed in a nav section) -->
+    <nav class="vertical-spacing">
+      
+      <!-- Backward button  -->
+        <button type="button" class="navigation-link" :disabled="previousLink === null" @click="navigateTo(previousLink)">
+          <Icon name="NavLeftArrowIcon" size="19" />
+          <span> Previous </span>
         </button>
-      </router-link>
 
-      <!-- Next button element -->
-      <router-link :to="nextLink">
-        <button class="nav-button" :disabled="id >= peopleCounter">
-          <p> Next </p>
-          <Icon id="right-icon" name="NavRightArrowIcon" size="19" />
-        </button>
-      </router-link>
-    </div>
+      <!-- Even if the link is static here, a button is used to have consistency in layout -->
+      <button class="navigation-link" @click="navigateTo('/about-us/people')">
+        <span> All People </span>
+      </button>
+
+      <!-- Next button -->
+      <button type="button" class="navigation-link" :disabled="nextLink === null" @click="navigateTo(nextLink)" style="margin-right:10px">
+        <span> Next </span>
+        <Icon name="NavRightArrowIcon" size="19" />
+      </button>
+    </nav>
+
+
   </div>
 </template>
 
 
 <style scoped>
 
-#page-container{
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
 
+/*
+ * Resetting some styles for a mobile-first approach.
+
+ * Font sizes:
+ * body -> 16px  |  h1 -> 32px  |  h2 -> 24px
+ * The font size of the wrapper is set to the one of the body and the children will inherit with em measurements.
+ * Line heights are set with relative measures so that they adjust when scaling.
+ *
+ * Widths calculated with a border-box approach.
+ */
+.page-wrapper {
+  font-size: 16px;
+}
+.page-wrapper * {
+  box-sizing: border-box;
+}
+.page-wrapper h1 {
+  font-size: 2.4em;    
+  line-height: 1.2em;
+}
+.page-wrapper h2 {
+  font-size: 2em; 
+  line-height: 1.2em;
+}
+.page-wrapper h3 {
+  font-size: 1.6em;
+  line-height: 1.2em;
+}
+.page-wrapper h4 {
+  font-size: 1.2em;
+  line-height: 1.2em;
+  font-weight: 200;
+}
+.page-wrapper p, .page-wrapper span {
+  font-size: 1em;
 }
 
-#cover{
+
+
+
+/* ------------------------General classes for grouping common style -------------------------------------*/
+.vertical-spacing {
+  margin-top: 6em;
+}
+
+.horizontal-padding {
+  padding: 0 2.3em;
+}
+
+
+
+
+/* ------------------------------STYLING OF THE PAGE--------------------------------------- */
+
+
+/*-------------------------------Cover section---------------------------------------------*/
+.cover-div {
   display: flex;
   flex-direction: row;
-  min-height: 50vh;
+  min-height: 50vw;
+  position: relative;
 }
 
-#purple-background{
-  display: flex;
-  flex-direction: column;
+/* The padding of this div sets the position of the title. 
+ * It's calculated in percentages of the width of the parent because it has to stay fixed in some point of the div while resizing.
+ */
+.purple-background-cover-div{
   min-height: 100%;
   width: 50%;
   background-color: var(--purple);
-  gap: 20vh;
+  padding: 35% 0 12% 8%;
 }
 
-#back-button{
-  margin-top: 20%;
-}
-
-/* Aligning the text of the title with the backward button */
-#align-text{
-  display: flex;
-  flex-direction: column;
-  margin-left: 9.79vw;
-  margin-top: 40%;
-}
-
-#job-title{
+#job-title-cover {
   color:white;
   margin-top: 5%;
-  margin-bottom: 20%;
 }
 
-#profile-image{
-  position: relative;
+.profile-image-cover-img {
   width: 50%;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  filter: grayscale(1);
 }
 
-#description-text{
-  margin-bottom: 5%
-}
-
-#button-container{
-  display: flex;
-  flex-direction: row;
-  gap: 5%;
-}
-
-#manager-card-container{
-  display: flex;
-  flex-direction: row;
-  gap: 10%;
-  margin-top: 20%
-}
-
-#person-role-container{
-  display: flex;
-  gap: 10%;
-  margin-top: 27%;
-}
-
-#circular-image{
-  border-radius: 50%;
-  border-color: var(--purple-hover);
-  border: 15px solid var(--lilac); /* Purple border */
-  background-position: center;
-  background-size: cover;
-  min-width: 40vh;
-  min-height: 40vh;
-  max-width: 50vh;
-  max-height: 50vh;
-
-}
-
-#role-description{
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center;
-}
-
-#next-previous-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-}
-
-#navigation-button{
-  display: flex;
-  justify-content: center;
-  gap: 6%;
-  margin-top: 20%;
-  margin-bottom: 15%;
-
-}
-
-/* Overriding some styling from the page-title class to adjust it to the person page */
-.page-title{
-  position: static;
-  width: auto;
-  height: auto;
-  text-align: left;
-  margin-top: 5%;
-}
-
-.purple-overlay{
+.purple-overlay-profile-image-div {
   position: absolute;
-  background-color: var(--purple-hover);
-  opacity: 40%;
+  width: 50%;
+  margin-left: 50%;
+  background-color: var(--purple);
+  opacity: 0.35;
   min-height: 100%;
-  min-width: 100%;
 }
 
-.central-flow{
+
+
+
+/*----------------------------Know More section-----------------------------------*/
+
+.cv-email-div {
   display: flex;
   flex-direction: column;
-  padding-left: 15%;
-  padding-right: 20%;
-  padding-top: 10%;
+  align-items: center;
+  gap: 2em;
+  margin-top: 3em;
 }
 
-.cv-email-buttons{
+.cv-email-div a {
   border: 2px solid var(--purple); /* Purple border */
   border-radius: 8px;
-  text-align: center;
   padding: 10px;
 }
 
-.nav-button {
+
+
+
+/*-----------------------------------Card Manager section------------------------------*/
+.manager-card-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  font-family: var(--font-montserrat);
-  color: var(--black);
-  font-size: var(--body3);
-  font-weight: var(--regular);
-  cursor: pointer;
-  border: none;
-  transition: background-color var(--transition);
+  flex-wrap: wrap;
+  gap: 3em;
 }
 
-.nav-button:hover {
+
+
+
+/*------------------------------------Person role section--------------------------------*/
+.person-role-div{
+  display: flex;
+  align-items: start;
+  gap: 8em;
+}
+
+/* Only appears for the tablet and desktop versions for resposiveness */
+.circular-image-img {
+  border-color: var(--purple-hover);
+  border: 15px solid var(--lilac); /* Purple border */
+  object-fit: cover;
+  border-radius: 100%;
+  display: none;
+  max-width: 500px;
+  width: 40%;
+  
+}
+
+.offered-service-nuxt-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1.6em;
+}
+
+
+
+
+/* ------------------------------Navigation buttons-------------------------------*/
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.2em;
+  margin-bottom: 10em;
+}
+
+.navigation-link {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  padding: 0;
+  color: var(--purple);
+  cursor: pointer;
+  font-size: inherit;
+  font-family: var(--font-montserrat);
+}
+.navigation-link:disabled {
+  color: var(--grey3);
+  cursor: not-allowed;
+
+}
+.navigation-link:hover:not(:disabled) {
   color: var(--purple-hover);
 }
-
-.nav-button:active {
+.navigation-link:active:not(:disabled) {
   color: var(--purple-active);
 }
 
-.nav-button[disabled] {
-  color: var(--grey3);
-  cursor: not-allowed;
+
+
+/*-------------------------------Media queries for responsive design-TABLET-----------------------------*/
+@media (min-width: 760px) {
+
+  .page-wrapper {
+    font-size: 20px;
+  }
+  .page-wrapper h1 {
+    font-size: 4em;
+  }
+  .page-wrapper h3 {
+    font-size: 2em;
+  }
+  .page-wrapper h4 {
+    font-size: 1.4em;
+  }
+
+  .vertical-spacing {
+    margin-top: 8em;
+  }
+
+  .horizontal-padding {
+    padding: 0 6em;
+  }
+
+  .cv-email-div {
+    flex-direction: row;
+  }
+
+  .manager-card-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3em;
+  }
+  
+  nav.vertical-spacing {
+    gap: 4em;
+    margin: 15em 0 11em 0;
+  }
+
 }
 
-.nav-button[disabled]:hover {
-  color: var(--grey3);
-  cursor: not-allowed;
+/*-------------------------------Media queries for responsive design-DESKTOP-----------------------------*/
+@media (min-width: 1100px) {
+
+  .page-wrapper {
+    font-size: 24px;
+  }
+  .page-wrapper h1 {
+    font-size: 4em;    
+  }
+  .page-wrapper h2 {
+    font-size: 1.5em; 
+    line-height: 1.2em;
+  }
+  .page-wrapper h3 {
+    font-size: 1.75em;
+    line-height: 1.2em;
+  }
+  .page-wrapper h4 {
+    font-size: 1.75em;
+  }
+  .page-wrapper p, .page-wrapper span {
+    font-size: 1em;
+  }
+
+  .horizontal-padding {
+    padding: 0 11em;
+  }
+
+  .vertical-spacing {
+    margin-top: 9em;
+  }
+
+  .purple-background-cover-div{
+    padding: 25% 0 12% 11%;
+  }
+
+  .manager-card-container{
+    flex-wrap: nowrap;
+  }
+
+
 }
+
+@media (min-width: 1400px) {
+  .circular-image-img{
+    display: inline;
+  }
+
+  
+  .person-role-div{
+    padding-right: 3.5em;
+  }
+}
+
+
 
 
 </style>
