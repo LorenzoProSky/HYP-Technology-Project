@@ -2,6 +2,21 @@
   import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   import MainButton from '~/components/buttons/MainButton.vue';
   import MapCardSmall from '~/components/cards/MapCardSmall.vue';
+
+  useHead({
+  title: 'About Us | Discover Centro MiLA history and values',
+  meta: [
+    {
+      name: 'description',
+      content: 'Welcome to Centro MiLA, a beacon of hope and support for women and children facing domestic violence in Milan since 2004. Discover our mission, vision, history, and commitment to empowering survivors through counseling, legal assistance, safe housing, and impactful projects. Visit us at our two locations in Bovisa and Zona Farini.',
+    },
+    {
+      name: 'keywords',
+      content: 'Centro MiLA, anti-violence centre Milan, domestic violence support Milan, women\'s shelter Milan, support for abuse victims Milan, MiLA mission, MiLA vision, MiLA history, MiLA commitment, MiLA services, MiLA projects, Centro anti-violenza Milano, supporto violenza domestica Milano, rifugio per donne Milano, assistenza vittime di abuso Milano, mission MiLA, visione MiLA, storia MiLA, impegno MiLA, servizi MiLA, progetti MiLA',
+    }
+  ]
+});
+
 </script>
 
 <template>

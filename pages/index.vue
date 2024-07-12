@@ -7,6 +7,21 @@ import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Project, Service } from '~/types/types';
 
+useHead({
+  meta: [
+    {
+      name: 'description',
+      content: 'Centro MiLA is a centre devoted to women and children victims of abuse and violence. ' +
+      'It offers all the facilities and services to support women and children in stepping out of difficult situations towards a better and brighter future',
+      
+    },
+    {
+      name: 'keywords',
+      content: 'anti-women violence Milan, domestic violence support Milan, Milan women\'s shelter, violence prevention Milan, help for abuse victims Milan, support for women and children Milan, centro anti-violenza Milano, servizi per donne vittime di violenza Milano, assistenza per vittime di violenza Milano, risorse per donne Milano, sicurezza donne Milano, sostegno donne e bambini Milano, prevenzione violenza Milano, aiuto donne Milano, protezione donne Milano',
+    }
+  ]
+});
+
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
 const baseBackendURL = runtimeConfig.public.baseBackendURL;

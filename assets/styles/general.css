@@ -69,11 +69,7 @@
 
 
 /* Reset some default styles */
-*,
-* ::before,
-* ::after {
-  box-sizing: border-box;
-}
+
 html,
 body {
   margin: 0;

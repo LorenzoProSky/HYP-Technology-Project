@@ -6,6 +6,7 @@ import { useRoute, useFetch, useRuntimeConfig } from 'nuxt/app';
 import type { Project, Manager, Image, Sponsor } from '~/types/types';
 
 
+
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
 const baseBackendURL = runtimeConfig.public.baseBackendURL;
@@ -28,6 +29,21 @@ if(data.value){
 } else {
   console.log(error);
 }
+
+useHead({
+  title: projectData.value.project_name + ' | Discover Projects Centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: projectData.value.short_description,
+    },
+    {
+      name: 'keywords',
+      content: projectData.value.project_name + ', ' + projectData.value.location_info + ', ' + projectData.value.date_info + ', anti-violence project, domestic abuse support,  project manager, event details, participants, sponsors'
+      + 'progetto contro la violenza, programma di empowerment delle donne, supporto per vittime di abusi domestici, rifugio per donne in crisi, prevenzione della violenza di genere',
+    }
+  ]
+});
 
 // Objects for dynamic styling of elements
 const coverStyling = ref({
@@ -198,6 +214,11 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
 <style scoped>
 
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
 
   /*-------------------------------Resetting some styles for the page (mobile-first design)-------------------------------*/
   

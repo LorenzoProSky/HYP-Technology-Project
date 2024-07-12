@@ -1,5 +1,19 @@
 <script lang="ts" setup>
 import MapCardBig from '~/components/cards/MapCardBig.vue';
+
+useHead({
+  title: "Contact Us | Get in contact with Centro MiLA for more information",
+  meta: [
+    {
+      name: 'description',
+      content: 'Contact Centro MiLA for support services including legal counselling, psychological counselling, and more. Call our crisis line at 0521 248886 or email us at centromila@gmail.com.'
+    },
+    {
+      name: 'keywords',
+      content: 'Centro MiLA, support for women, support for children, domestic violence support, legal counselling, psychological counselling, volunteer opportunities',
+    }
+  ]
+});
 </script>
 
 <template>

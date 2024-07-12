@@ -46,6 +46,21 @@ const bovisa_links: string[] = [];
 const offering_farini: Person[] = [];
 const farini_links: string[] = [];
 
+useHead({
+  title: name_service + " | Discover Services Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: description_service
+    },
+    {
+      name: 'keywords',
+      content: name_service + ', ' + manager.name + ' ' + manager.surname + ', MiLA service, domestic violence support, empowerment services, Milan support services, community impact, women\'s shelter services' +
+      'servizio MiLA, supporto violenza domestica, servizi di empowerment, servizi di supporto a Milano, impatto sulla comunità, servizi rifugio per donne',
+    }
+  ]
+});
+
 for (let i = 0; i<offering_people.length; i++){
   for (let j = 0; j<offers.length; j++){
     if(offering_people[i].person_id == offers[j].person_id && offers[j].location_id == 1){

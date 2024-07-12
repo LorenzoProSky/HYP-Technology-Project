@@ -1,5 +1,20 @@
 <script lang="ts" setup>
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
+
+useHead({
+  title: "Volunteer for Centro MiLA | Help us supporting women victims of violence",
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover how you can become a volunteer at MiLA and contribute to the fight against violence against women and for women\'s rights. Learn about our volunteer roles, training courses, and submit your application to join our community.'
+    },
+    {
+      name: 'keywords',
+      content: 'volunteer at MiLA, volunteer roles, domestic violence support, women\'s rights volunteer, volunteer training courses, submit volunteer application, support women in need' + 
+      'volontariato presso MiLA, ruoli per volontari, supporto violenza domestica, volontariato per i diritti delle donne, corsi di formazione per volontari, invio candidatura volontari, supporto donne in difficoltà',
+    }
+  ]
+});
 </script>
 
 <template>

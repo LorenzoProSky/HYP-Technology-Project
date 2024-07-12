@@ -1,6 +1,21 @@
 <script lang="ts" setup>
 // Import necessary components
 import DiscoverCard from '~/components/cards/DiscoverCard.vue';
+
+useHead({
+  title: "Services & Projects Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: 'Explore MiLA\'s activities dedicated to helping women and children affected by domestic violence. Discover our supportive services like counseling and legal assistance, as well as impactful projects promoting children\'s well-being and advocating for women\'s rights.'
+    },
+    {
+      name: 'keywords',
+      content: 'MiLA activities, domestic violence support, women empowerment, children well-being, counseling services, legal assistance, safe housing, advocacy projects, awareness campaigns, community impact, women\'s rights, empowerment programs' + 
+      'attività MiLA, supporto violenza domestica, supporto donne, benessere bambini, servizi di consulenza, assistenza legale, alloggi sicuri, progetti di advocacy, campagne di sensibilizzazione, impatto sulla comunità, diritti delle donne, programmi di empowerment',
+    }
+  ]
+});
 </script>
 
 <!-- Template for the activities page -->

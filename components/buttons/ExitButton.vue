@@ -6,37 +6,28 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   // Component name
   name: 'ExitButton',
-  // Setup reactive data for the component
-  setup() {
-    const hover = ref(false); // Tracks whether the mouse is over the button
-    const active = ref(false); // Tracks whether the button is being pressed
-    const focused = ref(false); // Tracks whether the button has focus
-
-    return { hover, active, focused }; // Expose reactive data to the template
-  },
 });
 </script>
 
 <template>
   <!-- Exit button element -->
-  <button class="exit-button" @click="navigateTo('https://www.google.com', {external: true})" @mouseover="hover = true" @mouseleave="hover = false" @mousedown="active = true"
-    @mouseup="active = false" @focus="focused = true" @blur="focused = false" v-bind="$attrs">
-    <!-- Icon for the button on top -->
-    <div class="icon-container">
+  <button class="exit-button" @click="navigateTo('https://www.google.com', {external: true})">
       <Icon name="ExitIcon" size="34" />
-    </div>
-    <!-- Text for the button -->
-    <span>{{ "Exit" }}</span>
+      <span>{{ "Exit" }}</span>
   </button>
 </template>
 
 
 <style scoped>
-/* Default style for the button */
+
 .exit-button {
-  height: 120px;
-  width: 132px;
-  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
   background-color: var(--orange);
   font-family: var(--font-montserrat);
   color: var(--white);
@@ -44,7 +35,6 @@ export default defineComponent({
   font-weight: var(--semibold);
   cursor: pointer;
   border: none;
-  transition: background-color var(--transition);
 }
 
 /* Hover style for the button */
@@ -57,21 +47,16 @@ export default defineComponent({
   filter: brightness(0.95);
 }
 
-.icon {
-  margin-bottom: 8px;
-}
 
-@media (max-width: 851px){
-  .exit-button{
-    width: 100px;
-  }
-}
-
-@media only screen and (max-device-width:1050px){
+@media screen and (max-width: 1050px){
   .exit-button{
     height: 84px;
     width: 84px;
     border-radius: 100%;
+    position: fixed;
+    right: 72px;
+    bottom: 54px;
+    z-index: 11;
   } 
   .exit-button span{
     display: none;
@@ -83,10 +68,12 @@ export default defineComponent({
   }
 }
 
-@media only screen and (max-device-width: 430px){
+@media screen and (max-width: 430px){
   .exit-button{
     height: 64px;
     width: 64px;
+    bottom: 40px;
+    right: 40px;
   }
   .icon{
     min-height: 0;

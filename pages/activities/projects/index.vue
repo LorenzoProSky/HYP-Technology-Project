@@ -6,6 +6,22 @@ import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Project } from '~/types/types';
 
+
+useHead({
+  title: 'Discover all Projects Centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: 'Explore MiLA\'s ongoing and past projects aimed at supporting survivors of domestic violence. Discover initiatives funded by MiLA in collaboration with local partners, fostering healing and empowerment in Milan.',
+    },
+    {
+      name: 'keywords',
+      content: 'MiLA projects, domestic violence support, ongoing projects, past projects, empowerment initiatives, art therapy, financial independence, community support, women\'s shelter, survivor advocacy, healing projects, resilience building' +
+      'progetti MiLA, supporto violenza domestica, progetti in corso, progetti passati, iniziative di empowerment, terapia artistica, indipendenza finanziaria, supporto comunitario, rifugio per donne, progetti di guarigione, supporto olistico, costruzione della resilienza',
+    }
+  ]
+});
+
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
 const baseBackendURL = runtimeConfig.public.baseBackendURL;

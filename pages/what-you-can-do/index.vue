@@ -1,6 +1,21 @@
 <script lang="ts" setup>
 // Import the DiscoverCard component
 import DiscoverCard from '~/components/cards/DiscoverCard.vue';
+
+useHead({
+  title: "What You Can Do to Support the Cause at Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover how to support MiLA in empowering women and fighting against violence. Donate to help women find a pathway out of violence or become a volunteer to contribute directly to our community efforts.'
+    },
+    {
+      name: 'keywords',
+      content: 'support MiLA, donate to women\'s shelter, volunteer against violence, empower women, fight against domestic violence, community support, women\'s rights' + 
+      'supporto MiLA, donazione a rifugio per donne, volontariato contro la violenza, empowerment delle donne, lotta contro la violenza domestica, supporto comunitario, diritti delle donne',
+    }
+  ]
+});
 </script>
 
 

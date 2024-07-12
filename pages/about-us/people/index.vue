@@ -7,6 +7,21 @@ import { useRuntimeConfig } from 'nuxt/app';
 // Import custom types to handle person data
 import type { Person } from '~/types/types'
 
+useHead({
+  title: 'People at centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: 'The staff at Centro MiLA is going to support women and children victims of any type of violence towards a better and brighter future.' + 
+      'Discover here the specialist that can provide you all the help you need for a better life.',
+    },
+    {
+      name: 'keywords',
+      content: 'MiLa team, anti-violence centre Milan staff, MiLa counselors, legal experts MiLa, social workers MiLa, MiLa volunteers, domestic violence support team, Milan women\'s shelter staff, MiLa team profiles, MiLa staff details, support for abuse victims Milan, MiLa team members, MiLa\'s compassionate team, Milan domestic violence support, MiLa mission team, women\'s aid team Milan, MiLa\'s people, MiLa staff contact' +
+      'personale centro anti-violenza Milano, consulenti MiLa, esperti legali MiLa, assistenti sociali MiLa, volontari MiLa, supporto violenza domestica, personale rifugio per donne Milano, profili team MiLa, dettagli personale MiLa',
+    }
+  ]
+});
 
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();

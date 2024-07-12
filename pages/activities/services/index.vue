@@ -7,6 +7,21 @@ import { useRuntimeConfig } from 'nuxt/app';
 
 import type { Service, ServiceOfferingInfo } from '~/types/types';
 
+useHead({
+  title: "Discover Services Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover the compassionate services offered by MiLA to support women and children facing domestic violence. Our services include psychological counseling, job placement assistance, cultural mediation, and shelter homes. With locations in two areas, we ensure accessibility and support for all. Explore how MiLA can help you build a safer, independent life.'
+    },
+    {
+      name: 'keywords',
+      content: 'MiLA services, domestic violence support, psychological counseling, job placement, cultural mediation, shelter homes, women empowerment, children support, Milan support services, community impact, healing services, independent life, support for victims' + 
+      'servizi MiLA, supporto violenza domestica, consulenza psicologica, assistenza al collocamento, mediazione culturale, case rifugio, supporto donne, supporto bambini, servizi supporto Milano, impatto sulla comunità, servizi di guarigione, vita indipendente, supporto per vittime',
+    }
+  ]
+});
+
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
 const baseBackendURL = runtimeConfig.public.baseBackendURL;
