@@ -22,7 +22,7 @@ useHead({
 <template>
   <div id="activities-page">
     <!-- Cover section with image and title -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_Activities.png)'}">
       <h1 class="page-title">Explore<br />Our Activities</h1>
     </div>
 
@@ -76,7 +76,6 @@ useHead({
 }
 
 #page-title {
-  background-image: url('/assets/images/our-activities-index-cover.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);

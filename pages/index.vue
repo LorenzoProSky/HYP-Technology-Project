@@ -46,6 +46,16 @@ const visibleProjects = computed(() => {
   return projects.value.slice(0, 3);
 });
 
+function retrieveCoverImageURL (serviceIndex: number): string {
+  let imageList = services.value[serviceIndex].image;
+  const regex = new RegExp("Cover");
+  for(let image of imageList) {
+    if(regex.test(image.image_id as string)) {
+      return image.image_url;
+    }
+  }
+  return "Image not found";
+}
 
 
 
@@ -54,7 +64,7 @@ const visibleProjects = computed(() => {
 
 <template>
 
-  <div id="home-cover">
+  <div id="home-cover" :style="{ backgroundImage: `url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Homepage.png)`}">
     <div class="page-title">
       <h1>Centro MiLA</h1>
       <h2>Empowering women on their journey beyond abuse, towards healing and renewal.</h2>
@@ -70,7 +80,7 @@ const visibleProjects = computed(() => {
   <div class="activity-container">
     <h3>Our Services</h3>
     <div class="grid-3">
-      <ActivityCard v-for="(service, index) of services" :key="index" :imageSrc="service.image[0].image_url" 
+      <ActivityCard v-for="(service, index) of services" :key="index" :imageSrc="retrieveCoverImageURL(index)" 
       :title="service.service_name" :text="service.short_description" :to="`/activities/services/${service.service_id}`" />
     </div>
   </div>
@@ -130,7 +140,6 @@ const visibleProjects = computed(() => {
 
 <style scoped>
 #home-cover{
-  background-image: url(/assets/images/cover-homepage.png);
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -176,7 +185,7 @@ const visibleProjects = computed(() => {
 
 /**About Us section */
 #home-about{
-  background-image: url(/assets/images/homepage-about-us.png);
+  background-image: url(/assets/images/Homepage_About_Us_section.png);
   width: 100%;
   min-height: calc(100vw * 868 / 1920);
   color: var(--white);

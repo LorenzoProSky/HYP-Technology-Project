@@ -218,7 +218,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100% - 5rem);
+    height: calc(100% - 8.5rem);
     align-items: center;
     padding: 0 0 4rem 0;
 }
@@ -251,7 +251,7 @@ form {
 }
 
 form input {
-    height: 70px;
+    height: 1em;
     padding: 1rem;
     margin: 0;
     border: 2px solid var(--grey2);

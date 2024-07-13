@@ -7,18 +7,23 @@
 
 <script lang="ts" setup>
 
-const props = defineProps(['controlsId']);
+const props = defineProps({
+    controlsId: String,
+    iconName: {
+        type: String,
+        validator: (value: string) => value === 'MenuIcon' || value === 'MobileExitIcon',
+        required: true,
+    }
+});
+
 const emit = defineEmits(['toggleMobileMenu']);
 
-let iconName = ref('MenuIcon');
 let menuExpanded = ref(false);
 
 function buttonClicked() {
-    /* Change the icon contained in the button (switch to the other one) */
-    iconName.value = iconName.value === 'MenuIcon' ? 'MobileExitIcon' : 'MenuIcon';
 
     /* Change the aria attribute */
-    menuExpanded.value = iconName.value === 'MenuIcon' ? false : true;
+    menuExpanded.value = props.iconName === 'MenuIcon' ? false : true;
     
     /* Emit the event to inform parent to change the visibility of the mobile menu */
     emit('toggleMobileMenu'); 
@@ -28,15 +33,12 @@ function buttonClicked() {
 </script>
 
 
-
-
-
 <template>
     <button type="button" @click="buttonClicked" 
     :aria-expanded="menuExpanded" 
     :aria-controls="props.controlsId"
     aria-label="Open the menu">
-        <Icon class="mobile-menu-icon" :name="iconName"></Icon>
+        <Icon class="mobile-menu-icon" :name="props.iconName"> </Icon>
     </button>
 </template>
 

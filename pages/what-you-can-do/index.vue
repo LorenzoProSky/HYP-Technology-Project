@@ -23,13 +23,13 @@ useHead({
   <!-- Main container for the activities page -->
   <div id="activities-page">
     <!-- Title section -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_What_you_can_do.png)'}">
       <h1 class="page-title">Discover how to<br />Support MiLA</h1>
     </div>
 
     <!-- Action section -->
     <div id="page-section">
-      <h3 id="section-title">Take Action!</h3>
+      <h2 id="section-title">Take Action!</h2>
       <div id="section-description">
         Join us in our mission to empower women and fight against violence.<br>
         By donating or volunteering with us, you become part of a community dedicated to creating a safer and more equitable world for all.
@@ -90,7 +90,6 @@ useHead({
 
 /* Style for the title section */
 #page-title {
-  background-image: url('/assets/images/cover-what-you-can-do.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);

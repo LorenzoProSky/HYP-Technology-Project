@@ -64,7 +64,7 @@ const pastProjects = computed(() => {
 });
 
 const visibleProjects = computed(() => {
-  return viewMode.value === 'present' ? ongoingProjects : pastProjects;
+  return viewMode.value === 'present' ? ongoingProjects.value.slice(startCount.value, endCount.value) : pastProjects.value.slice(startCount.value, endCount.value);
 });
 
 const totalPages = computed(() => {
@@ -130,7 +130,7 @@ function toggleViewMode(mode: string) {
   <div id="projects-page">
 
     <!-- Cover section with image, title, back button -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_Projects.png)'}">
       <backward-button-wrapper>
         <BackwardButton buttonText="Our Activities" to="/activities" />
       </backward-button-wrapper>
@@ -139,7 +139,7 @@ function toggleViewMode(mode: string) {
 
     <!-- Section content -->
     <div id="page-section" ref="targetSection"> <!-- Target section for smooth scroll -->
-      <h3 id="section-title">MiLA is Full of Opportunities</h3>
+      <h2 id="section-title">MiLA is Full of Opportunities</h2>
       <div id="section-description">
         At MiLA, we believe in creating meaningful opportunities for those impacted by domestic violence. We propose and
         design initiatives funded by the center in collaboration with partners like Milan Municipality and other local
@@ -161,7 +161,7 @@ function toggleViewMode(mode: string) {
     <div id="cards-container">
       <div id="page-cards">
         <!-- Loop through visibleProjects to render ProjectCard components -->
-        <ProjectCard v-for="(project, index) of visibleProjects.value" :key="index" :imageSrc="project.image[0].image_url"
+        <ProjectCard v-for="(project, index) of visibleProjects" :key="index" :imageSrc="project.image[0].image_url"
           :title="project.project_name" :text="project.short_description" :when="project.date_info" :where="project.location_info" :to="`/activities/projects/${project.project_id}`"
           :type="project.status === true ? 'present' : 'past'" />
       </div>
@@ -204,7 +204,6 @@ function toggleViewMode(mode: string) {
 }
 
 #page-title {
-  background-image: url('/assets/images/our-projects-cover.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -234,6 +233,8 @@ function toggleViewMode(mode: string) {
 #section-title {
   text-align: left;
   margin-top: 0px;
+  font-size: 40px;
+  font-weight: 900;
 }
 
 #section-description {

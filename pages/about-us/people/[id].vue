@@ -6,7 +6,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import ManagerCard from '~/components/cards/ManagerCard.vue';
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
-import type { Person, Service, Project } from '~/types/types';
+import type { Person, Service, Project, ServiceOfferingInfo } from '~/types/types';
 import { useRuntimeConfig } from 'nuxt/app';
 
 
@@ -118,21 +118,20 @@ if(managesServices){
   }
 }
 
-/* Build links for offered services */
-
-
-interface offeredService {
-  link: string;
-  name: string;
-}
-
-
-let offeredServiceList = ref([] as offeredService[]);
-
-
-for(let service of personData.value.offering_service) {
-  offeredServiceList.value.push({link: `/activities/services/${service.service_id}`, name: service.service_name});
-}
+/* Filter duplicates in offered services */
+let offeredServices = personData.value.offering_service;
+let offeredServicesNoDup = [] as Array<{service_id: string, service_name: string}>;
+offeredServices.forEach(service => {
+  let duplicate = false;
+  for (let i = 0; i < offeredServicesNoDup.length; i++){
+    if (offeredServicesNoDup[i].service_id === service.service_id) {
+      duplicate = true;
+    }
+  }
+  if(duplicate === false){
+    offeredServicesNoDup.push(service);
+  }
+})
 
 
 </script>
@@ -154,8 +153,8 @@ for(let service of personData.value.offering_service) {
             </backward-button-wrapper>
 
             <!-- Text in cover section -->
-            <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
-            <h4 id="job-title-cover">{{ personData.job_title }}</h4>
+            <h1>{{ personData.name }}<br>{{ personData.surname }}</h1>
+            <h2 id="job-title-cover">{{ personData.job_title }}</h2>
         
         </div>
 
@@ -189,8 +188,8 @@ for(let service of personData.value.offering_service) {
         <div id="role-description">
           <h3>Role at MiLa</h3>
           <p>{{ personData.role_description }}</p>
-          <NuxtLink v-for="(service, index) in []" to="/" :key="index" class="offered-service-nuxt-link">
-            Discover {{ }} 
+          <NuxtLink v-for="(service, index) in offeredServicesNoDup" :to="`/activities/services/${service.service_id}`" :key="index" class="offered-service-nuxt-link">
+            Discover {{ service.service_name }} 
             <Icon name="ForwardArrowIcon" size="19"> </Icon>
           </NuxtLink>
         </div>
@@ -301,6 +300,9 @@ for(let service of personData.value.offering_service) {
 #job-title-cover {
   color:white;
   margin-top: 5%;
+  font-size: 42px;
+  line-height: 70px;
+  font-weight: 600;
 }
 
 .profile-image-cover-img {

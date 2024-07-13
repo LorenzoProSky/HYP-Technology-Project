@@ -18,15 +18,15 @@ useHead({
 </script>
 
 <template>
-  <div id="volunteering-cover">
+  <div id="volunteering-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Volunteering.png)'}">
     <backward-button-wrapper>
       <BackwardButton buttonText="What You Can Do" to="/what-you-can-do" />
     </backward-button-wrapper>
-    <h1 class="page-title">Become a <br> volunteer at MiLA</h1>
+    <h1 class="page-title" >Become a <br> volunteer at MiLA</h1>
   </div>
   
   <div id="volunteering-intro">
-    <h3>Volunteer With Us!</h3>
+    <h2>Volunteer With Us!</h2>
     <p class="dynamic-p">Contribute to the fight against violence against women
       and for rights by becoming a volunteer in our centre.</p>
   </div>
@@ -46,7 +46,7 @@ useHead({
   <div id="volunteer-role" style="z-index: 1; position: relative;">
     <img src="/assets/images/volunteer-pic2.jpeg" alt="volunteer-pic2" id="volunteer-pic2">
     <div>
-      <h4>Who We Are Looking For</h4>
+      <h3>Who We Are Looking For</h3>
       <p>We seek compassionate, reliable individuals eager to support women and children affected by domestic violence. Our ideal volunteer is empathetic, 
         maintains confidentiality, and is dedicated to making a positive impact. We welcome diverse backgrounds and experiences, believing that varied perspectives 
         strengthen our community. Whether you have previous social services experience or simply a heartfelt desire to help, your commitment and willingness to 
@@ -101,7 +101,6 @@ useHead({
 
 <style scoped>
 #volunteering-cover{
-  background-image: url('/assets/images/cover-volunteering.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -123,6 +122,17 @@ useHead({
 }
 #volunteering-intro a{
   text-decoration: underline;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 44px; 
+  font-weight: 900;
+}
+h3 {
+  font-size: 32px;
+  line-height: 34px; 
+  font-weight: 900;
 }
 
 #volunteer-quote{

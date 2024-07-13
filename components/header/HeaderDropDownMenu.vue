@@ -1,5 +1,4 @@
 
-
 <script lang="ts" setup>
 
 const props = defineProps({
@@ -60,7 +59,7 @@ function blurLink(index: number){
 
 .dropdown-menu {
   position: absolute;
-  top: 20px;  
+  top: 30px;  
   background-color: var(--white);
   width: 187px;
   border: 1px, solid, var(--lilac);
@@ -111,7 +110,7 @@ li {
 
 @media screen and (max-width: 700px) {
     .dropdown-menu {
-        top: 30px;
+        top: 35px;
     }
 }
 

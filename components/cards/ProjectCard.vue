@@ -74,7 +74,7 @@ export default defineComponent({
         <!-- Card content -->
         <div class="card-content">
           <!-- Project title -->
-          <h4 class="card-title">{{ title }}</h4>
+          <h1 class="card-title">{{ title }}</h1>
           <!-- Project description -->
           <p class="card-text">{{ text }}</p>
           <!-- When and where details -->
@@ -182,6 +182,8 @@ export default defineComponent({
   margin-top: 36px;
   margin-bottom: -6px;
   text-align: left;
+  line-height: 60px;
+
 }
 
 /* Text styling */

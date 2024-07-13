@@ -6,8 +6,7 @@ import SecondaryButton from '~/components/buttons/SecondaryButton.vue';
 import ExitButton from '~/components/buttons/ExitButton.vue';
 import ChatbotButton from '~/components/buttons/ChatbotButton.vue';
 import Chat from '~/components/chatbot/Chat.vue';
-import MobileHeaderOpenCloseButton from '~/components/header/MobileHeaderOpenCloseButton.vue';
-import MobileHeaderPlusMinusButton from '~/components/header/MobileHeaderPlusMinusButton.vue';
+import MobileHeader from '~/components/header/MobileHeader.vue';
 import HeaderDropDownMenu from '~/components/header/HeaderDropDownMenu.vue';
 
 /* Detect whether the device is a mobile device or a desktop one based on touch actions support */
@@ -22,12 +21,8 @@ onBeforeMount(() => {
      }
 });
 
-/* Variable to keep track of whether the mobile menus is opened or not */
-const isMobileMenuOpened = ref(false);
-
 /* Variable to keep track of the appearance of the chatbot dialogue */
 const isChatbotDialogOpened = ref(false);
-
 
 /* Data for the dropdown menus of the header to be passed to the components */
 const linkNames = [
@@ -48,66 +43,22 @@ const focusStatusHeaderLinks = ref([false, false, false]) as Ref<boolean[]>;
 const focusStatusDropDownMenus = ref([false, false, false]) as Ref<boolean[]>;
 
 /* Show dropdown when the high-level link in the header is focused or hovered on */
-function showDropDown (id: number) {
-  focusStatusHeaderLinks.value[id] = true;
-}
 
-function hideDropDown (id: number) {
+function blurHeaderLink (id: number) {
   setTimeout(() => {
     focusStatusHeaderLinks.value[id] = false;
-  }, 200);
-}
-
-function focusDropDownMenu (id: number) {
-  focusStatusDropDownMenus.value[id] = true;
+  }, 100);
 }
 
 function blurDropDownMenu (id: number) {
   setTimeout(() => {
     focusStatusDropDownMenus.value[id] = false;
-  }, 200);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Open and close mobile menu based on the boolean ref isMobileMenuOpened */
-function toggleMobileMenu() {
-  isMobileMenuOpened.value = isMobileMenuOpened.value === true ? false : true;
+  }, 100);
 }
 
 function toggleChatbotDialogue() {
   isChatbotDialogOpened.value = isChatbotDialogOpened.value === true ? false : true;
 }
-
-
-
-function openSubmenu(index: number) {
-  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
-  if(subMenu){
-    subMenu.style.display='flex';
-  }
-}
-
-function closeSubmenu(index: number) {
-  let subMenu = document.getElementsByClassName('subMenu')[index] as HTMLElement;
-  if(subMenu){
-    subMenu.style.display='none';
-  }
-}
-
-
-
 
 </script>
 
@@ -127,13 +78,13 @@ function closeSubmenu(index: number) {
       <div class="menu-container">
         <NuxtLink class="high-level-link" to="/about-us" aria-controls="about-us-dropdown" 
           :aria-expanded="focusStatusHeaderLinks[0] || focusStatusDropDownMenus[0]" 
-          @mouseover="showDropDown(0)" @mouseleave="hideDropDown(0)" @focus="showDropDown(0)" @blur="hideDropDown(0)">
+          @mouseover="focusStatusHeaderLinks[0] = true" @mouseleave="blurHeaderLink(0)" @focus="focusStatusHeaderLinks[0] = true" @blur="blurHeaderLink(0)">
           About Us
         </NuxtLink>
         <HeaderDropDownMenu id="about-us-dropdown" 
           v-if="focusStatusHeaderLinks[0] || focusStatusDropDownMenus[0]" 
-          @mouseover="focusDropDownMenu(0)" @mouseleave="blurDropDownMenu(0)" 
-          @focused-link="focusDropDownMenu(0)" @blur-link="blurDropDownMenu(0)"
+          @mouseover="focusStatusDropDownMenus[0] = true" @mouseleave="blurDropDownMenu(0)" 
+          @focused-link="focusStatusDropDownMenus[0] = true" @blur-link="blurDropDownMenu(0)"
           :link-names="linkNames[0]" :to="to[0]"> 
         </HeaderDropDownMenu>
       </div>
@@ -141,13 +92,13 @@ function closeSubmenu(index: number) {
       <div class="menu-container">
         <NuxtLink class="high-level-link" to="/activities" aria-controls="our-activities-dropdown" 
           :aria-expanded="focusStatusHeaderLinks[1] || focusStatusDropDownMenus[1]"  
-          @mouseover="showDropDown(1)" @mouseleave="hideDropDown(1)" @focus="showDropDown(1)" @blur="hideDropDown(1)">
+          @mouseover="focusStatusHeaderLinks[1] = true" @mouseleave="blurHeaderLink(1)" @focus="focusStatusHeaderLinks[1] = true" @blur="blurHeaderLink(1)">
           Our Activities
         </NuxtLink>
         <HeaderDropDownMenu id="our-activities-dropdown" 
           v-if="focusStatusHeaderLinks[1] || focusStatusDropDownMenus[1]"
-          @mouseover="focusDropDownMenu(1)" @mouseleave="blurDropDownMenu(1)" 
-          @focused-link="focusDropDownMenu(1)" @blur-link="blurDropDownMenu(1)"
+          @mouseover="focusStatusDropDownMenus[1] = true" @mouseleave="blurDropDownMenu(1)" 
+          @focused-link="focusStatusDropDownMenus[1] = true" @blur-link="blurDropDownMenu(1)"
           :link-names="linkNames[1]" :to="to[1]"> 
         </HeaderDropDownMenu>
       </div>
@@ -155,13 +106,13 @@ function closeSubmenu(index: number) {
       <div class="menu-container">
         <NuxtLink class="high-level-link" to="/what-you-can-do" aria-controls="what-you-can-do-dropdown"
           :aria-expanded="focusStatusHeaderLinks[2] || focusStatusDropDownMenus[2]"    
-          @mouseover="showDropDown(2)" @mouseleave="hideDropDown(2)" @focus="showDropDown(2)" @blur="hideDropDown(2)">
+          @mouseover="focusStatusHeaderLinks[2] = true" @mouseleave="blurHeaderLink(2)" @focus="focusStatusHeaderLinks[2] = true" @blur="blurHeaderLink(2)">
           What You Can Do
         </NuxtLink>
         <HeaderDropDownMenu id="what-you-can-do-dropdown" 
           v-if="focusStatusHeaderLinks[2] || focusStatusDropDownMenus[2]"
-          @mouseover="focusDropDownMenu(2)" @mouseleave="blurDropDownMenu(2)" 
-          @focused-link="focusDropDownMenu(2)" @blur-link="blurDropDownMenu(2)"
+          @mouseover="focusStatusDropDownMenus[2] = true" @mouseleave="blurDropDownMenu(2)" 
+          @focused-link="focusStatusDropDownMenus[2] = true" @blur-link="blurDropDownMenu(2)"
           :link-names="linkNames[2]" :to="to[2]"> 
         </HeaderDropDownMenu>
       </div>
@@ -174,41 +125,7 @@ function closeSubmenu(index: number) {
 
 
     <!-- MOBILE HEADER -->
-    <MobileHeaderOpenCloseButton class="mobile-menu-open-close-button" v-if="isMobile" @toggle-mobile-menu="toggleMobileMenu"></MobileHeaderOpenCloseButton>
-
-    <nav id="mobile-nav" class="mobile-container" v-if="isMobileMenuOpened && isMobile">
-
-      <div class="dropdown-mobile">
-        <NuxtLink to="/about-us" class="semiboldText">About Us</NuxtLink>
-        <MobileHeaderPlusMinusButton :index="0" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
-      </div>
-      <div class="subMenu">
-        <NuxtLink to="/about-us/locations">Our Location</NuxtLink>        
-        <NuxtLink to="/about-us/people">Our People</NuxtLink>
-      </div>   
-
-      <div class="dropdown-mobile">
-        <NuxtLink to="/activities" class="semiboldText">Our Activities</NuxtLink>
-        <MobileHeaderPlusMinusButton :index="1" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
-      </div>
-      <div class="subMenu">
-        <NuxtLink to="/activities/projects">Projects</NuxtLink>        
-        <NuxtLink to="/activities/services">Services</NuxtLink>
-      </div>
-
-      <div class="dropdown-mobile">
-        <NuxtLink to="/what-you-can-do" class="semiboldText">What You Can Do</NuxtLink>
-        <MobileHeaderPlusMinusButton :index="2" @open-submenu="openSubmenu" @close-submenu="closeSubmenu"> </MobileHeaderPlusMinusButton>
-      </div>
-      <div class="subMenu">
-        <NuxtLink to="/what-you-can-do/volunteering">Volunteering</NuxtLink>        
-        <NuxtLink to="/what-you-can-do/donate">Donate</NuxtLink>
-      </div>
-
-      <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contact-us-button-mobile"
-         style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" />
-    
-    </nav>
+    <MobileHeader v-if="isMobile"></MobileHeader>
 
     <ExitButton v-if="isMobile" aria-label="Exit from the website"/>
 
@@ -330,6 +247,9 @@ header {
 
 nav a {
   color: var(--black);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
 }
 nav a:hover {
   color: var(--purple-hover);
@@ -351,63 +271,9 @@ header nav #contactUs{
   position: relative;
 }
 
-
-/**Header for mobile devices */
-
-/* Wrapper for the dropdown menu */
-.mobile-container {
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  font-size: var(--body2);
-  line-height: var(--l-height-header);
-  background-color: var(--white);
-  padding-top: 3.4rem;
-
-  position: fixed;
-  width: 100%;
-  top: var(--mobile-header2);
-  left: 0;
-
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
-}
-
-/* Top-level links */
-.mobile-container .dropdown-mobile {
-  max-width: 550px;
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-}
-.mobile-container a {
-  color: var(--black);
-}
-
-
-/* Sub-menus under the top-level links */
-.subMenu {
-  display: none;
-  flex-direction: column;
-  align-items: start;
-  gap: 1rem;
-  width: 75%;
-  max-width: 500px;
-  margin-top: -12px;
-  margin-bottom: 16px;
-  font-size: var(--body1);
-  line-height: var(--l-height1);
-  font-weight: var(--medium);
-}
-.subMenu a {
-  color: var(--grey1);
-}
-
 main {
   margin-top: var(--header-height);
 }
-
 
 
 
@@ -680,8 +546,6 @@ p {
 /**Stylings for mobile devices */
 /**tablet */
 @media only screen and (max-device-width:900px){
-
-
 
 footer {
   align-items: center;

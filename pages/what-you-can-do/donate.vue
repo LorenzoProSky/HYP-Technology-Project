@@ -28,13 +28,13 @@ useHead({
       </backward-button-wrapper>
 
       <!-- Page title section -->
-      <div id="page-title">
+      <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Donate.png)'}">
         <h1 class="page-title">Donate to<br />Centro MiLA</h1>
       </div>
 
       <!-- Description section -->
       <div id="page-section">
-        <h3 id="section-title">Your support can make a difference</h3>
+        <h2 id="section-title">Your support can make a difference</h2>
         <div id="section-description">
           You can contribute to the realisation of our activities with a <br> donation, thus supporting women in their pathways out of violence.
         </div>
@@ -78,9 +78,9 @@ useHead({
               <h2>Your Impact</h2>
             </div>
             <!-- Text describing the impact of donations -->
-            <div id="quote-text">
-              By supporting our projects you guarantee many women a welcoming reception, individual psychological support, legal counselling and support for autonomy, job orientation, professional retraining and support in accessing safe housing services.
-            </div>
+            
+              <p id="quote-text">By supporting our projects you guarantee many women a welcoming reception, individual psychological support, legal counselling and support for autonomy, job orientation, professional retraining and support in accessing safe housing services.</p>
+           
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@ useHead({
         <Icon id="heart-icon" name="HeartIcon" size=3vw />
       </div>
       <div class="heart-text">
-        <h4>All this is possible thanks to all the people who <br> believe in and fight for a fairer and more just world. </h4>
+        <p id="motivational-text">All this is possible thanks to all the people who <br> believe in and fight for a fairer and more just world. </p>
       </div>
     </div>
   </template>
@@ -135,7 +135,6 @@ useHead({
 
 /* Style for the page title section */
 #page-title {
-  background-image: url('/assets/images/cover-donate.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -154,6 +153,8 @@ useHead({
   font-family: var(--font-playfair);
   font-weight: var(--bold);
   font-size: 42px;
+  font-weight: 700;
+  line-height: 44px;
 }
 #section-description {
   text-align: center;
@@ -249,6 +250,16 @@ useHead({
   font-family: var(--font-montserrat);
   font-weight: var(--regular);
   font-size: var(--h4);
+  line-height: 40px;
+}
+
+#motivational-text {
+  font-size: 32px;
+  margin: 0;
+  font-weight: 700;
+  font-family: var(--font-playfair);
+  line-height: 40px;
+
 }
 
 /* Media queries for responsive design */

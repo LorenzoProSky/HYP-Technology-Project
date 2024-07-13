@@ -62,7 +62,7 @@ export default defineComponent({
         <!-- Card content -->
         <div class="card-content">
           <!-- Service title -->
-          <h4 class="card-title">{{ title }}</h4>
+          <h1 class="card-title">{{ title }}</h1>
           <!-- Service description -->
           <p class="card-text">{{ text }}</p>
           <!-- Card details -->
@@ -155,6 +155,7 @@ export default defineComponent({
   margin-top: 36px;
   margin-bottom: -10px;
   text-align: left;
+  line-height: 50px;
 }
 
 /* Text styling */
@@ -163,7 +164,7 @@ export default defineComponent({
   font-size: var(--body3);
   color: var(--black);
   font-weight: var(--medium);
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 25px;
   text-align: left;
 }

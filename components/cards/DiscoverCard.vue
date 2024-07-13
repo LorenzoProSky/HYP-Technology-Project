@@ -45,7 +45,7 @@ export default defineComponent({
         <!-- Card content -->
         <div class="card-content">
           <!-- Activity title -->
-          <h4 class="card-name">{{ title }}</h4>
+          <h1 class="card-name">{{ title }}</h1>
           <!-- Activity description -->
           <p class="card-text">{{ text }}</p>
           <!-- Forward arrow icon -->
@@ -61,7 +61,7 @@ export default defineComponent({
 /* Card styling */
 .card {
   width: 600px;
-  height: 380px;
+  height: 400px;
   border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
@@ -105,6 +105,8 @@ export default defineComponent({
 /* Content styling */
 .card-content {
   padding: 0px;
+  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -138,9 +140,9 @@ export default defineComponent({
 
 /* Icon styling */
 .icon {
-  align-self: center;
-  margin-top: 44px;
-  margin-left: 496px;
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
 }
 
 
