@@ -116,10 +116,12 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
       <backward-button-wrapper>
         <BackwardButton buttonText="Our Projects" to="/activities/projects" />
       </backward-button-wrapper>
+      <div class="page-title">
       <h1> {{ projectData.project_name }} </h1>
       <NuxtLink :to="`/about-us/people/${projectData.person?.person_id}`">
         <h2 id="manager-subtitle"> Manager: {{ managerFullName }}</h2>
       </NuxtLink>
+      </div>
     </div>
 
 
@@ -278,8 +280,16 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
   .cover-section-div {    /* Cover image dynamically added in javascript */
     background-size: cover;
     background-position: top right;
-    padding: 25% 7% 13% 10%;
+    padding: 25% 7% 13% 0;
   }
+
+@media(max-width:1400px){
+  .cover-section-div h2{
+    font-size: 3.4vw !important;
+    line-height: 3.5vw;
+    max-width: 60vw;
+  }
+}
 
   #manager-subtitle {
     color: white;
