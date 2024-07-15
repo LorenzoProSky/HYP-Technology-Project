@@ -142,10 +142,13 @@ useHead({
 .quote-section {
   margin: 15em 0;
   background-image: url('/assets/images/what-you-can-do-pageImage.png');
-  object-fit:fill;
+  object-fit: cover;
+  background-position: center;
   color: var(--black);
   padding: 15% 40% 8% 6%;
   position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Style for the quote container */
@@ -209,13 +212,18 @@ useHead({
 @media screen and (max-width: 700px){
   #quote-text {
   font-size: 16px; 
-  line-height: 30px; 
+  line-height: 20px; 
 }
 
 #quote-author {
   font-size: 14px;
 }
+
+.page-section {
+  padding: 160px 10%;
 }
+}
+
 
 
 </style>

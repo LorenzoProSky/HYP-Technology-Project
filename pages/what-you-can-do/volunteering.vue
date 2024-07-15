@@ -25,7 +25,7 @@ useHead({
     <h1 class="page-title" >Become a <br> volunteer at MiLA</h1>
   </div>
   
-  <div id="volunteering-intro">
+  <div class="volunteering-intro">
     <h2>Volunteer With Us!</h2>
     <p class="dynamic-p">Contribute to the fight against violence against women
       and for rights by becoming a volunteer in our centre.</p>
@@ -66,13 +66,13 @@ useHead({
         effective communication, crisis intervention, and confidentiality protocols. These sessions equip you with the knowledge and tools necessary to provide compassionate 
         and effective support. Completing this training prepares you to make a meaningful impact and contribute to the healing and empowerment of those we serve. Join us to 
         learn, grow, and make a difference together.</p>
-        <p class="boldText" style="margin-top: 64px;" >Seminar 1 - On site</p>
+        <p class="boldText" >Seminar 1 - On site</p>
         <p>Sat 01 June <br>
           18 pm - 20 pm</p>
-        <p class="boldText" style="margin-top: 48px;" >Seminar 2 - Online</p>
+        <p class="boldText">Seminar 2 - Online</p>
         <p>Wed 05 June - Wed 15 June <br>
           18 pm - 20 pm</p>
-        <p class="boldText" style="margin-top: 48px;" >Seminar 3 - On site</p>
+        <p class="boldText"  >Seminar 3 - On site</p>
         <p>Sat 22 June - Sat 29 June <br>
           18 pm - 20 pm</p>
     </div>
@@ -84,7 +84,7 @@ useHead({
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
     <!--Cambiare action-->  
-    <form action="/" style="width: 800px; margin-top: 92px;">
+    <form action="/">
       <input type="text" name="name" placeholder="Name and Surname" required>
       <input type="text" name="age" placeholder="Your age" required>
       <input type="text" name="e-mail" placeholder="E-mail address" required>
@@ -102,26 +102,26 @@ useHead({
 <style scoped>
 #volunteering-cover{
   background-size: cover;
-  width: 100%;
-  height: calc(100vw / 2);
+  min-height: 50vw;
+  position: relative;
+}
+
+.page-title {
+  position: absolute;
+  bottom: 1em;
 }
 
 /**Introductive section */
-#volunteering-intro{
-  width: 100%;
+.volunteering-intro{
+  margin: 160px 0;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 160px 0;
-  text-align: center;
 }
-#volunteering-intro p{
-  width: 41%;
+.volunteering-intro p{
+  width: 50%;
   text-align: center;
-  padding: 20px;
-}
-#volunteering-intro a{
-  text-decoration: underline;
 }
 
 h2 {
@@ -140,12 +140,11 @@ h3 {
   background-image: url(/assets/images/volunteer-quote.svg);
   background-repeat: no-repeat;
   background-position: right;
-  min-height: calc(100vw*678/1920);
 }
 #quote-container{
   display: flex;
   flex-direction: row;
-  padding: 145px 0 139px 170px;
+  padding: 6em 0 10em 8em;
 }
 #quote-container div{
   width: 30.5vw;
@@ -154,138 +153,144 @@ h3 {
 }
 
 #volunteer-role{
-  margin: 300px 0 370px 0;
+  margin: 15em 0 18em 0;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  padding-right: 4em;
+  overflow-x: hidden;
 }
 #volunteer-pic2{
-  width: 64.8vw;
-  height: auto;
-  margin-left: -20vw;
+  flex: 1 1 auto;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
 }
 #volunteer-role div{
   margin-left: 7.9vw;
-  width: 32.2vw;
+  width: 50%;
   font-size: var(--body3);
   line-height: var(--l-height3);
 }
 
 #volunteer-training{
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: end;
-  overflow-x: hidden
+  overflow-x: hidden;
+  padding-left: 4em;
+  gap: 4em;
 }
 #volunteer-training div{
-  margin-right: 10.4vw;
-  width: 30vw;
+  width: 40%;
   font-size: var(--body3);
   line-height: var(--l-height3);
 }
 #volunteer-pic1{
-  width: 59.8vw;
-  height: auto;
-  margin-right: -12vw;
+  width: 60%;
+  margin-right: -20vw;
 }
 
 #volunteering-form{
-  margin: 300px 0 511px 0;
+  padding: 0 3%;
+  margin: 12em 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
+#volunteering-form form {
+  width: 80%;
+  max-width: 750px;
+  margin-top: 30px;
+}
 #volunteering-form p{
-  max-width: 38.2vw;
+  width: 80%;
+  max-width: 600px;
 }
 
-@media (max-width: 1700px){
-  #quote-container{
-    padding-left: 10vw;
+@media screen and (max-width: 1150px) {
+  #quote-container div{
+  width: 60%;
+  font-size: 28px;
+  line-height: 40px;
+}
+
+#volunteer-role{
+  flex-direction: column;
+  gap: 3em;
+  padding: 0;
+  margin-bottom: 12em;
+}
+#volunteer-role img {
+  width: 80%;
+}
+#volunteer-role div {
+  margin: 0;
+  width: 60%;
+}
+
+#volunteer-training{
+  flex-direction: column;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+#volunteer-training div{
+  width: 60%;
+  font-size: var(--body3);
+  line-height: var(--l-height3);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+#volunteer-pic1{
+  width: 80%;
+  margin: 0;
+  order: -1;
+}
+.boldText {
+  margin-bottom: 0;
+}
+
+}
+
+@media screen and (max-width: 800px){
+  #quote-container {
+    padding: 6em 0 6em 5em;
   }
   #quote-container div{
-    width: 80vw;
-    font-size: 2.7vw;
-    line-height: 2.8vw;
-  }
-  #quote-author {
-    font-size: 2.2vw!important;
-    line-height: 2.5vw!important;
-  }
+  width: 70%;
+  font-size: 24px;
+  line-height: 33px;
+}
 }
 
-@media (max-width:1300px){
-  #volunteer-role div{
-    font-size: var(--body2);
-    width: 40vw;
-    margin-left: 20px;
-  }
-  #volunteer-training div{
-    font-size: var(--body2);
-    width: 40vw;
-    margin-right: 20px;
-  }
-}
-
-@media(max-width:900px){
-  .dynamic-p{
-    width: 80vw !important;
-    max-width: 80vw !important;
-  }
-
-  #quote-container{
-    padding-left: 20px;
+@media screen and (max-width: 500px) {
+  #quote-container {
+    padding: 6em 0 6em 2em;
   }
   #quote-container div{
-    width: 80vw;
-  }
-
-  #volunteer-role{
-    flex-direction: column;
-  }
-  #volunteer-pic1{
-    width: 100vw;
-    margin: 0;
-  }
-  #volunteer-role div{
-    width: 80vw;
-    margin: 0;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-  #volunteer-training{
-    flex-direction: column;
-  }
-  #volunteer-pic2{
-    width: 100vw;
-    margin: 0;
-  }
-  #volunteer-training div{
-    width: 80vw;
-    margin: 0;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-
-  form{
-    width: 90vw !important;
-  }
+  width: 80%;
+  font-size: 20px;
+  line-height: 28px;
 }
 
-@media (max-width: 500px){
-  #quote-container{
-    padding-left: 10vw;
-  }
-  #quote-container div{
-    width: 80vw;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-  #quote-author {
-    font-size: var(--body1)!important;
-    line-height: var(--l-height1)!important;
-  }
+#volunteer-role div{
+  width: 78%;
+  font-size: 18px;
+
 }
+
+#volunteer-training div{
+  width: 78%;
+  font-size: 18px;
+  line-height: var(--l-height3);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+}
+
+
 </style>
