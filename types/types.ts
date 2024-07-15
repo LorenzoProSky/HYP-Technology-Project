@@ -24,20 +24,7 @@ export interface Person {
     short_description?: string;
 }
 
-export interface ServiceOfferingInfo {
-    location: {
-        name: string,
-    };
-    schedule: String;
-}
 
-export interface Service {
-    service_id: number;
-    service_name: string;
-    short_description: string;
-    image: Image[];
-    service_offering_info: ServiceOfferingInfo[];
-}
 
 export interface Sponsor {
     sponsor_name: string;
@@ -45,11 +32,13 @@ export interface Sponsor {
 }
 
 export interface Manager {
+    person_id: number;
     name: string;
     surname: string;
 }
 
 export interface Image {
+    image_id?: string;
     image_url: string;
 }
 
@@ -69,6 +58,23 @@ export interface Project {
 
 }
 
+export interface OfferingInfoSingleServicePage {
+    person: {
+        name: string,
+        surname: string,
+        person_id: number,
+    };
+    location_id: number;
+    schedule: string;
+}
+
+export interface OfferingInfoMultiServicePage {
+    location: {
+        name: string,
+    }
+    schedule: string,
+}
+
 export interface Service {
     service_id: string;
     service_name: string;
@@ -76,10 +82,11 @@ export interface Service {
     description: string;
     additional_info: string;
     image: Image[];
+    offering_info: OfferingInfoSingleServicePage[];
+    service_offering_info: OfferingInfoMultiServicePage[];
     manager: Person;
     testimonial: Testimonial[];
     offering_person: Person[];
-    offers: Offer[];
 }
 
 export interface Offer{

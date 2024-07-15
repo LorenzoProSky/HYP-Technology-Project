@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 
 import { useRoute, useFetch, useRuntimeConfig } from 'nuxt/app';
+import BackwardButton from '~/components/buttons/BackwardButton.vue';
 
 // Import interfaces for handling data conversion from json server response
 import type { Project, Manager, Image, Sponsor } from '~/types/types';
+
 
 
 // Import the server public URL
@@ -28,6 +30,21 @@ if(data.value){
 } else {
   console.log(error);
 }
+
+useHead({
+  title: projectData.value.project_name + ' | Discover Projects Centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: projectData.value.short_description,
+    },
+    {
+      name: 'keywords',
+      content: projectData.value.project_name + ', ' + projectData.value.location_info + ', ' + projectData.value.date_info + ', anti-violence project, domestic abuse support,  project manager, event details, participants, sponsors'
+      + 'progetto contro la violenza, programma di empowerment delle donne, supporto per vittime di abusi domestici, rifugio per donne in crisi, prevenzione della violenza di genere',
+    }
+  ]
+});
 
 // Objects for dynamic styling of elements
 const coverStyling = ref({
@@ -96,8 +113,15 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
     <!-- Cover section with the title -->
     <div class="cover-section-div" :style="coverStyling">
-       <h1> {{ projectData.project_name }} </h1>
-       <h3 id="manager-subtitle"> Manager: {{ managerFullName }}</h3>
+      <backward-button-wrapper>
+        <BackwardButton buttonText="Our Projects" to="/activities/projects" />
+      </backward-button-wrapper>
+      <div class="page-title">
+      <h1> {{ projectData.project_name }} </h1>
+      <NuxtLink :to="`/about-us/people/${projectData.person?.person_id}`">
+        <h2 id="manager-subtitle"> Manager: {{ managerFullName }}</h2>
+      </NuxtLink>
+      </div>
     </div>
 
 
@@ -198,6 +222,11 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
 <style scoped>
 
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
 
   /*-------------------------------Resetting some styles for the page (mobile-first design)-------------------------------*/
   
@@ -218,7 +247,7 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     font-weight: 700;
   }
   .page-wrapper h3 {
-    font-size: 19px;  /* Manager name sub-title font-size */
+    font-size: 19px; 
     font-weight: 600;
   }
   .page-wrapper p, 
@@ -251,12 +280,22 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
   .cover-section-div {    /* Cover image dynamically added in javascript */
     background-size: cover;
     background-position: top right;
-    padding: 30% 0 10% 7%;
+    padding: 25% 7% 13% 0;
   }
+
+@media(max-width:1400px){
+  .cover-section-div h2{
+    font-size: 3.4vw !important;
+    line-height: 3.5vw;
+    max-width: 60vw;
+  }
+}
 
   #manager-subtitle {
     color: white;
-    margin-top: 0.5em;
+    /*margin-top: 0.5em;*/
+    font-size: 24px;
+    font-weight: 600;
   }
 
 
@@ -377,7 +416,6 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
   }
 
   .illustrative-images-container-div img {
-    height: 100%;
     object-fit: cover;
   }
 
@@ -390,7 +428,8 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     flex-wrap: nowrap;
     justify-content: center;
     margin-bottom: 10em;
-    gap: 2.2em;
+    gap: 0.4em;
+    margin-top: 15em;
   }
 
   .navigation-link {
@@ -450,6 +489,10 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     }
     .horizontal-padding {
       padding: 0 120px;
+    }
+
+    #manager-subtitle {
+      font-size: 32px;
     }
 
     /*----------------------------------Info section horizontal refactoring------------------------*/
@@ -541,6 +584,9 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
       padding: 0 260px;
     }
 
+    #manager-subtitle {
+      font-size: 40px;
+    }
 
     /*----------------------------------Additional Information section------------------------*/
     .additional-information-div {
@@ -584,86 +630,6 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     .event-info-div {
       gap: 6em;
     }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @media screen and (min-width: 1400px) {
-    #page-wrapper {
-      font-size: 96px;
-    }
-
-    #info-container {
-      max-width: 90%;
-    
-    }
-
-    #sponsor-section {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 2em;
-  
-    }
-
-    #sponsor-section img{
-      margin-top: 0;
-
-    }
-
-    #page-body {
-      padding-inline: 1.5em;
-    }
-
-  }
-
-
-  @media screen and (min-width: 1800px) {
-    #info-container {
-      flex-direction: row;
-      border-width: 3px;
-    }
-
-    #flex-no-wrap {
-      font-size: 0.5em;
-      flex-direction: row;
-      justify-content: center;
-    }
-
-    .icon-info {
-      margin: 0;
-    } 
-
-    #page-body {
-      padding-inline: 1.5em;
-    }
-
-
-
   }
 
 

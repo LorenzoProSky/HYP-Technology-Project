@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
-import { onMounted } from 'vue';
-import type { Person, Service } from '~/types/types';
+import type { Person, Service, OfferingInfoSingleServicePage } from '~/types/types';
 
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
 const baseBackendURL = runtimeConfig.public.baseBackendURL;
 
-// service id from url
+// Service id from url
 const serviceId = useRoute().params.id as string;
 const serviceUrl = baseBackendURL + "services/" + serviceId;
 const regex = /service\_(\d+)/;
@@ -33,104 +32,103 @@ if(data.value){
   console.log(error);
 }
 
-const name_service = service.value.service_name;
-const description_service = service.value.description;
-const additional_info = service.value.additional_info;
-const manager = service.value.manager;
-
 /**information about the images */
-const service_images = service.value.image;
-const cover_image = service_images[0].image_url;
-
-/**information about people offering the service */
-const offering_people = service.value.offering_person;
-const offers = service.value.offers;
-const offering_bovisa: Person[] = [];
-const bovisa_links: string[] = [];
-const offering_farini: Person[] = [];
-const farini_links: string[] = [];
-
-for (let i = 0; i<offering_people.length; i++){
-  for (let j = 0; j<offers.length; j++){
-    if(offering_people[i].person_id == offers[j].person_id && offers[j].location_id == 1){
-      offering_farini.push(offering_people[i]);
-      farini_links.push("/about-us/people/"+offering_people[i].name+"_"+offering_people[i].surname);
-    } else if(offering_people[i].person_id == offers[j].person_id && offers[j].location_id == 2) {
-      offering_bovisa.push(offering_people[i]);
-      bovisa_links.push("/about-us/people/"+offering_people[i].name+"_"+offering_people[i].surname);
-    }
-  }  
-}
-
-/**information about the schedule of the service */
-let schedule_farini: string = '';
-let schedule_bovisa: string = '';
-
-for (let i = 0; i<offers.length; i++){
-  if (offers[i].location_id == 1) {
-    schedule_farini = offers[i].schedule;
+let imageList = service.value.image;
+let coverImageURL = '';
+let descriptionImages = [] as string[];
+const re = new RegExp("Cover");
+for(let image of imageList){
+  if(re.test(image.image_id as string)) {
+    coverImageURL = image.image_url;
   } else {
-    schedule_bovisa = offers[i].schedule;
+    descriptionImages.push(image.image_url);
   }
 }
+
+/**information about people offering the service */
+const offering_info: OfferingInfoSingleServicePage[] = service.value.offering_info;
+const offeringBovisa = ref([]) as Ref<OfferingInfoSingleServicePage[]>;
+const offeringFarini = ref([]) as Ref<OfferingInfoSingleServicePage[]>;
+let scheduleBovisa = '';
+let scheduleFarini = '';
+
+offering_info.forEach(offer_info => {
+  offer_info.location_id === 1 ? offeringBovisa.value.push(offer_info) : offeringFarini.value.push(offer_info);
+  offer_info.location_id === 1 ? scheduleBovisa = offer_info.schedule : scheduleFarini = offer_info.schedule;
+});
+
 
 /**information about the testimonials */
 const service_testimonial = service.value.testimonial;
 
-onMounted(async ()=>{
-  console.log(id);  
+useHead({
+  title: service.value.service_name + " | Discover Services Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: service.value.description,
+    },
+    {
+      name: 'keywords',
+      content: service.value.service_name + ', ' + service.value.manager.name + ' ' + service.value.manager.surname + ', MiLA service, domestic violence support, empowerment services, Milan support services, community impact, women\'s shelter services' +
+      'servizio MiLA, supporto violenza domestica, servizi di empowerment, servizi di supporto a Milano, impatto sulla comunità, servizi rifugio per donne',
+    }
+  ]
 });
+
 </script>
 
 <template>
-  <div id="service-cover" :style="{ backgroundImage: `url('${cover_image}')` }">
+  <div id="service-cover" :style="{ backgroundImage: `url('${coverImageURL}')` }">
     <backward-button-wrapper>
       <BackwardButton buttonText="Our Services" to="/activities/services" />
     </backward-button-wrapper>
     <div class="page-title" >
-      <h1 >{{name_service}}</h1>
-      <h3>Manager: {{ manager.name }} {{ manager.surname }}</h3>
+      <h1 >{{ service.service_name }}</h1>
+      <NuxtLink :to="`/about-us/people/${service.manager.person_id}`">
+        <h3>Manager: {{ service.manager.name }} {{ service.manager.surname }}</h3>
+      </NuxtLink>
     </div>
   </div>
 
   <div id="service-intro" >
-    <h3>{{ name_service }}</h3>
-    <p class="dynamic-p">{{ description_service }}</p>
+    <h3>{{ service.service_name }}</h3>
+    <p class="dynamic-p">{{ service.description }}</p>
   </div>
 
   <div id="service-location" >
     <div class="centre-container" >
       <h3>Centro MiLA Farini</h3>
-      <p class="semiboldText" style="margin-top: 40px;" >Provided By</p>
+      <p class="semiboldText" style="margin-top: 40px; line-height: 60px;" >Provided By</p>
       <div class="offering-container" >
-        <NuxtLink v-for="(person, index) in offering_farini" :to=farini_links[index] >
-          <p>{{ person.name }} {{ person.surname }}</p>
+        <NuxtLink v-for="(offer, index) in offeringFarini" :to="`/about-us/people/${offer.person.person_id}`" >
+          <p>{{ offer.person.name }} {{ offer.person.surname }}</p>
         </NuxtLink>
       </div>
       <p class="semiboldText" style="margin-top: 50px;">Opening Hours</p>
-      <p>{{ schedule_farini }}</p>
+      <p>{{ scheduleFarini }}</p>
     </div>
     <div class="centre-container" >
       <h3>Centro MiLA Bovisa</h3>
-      <p class="semiboldText" style="margin-top: 40px;" >Provided By</p>
+      <p class="semiboldText" style="margin-top: 40px; line-height: 60px;" >Provided By</p>
       <div class="offering-container" >
-        <NuxtLink v-for="(person, index) in offering_bovisa" :to="bovisa_links[index]" >
-          <p>{{ person.name }} {{ person.surname }}</p>
+        <NuxtLink v-for="(offer, index) in offeringBovisa" :to="`/about-us/people/${offer.person.person_id}`" >
+          <p>{{ offer.person.name }} {{ offer.person.surname }}</p>
         </NuxtLink>
       </div>
       <p class="semiboldText" style="margin-top: 50px;">Opening Hours</p>
-      <p>{{ schedule_bovisa }}</p>
+      <p>{{ scheduleBovisa }}</p>
     </div>
   </div>
 
   <div id="service-additional">
     <h3 style="text-align: center;" >Additional Information</h3>
-    <p style="margin-top: 32px; text-align: center; max-width: 55.7vw;" class="dynamic-p" >{{ additional_info }}</p>
+    <p style="margin-top: 32px; text-align: center; max-width: 55.7vw;" class="dynamic-p" >{{ service.additional_info }}</p>
   </div>
   
   <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; opacity: 0.25; right: 0px; margin-top: -200px; z-index: 0;">
   <div id="service-images" >
-    <img v-for="(image, index) in service_images.slice(1)" :key="index" :src="image.image_url" >
+    <img v-for="(url, index) in descriptionImages" :key="index" :src="url" >
   </div>
 
   <div id="service-voices" >
@@ -182,6 +180,10 @@ onMounted(async ()=>{
   }
 }
 
+.page-title h1{
+  line-height: 140px;
+}
+
 #service-intro{
   margin: 160px 0;
   margin-left: 13.7vw;
@@ -202,7 +204,6 @@ onMounted(async ()=>{
 #service-location .centre-container{
   border: 2px solid var(--purple);
   border-radius: 24px;
-  width: calc(35.3vw - 64*2px);
   max-width: 678px;
   padding: 64px;
 }
@@ -211,7 +212,7 @@ onMounted(async ()=>{
   display: flex;
   flex-direction: row;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .offering-container a{
   text-decoration: underline;
@@ -227,13 +228,15 @@ onMounted(async ()=>{
 }
 
 #service-images{
-  position: relative;
-  text-align: center;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 3rem; 
+  gap: 5rem;
+  object-fit: cover;
 }
 #service-images img{
-  max-width: 40%;
-  margin: 45px;
+  width: 45%;
+  z-index: 2;
 }
 
 #service-voices{
@@ -308,10 +311,18 @@ onMounted(async ()=>{
     width: 90vw;
     max-width: 90vw !important;
   }
-  #service-images img{
-    max-width: 90%;
-    margin: 20px 5vw;
+  #service-images {
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    padding: 0;
   }
+  #service-images img{
+    width: 75%;
+    z-index: 2;
+  }
+  
+  
   #service-navigation{
     font-size: var(--body2);
     gap: 40px;
