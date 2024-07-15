@@ -18,10 +18,10 @@ useHead({
 </script>
 
 <template>
-  <div id="volunteering-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Volunteering.png)'}">
     <backward-button-wrapper>
-      <BackwardButton buttonText="What You Can Do" to="/what-you-can-do" />
+      <BackwardButton buttonText="What You Can Do" class="back-button" to="/what-you-can-do" />
     </backward-button-wrapper>
+  <div id="volunteering-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Volunteering.png)'}">
     <h1 class="page-title" >Become a <br> volunteer at MiLA</h1>
   </div>
   
@@ -100,6 +100,11 @@ useHead({
 
 
 <style scoped>
+
+.back-button {
+  z-index: 11;
+}
+
 #volunteering-cover{
   background-size: cover;
   min-height: 50vw;
@@ -108,7 +113,7 @@ useHead({
 
 .page-title {
   position: absolute;
-  bottom: 1em;
+  bottom: 3em;
 }
 
 /**Introductive section */
@@ -267,6 +272,13 @@ h3 {
 }
 
 @media screen and (max-width: 500px) {
+
+  .page-title {
+  position: absolute;
+  bottom: 1em;
+}
+
+
   #quote-container {
     padding: 6em 0 6em 2em;
   }

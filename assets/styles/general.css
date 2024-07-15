@@ -149,6 +149,7 @@ backward-button-wrapper {
   position: absolute;
   top: calc(max((100vw / 2) * 0.3375 , var(--header-height)));
   left: 9.75vw;
+  z-index: 11;
 }
 @media(max-device-width: 900px){
   backward-button-wrapper {
