@@ -97,6 +97,9 @@ export default defineComponent({
         },
         clearChat() {
             this.chat = [];
+        },
+        handleChatScroll(event: Event) {
+            event.preventDefault();
         }
 
     }
@@ -108,7 +111,7 @@ export default defineComponent({
 
 <template>
 
-    <div class="chatbot-dialogue">   
+    <div class="chatbot-dialogue" @click.stop @wheel="handleChatScroll">   
           
         <div class="chat-left" v-if="showLeftPanel">
             <SecondaryButton button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" />
@@ -136,7 +139,8 @@ export default defineComponent({
                 </div>
 
                 <form id="chat-form" @submit.prevent="handleConversation">
-                    <input type="text" v-model="userInput" name="input" placeholder="Here you can write" aria-label="Here you can type the message for us. Press Enter to send the message, then wait for the response to be read. Type again from the keyboard to keep the conversation going. hi" required >
+                    <input type="text" v-model="userInput" name="input" placeholder="Here you can write" aria-label="Here you can type the message for us. Press Enter to send the message, then wait for the response to be read. Type again from the keyboard to keep the conversation going." required 
+                        :style="{ fontSize: '16px' }">
                     <button type="submit" aria-label='Send the message' style="width: 80px; height: 40px; border: 1px solid var(--purple); border-radius: 8px; font-size: var(--body1);
                         background-color: var(--white); color: var(--purple); cursor: pointer;" :disabled="isWaitingForReply" >Send
                     </button>

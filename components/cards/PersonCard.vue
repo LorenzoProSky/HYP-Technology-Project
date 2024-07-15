@@ -63,7 +63,7 @@ export default defineComponent({
           <!-- Person description -->
           <p class="card-text">{{ text }}</p>
           <!-- Forward arrow icon -->
-          <Icon name="ForwardArrowIcon" size="32" />
+          <Icon name="ForwardArrowIcon" size="32" class="arrow-icon"/>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@ export default defineComponent({
 /* Card styling */
 .card {
   width: 470px;
-  height: 606px;
+  height: 700px;
   border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
@@ -124,14 +124,14 @@ export default defineComponent({
 
 /* Content styling */
 .card-content {
+  position: relative;
   height: 42%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
   color: var(--black);
-  padding-left: 54px;
-  padding-right: 59px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  gap: 1rem;
 }
 
 /* Name styling */
@@ -142,7 +142,6 @@ export default defineComponent({
   font-weight: var(--semibold);
   text-align: left;
   margin-top: 24px;
-  margin-bottom: 0px;
 }
 
 /* Job styling */
@@ -152,8 +151,7 @@ export default defineComponent({
   color: var(--black);
   font-weight: var(--medium);
   text-align: left;
-  margin-top: 6px;
-  margin-bottom: 0px;
+  margin: 0;
 }
 
 /* Text styling */
@@ -164,14 +162,41 @@ export default defineComponent({
   font-size: var(--body1);
   font-weight: var(--medium);
   text-align: left;
-  margin-top: 26px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
 /* Icon styling */
-.icon {
-  align-self: center;
-  margin-bottom: 33px;
-  margin-left: 370px;
+.arrow-icon {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
 }
+
+@media screen and (max-width: 650px){
+  .card {
+    width: 320px;
+    height: 580px;
+  }
+
+  .card-image {
+  height: 45%;
+  }
+
+  .card-name {
+  font-size: 28px;
+}
+
+.card-job {
+  font-size: 21px;
+}
+
+.card-content {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  gap: 1rem;
+  height: 55%;
+}
+}
+
 </style>

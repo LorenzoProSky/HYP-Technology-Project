@@ -61,7 +61,7 @@ export default defineComponent({
 /* Card styling */
 .card {
   width: 600px;
-  height: 400px;
+  height: 380px;
   border-radius: var(--border-radius-card);
   overflow: hidden;
   background-color: var(--white);
@@ -122,9 +122,10 @@ export default defineComponent({
   font-size: var(--h4);
   color: var(--black);
   font-weight: var(--semibold);
-  margin-top: 64px;
+  margin-top: 2rem;
   margin-bottom: 9px;
   text-align: left;
+  line-height: 80px;
 }
 
 /* Text styling */
@@ -147,14 +148,18 @@ export default defineComponent({
 
 
 
+
 @media (max-width: 650px){  
   .card{
     width: 80vw;
-    height: auto;
+    height: 330px;
+  }
+  .card-name {
+    font-size: 30px;
+    line-height: 47px;
   }
   .card .icon{
     margin-left: 80%;
-    margin-bottom: 30px;
   }
   .card-text{
     font-size: var(--body1);
@@ -162,6 +167,13 @@ export default defineComponent({
   }
   .card-content{
     padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card{
+    width: 80vw;
+    height: 410px;
   }
 }
 </style>

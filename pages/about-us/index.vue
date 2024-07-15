@@ -52,7 +52,6 @@
 
     <div id="history">
       <img src="/assets/images/Group.jpg" alt="" id="image-group">
-      <div>
         <h3>MiLA's History</h3>
         <p>Centro MiLA’s roots run deep. Initially, we operated from a single location in Milan, a safe haven for a handful of women 
           seeking refuge. Those early days were marked by determination, empathy, and a shared commitment to making a difference. As the 
@@ -63,7 +62,6 @@
           and learned from every step along the way.
           Each survivor who has walked through our doors has left an indelible mark on our journey, reminding us of the urgency and 
           importance of our work</p>
-      </div>
       <div id="history-flex">
         <div>
           <h2>+ 60</h2>
@@ -118,6 +116,13 @@
 
 
 <style scoped>
+
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
+
 #about-cover{
   background-size: cover;
   width: 100%;
@@ -137,6 +142,7 @@ h2 {
 #intro{
   margin: 100px 15%;
   width: 60vw;
+  padding: 2rem;
 }
 
 /**Our Mission section */
@@ -167,6 +173,7 @@ h2 {
 #history{
   margin: 100px 15%;
   width: 60vw;
+  padding: 2rem;
 }
 #image-group{
   margin-top: -50px;
@@ -302,6 +309,7 @@ h2 {
 
   #locations{
     text-align: center;
+    margin-top: 200px;
   }
   #locations-p{
     width: 80vw;
@@ -309,7 +317,10 @@ h2 {
   }
 
   #people{
-    margin-left: 10px;
+    margin-left: 0px;
+    padding: 2rem;
+    margin-bottom: 200px;
+    margin-top: 200px;
   }
   #people img{
     display: none;

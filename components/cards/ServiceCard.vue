@@ -225,12 +225,15 @@ export default defineComponent({
   .card-text{
     font-size: var(--body1);
     line-height: var(--l-height1);
+    margin-bottom: 40px;
   }
   .card-content{
     padding: 0 20px;
   }
   .card-title{
     margin-top: 10px;
+    line-height: 45px;
+    margin-bottom: 2px;
   }
 }
 </style>

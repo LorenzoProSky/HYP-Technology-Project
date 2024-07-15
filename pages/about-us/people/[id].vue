@@ -6,7 +6,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import ManagerCard from '~/components/cards/ManagerCard.vue';
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
-import type { Person, Service, Project, ServiceOfferingInfo } from '~/types/types';
+import type { Person } from '~/types/types';
 import { useRuntimeConfig } from 'nuxt/app';
 
 
@@ -24,13 +24,9 @@ const personDataURL = `${baseBackendURL}people/${id.value}`;
 
 // Variable ref<Person> holding all the data for the person with the specified id
 let personData = ref() as Ref<Person>;
-let peopleCounter = ref() as Ref<number>;
+let peopleCounter = ref(20) as Ref<number>;
 
 try {
-  /* Count people */
-  const { data: countPpl } = await useFetch<Number>(countPeopleURL);
-  peopleCounter.value = Number(countPpl.value);
-
   /* Fetch person data */
   const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
   if(fetchPersonData.value){
@@ -196,7 +192,7 @@ offeredServices.forEach(service => {
       </div>
 
       <!-- Navigation links at the end of the page (enclosed in a nav section) -->
-      <nav class="vertical-spacing">
+      <nav>
         
         <!-- Backward button  -->
           <button type="button" class="navigation-link" :disabled="previousLink === null" @click="navigateTo(previousLink)">
@@ -234,6 +230,13 @@ offeredServices.forEach(service => {
  *
  * Widths calculated with a border-box approach.
  */
+
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
+
 .page-wrapper {
   font-size: 16px;
 }
@@ -241,11 +244,11 @@ offeredServices.forEach(service => {
   box-sizing: border-box;
 }
 .page-wrapper h1 {
-  font-size: 2.4em;    
+  font-size: 2em;    
   line-height: 1.2em;
 }
 .page-wrapper h2 {
-  font-size: 2em; 
+  font-size: 1.5em; 
   line-height: 1.2em;
 }
 .page-wrapper h3 {
@@ -294,15 +297,15 @@ offeredServices.forEach(service => {
   min-height: 100%;
   width: 50%;
   background-color: var(--purple);
-  padding: 35% 0 12% 8%;
+  padding: 40% 0 15% 6.5%;
 }
 
 #job-title-cover {
   color:white;
   margin-top: 5%;
-  font-size: 42px;
-  line-height: 70px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 10px;
 }
 
 .profile-image-cover-img {
@@ -388,6 +391,7 @@ nav {
   justify-content: center;
   gap: 2.2em;
   margin-bottom: 10em;
+  margin-top: 15rem;
 }
 
 .navigation-link {
@@ -480,6 +484,14 @@ nav {
   .page-wrapper p, .page-wrapper span {
     font-size: 1em;
   }
+
+  #job-title-cover {
+  color:white;
+  margin-top: 5%;
+  font-size: 42px;
+  line-height: 70px;
+  font-weight: 600;
+}
 
   .horizontal-padding {
     padding: 0 11em;

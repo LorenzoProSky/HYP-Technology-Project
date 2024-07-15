@@ -406,7 +406,6 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
   }
 
   .illustrative-images-container-div img {
-    height: 100%;
     object-fit: cover;
   }
 
@@ -419,7 +418,8 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     flex-wrap: nowrap;
     justify-content: center;
     margin-bottom: 10em;
-    gap: 2.2em;
+    gap: 0.4em;
+    margin-top: 15em;
   }
 
   .navigation-link {

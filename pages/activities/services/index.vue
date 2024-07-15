@@ -99,7 +99,6 @@ function retrieveCoverImageURL (serviceIndex: number): string {
     }
   }
   return "Image not found";
-
 }
 
 </script>

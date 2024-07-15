@@ -10,7 +10,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: 'Centro MiLA, support for women, support for children, domestic violence support, legal counselling, psychological counselling, volunteer opportunities',
+      content: 'Centro MiLA, support for women, support for children, domestic violence support, legal counselling, psychological counselling, volunteer opportunities, supporto alle donne, supporto per l\'infanzia, sostegno contro la violenza domestica, consulenza legale, consulenza psicologica, opportunità di volontariato',
     }
   ]
 });
