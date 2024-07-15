@@ -6,8 +6,10 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import ManagerCard from '~/components/cards/ManagerCard.vue';
 import {ref, computed} from 'vue';
 import { useRoute, useFetch } from 'nuxt/app';
-import type { Person, Service, Project } from '~/types/types';
+import type { Person } from '~/types/types';
 import { useRuntimeConfig } from 'nuxt/app';
+
+
 
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
@@ -22,13 +24,9 @@ const personDataURL = `${baseBackendURL}people/${id.value}`;
 
 // Variable ref<Person> holding all the data for the person with the specified id
 let personData = ref() as Ref<Person>;
-let peopleCounter = ref() as Ref<number>;
+let peopleCounter = ref(20) as Ref<number>;
 
 try {
-  /* Count people */
-  const { data: countPpl } = await useFetch<Number>(countPeopleURL);
-  peopleCounter.value = Number(countPpl.value);
-
   /* Fetch person data */
   const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
   if(fetchPersonData.value){
@@ -37,6 +35,22 @@ try {
 } catch (error) {
   console.error('Error while fetching data for person ${id}', error);
 }
+
+// Generate the page title and description dynamically:
+useHead({
+  title: personData.value.name + ' ' + personData.value.surname + ' | People at centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: personData.value.short_description,
+    },
+    {
+      name: 'keywords',
+      content: 'MiLa anti-violence centre staff, MiLa team, domestic violence support Milan, women\'s shelter Milan, staff profile MiLa, MiLa employee details, support for abuse victims Milan, MiLa team member, services managed by MiLa staff, projects managed by MiLa staff, Milan anti-violence centre team, role at MiLa, MiLa staff contact, MiLa staff CV, MiLa staff email, women\'s aid Milan, MiLa people, Milan domestic violence team' +
+      'personale centro anti-violenza Milano, consulenti MiLa, esperti legali MiLa, assistenti sociali MiLa, volontari MiLa, supporto violenza domestica, personale rifugio per donne Milano, profili team MiLa, dettagli personale MiLa',
+    }
+  ]
+});
 
 watch(id, async () =>  {
   try {
@@ -100,110 +114,107 @@ if(managesServices){
   }
 }
 
-/* Build links for offered services */
-
-
-interface offeredService {
-  link: string;
-  name: string;
-}
-
-
-let offeredServiceList = ref([] as offeredService[]);
-
-
-for(let service of personData.value.offering_service) {
-  offeredServiceList.value.push({link: `/activities/services/${service.service_id}`, name: service.service_name});
-}
-
-
+/* Filter duplicates in offered services */
+let offeredServices = personData.value.offering_service;
+let offeredServicesNoDup = [] as Array<{service_id: string, service_name: string}>;
+offeredServices.forEach(service => {
+  let duplicate = false;
+  for (let i = 0; i < offeredServicesNoDup.length; i++){
+    if (offeredServicesNoDup[i].service_id === service.service_id) {
+      duplicate = true;
+    }
+  }
+  if(duplicate === false){
+    offeredServicesNoDup.push(service);
+  }
+})
 
 
 </script>
 
 
-<template>
-  <!-- Wrapper for the whole page, reset some styling for a mobile-first design -->
-  <div class="page-wrapper">
+  <template>
+    <!-- Wrapper for the whole page, reset some styling for a mobile-first design -->
+    <div class="page-wrapper">
 
-    <!-- Cover section wrapper-->
-    <div class="cover-div">
+      <!-- Cover section wrapper-->
+      <div class="cover-div">
 
-      <!-- Purple section on the left of the cover with the title -->
-      <div class="purple-background-cover-div">
+        <!-- Purple section on the left of the cover with the title -->
+        <div class="purple-background-cover-div">
 
-        <!-- TODO: FIX BACKWARD BUTTON FOR MOBILE VERSION -->
-          <backward-button-wrapper>
-            <BackwardButton button-text="Our People" to="/about-us/people"></BackwardButton>
-          </backward-button-wrapper>
+          <!-- TODO: FIX BACKWARD BUTTON FOR MOBILE VERSION -->
+            <backward-button-wrapper>
+              <BackwardButton button-text="Our People" to="/about-us/people"></BackwardButton>
+            </backward-button-wrapper>
 
-          <!-- Text in cover section -->
-          <h1 >{{ personData.name }}<br>{{ personData.surname }}</h1>
-          <h4 id="job-title-cover">{{ personData.job_title }}</h4>
-      
+            <!-- Text in cover section -->
+            <h1>{{ personData.name }}<br>{{ personData.surname }}</h1>
+            <h2 id="job-title-cover">{{ personData.job_title }}</h2>
+        
+        </div>
+
+        <!-- Person image on the right section of the cover -->
+        <img class="profile-image-cover-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"/>
+        <div class="purple-overlay-profile-image-div"></div>
+
       </div>
 
-      <!-- Person image on the right section of the cover -->
-      <img class="profile-image-cover-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"/>
-      <div class="purple-overlay-profile-image-div"></div>
-
-    </div>
-
-    <!-- Text section under the cover: know more section about the employee -->
-    <div class="horizontal-padding vertical-spacing">
-      <h3> Know more about {{ completeName }}</h3>
-      <p id="description-text">{{ personData.description }}</p>
-    </div>
-      
-    <!-- Section containing the links to CV and email -->
-    <div class="cv-email-div horizontal-padding">
-      <a :href="personData.cv_url">Download CV</a>
-      <a :href="`mailto:${personData.email}`">{{ personData.email }}</a>
-    </div>
-
-    <!-- Conditional rendering of services and projects managed by the employee -->
-    <div class="manager-card-container vertical-spacing horizontal-padding" v-if="managesServices || managesProjects">
-      <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="managedServiceNames" :to="managedServiceURLs" ></ManagerCard>
-      <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="managedProjectNames" :to="managedProjectURLs" ></ManagerCard>
-    </div>
-
-    <!-- Circular image and description of the role of the employee -->
-    <div class="person-role-div vertical-spacing horizontal-padding">
-      <img class="circular-image-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"></img>
-      <div id="role-description">
-        <h3>Role at MiLa</h3>
-        <p>{{ personData.role_description }}</p>
-        <NuxtLink v-for="(service, index) in []" to="/" :key="index" class="offered-service-nuxt-link">
-          Discover {{ }} 
-          <Icon name="ForwardArrowIcon" size="19"> </Icon>
-        </NuxtLink>
+      <!-- Text section under the cover: know more section about the employee -->
+      <div class="horizontal-padding vertical-spacing">
+        <h3> Know more about {{ completeName }}</h3>
+        <p id="description-text">{{ personData.description }}</p>
       </div>
-    </div>
+        
+      <!-- Section containing the links to CV and email -->
+      <div class="cv-email-div horizontal-padding">
+        <a :href="personData.cv_url">Download CV</a>
+        <a :href="`mailto:${personData.email}`">{{ personData.email }}</a>
+      </div>
 
-    <!-- Navigation links at the end of the page (enclosed in a nav section) -->
-    <nav class="vertical-spacing">
-      
-      <!-- Backward button  -->
-        <button type="button" class="navigation-link" :disabled="previousLink === null" @click="navigateTo(previousLink)">
-          <Icon name="NavLeftArrowIcon" size="19" />
-          <span> Previous </span>
+      <!-- Conditional rendering of services and projects managed by the employee -->
+      <div class="manager-card-container vertical-spacing horizontal-padding" v-if="managesServices || managesProjects">
+        <ManagerCard v-if="managesServices" :type="'service'" :managerName="completeName" :text="managedServiceNames" :to="managedServiceURLs" ></ManagerCard>
+        <ManagerCard v-if="managesProjects" :type="'project'" :managerName="completeName" :text="managedProjectNames" :to="managedProjectURLs" ></ManagerCard>
+      </div>
+
+      <!-- Circular image and description of the role of the employee -->
+      <div class="person-role-div vertical-spacing horizontal-padding">
+        <img class="circular-image-img" :src="personData.profile_image_url" :alt="`Profile image for the employee ${personData.name} ${personData.surname}`"></img>
+        <div id="role-description">
+          <h3>Role at MiLa</h3>
+          <p>{{ personData.role_description }}</p>
+          <NuxtLink v-for="(service, index) in offeredServicesNoDup" :to="`/activities/services/${service.service_id}`" :key="index" class="offered-service-nuxt-link">
+            Discover {{ service.service_name }} 
+            <Icon name="ForwardArrowIcon" size="19"> </Icon>
+          </NuxtLink>
+        </div>
+      </div>
+
+      <!-- Navigation links at the end of the page (enclosed in a nav section) -->
+      <nav>
+        
+        <!-- Backward button  -->
+          <button type="button" class="navigation-link" :disabled="previousLink === null" @click="navigateTo(previousLink)">
+            <Icon name="NavLeftArrowIcon" size="19" />
+            <span> Previous </span>
+          </button>
+
+        <!-- Even if the link is static here, a button is used to have consistency in layout -->
+        <button class="navigation-link" @click="navigateTo('/about-us/people')">
+          <span> All People </span>
         </button>
 
-      <!-- Even if the link is static here, a button is used to have consistency in layout -->
-      <button class="navigation-link" @click="navigateTo('/about-us/people')">
-        <span> All People </span>
-      </button>
-
-      <!-- Next button -->
-      <button type="button" class="navigation-link" :disabled="nextLink === null" @click="navigateTo(nextLink)" style="margin-right:10px">
-        <span> Next </span>
-        <Icon name="NavRightArrowIcon" size="19" />
-      </button>
-    </nav>
+        <!-- Next button -->
+        <button type="button" class="navigation-link" :disabled="nextLink === null" @click="navigateTo(nextLink)" style="margin-right:10px">
+          <span> Next </span>
+          <Icon name="NavRightArrowIcon" size="19" />
+        </button>
+      </nav>
 
 
-  </div>
-</template>
+    </div>
+  </template>
 
 
 <style scoped>
@@ -219,6 +230,13 @@ for(let service of personData.value.offering_service) {
  *
  * Widths calculated with a border-box approach.
  */
+
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
+
 .page-wrapper {
   font-size: 16px;
 }
@@ -226,11 +244,11 @@ for(let service of personData.value.offering_service) {
   box-sizing: border-box;
 }
 .page-wrapper h1 {
-  font-size: 2.4em;    
+  font-size: 2em;    
   line-height: 1.2em;
 }
 .page-wrapper h2 {
-  font-size: 2em; 
+  font-size: 1.5em; 
   line-height: 1.2em;
 }
 .page-wrapper h3 {
@@ -279,12 +297,15 @@ for(let service of personData.value.offering_service) {
   min-height: 100%;
   width: 50%;
   background-color: var(--purple);
-  padding: 35% 0 12% 8%;
+  padding: 40% 0 15% 6.5%;
 }
 
 #job-title-cover {
   color:white;
   margin-top: 5%;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 10px;
 }
 
 .profile-image-cover-img {
@@ -370,6 +391,7 @@ nav {
   justify-content: center;
   gap: 2.2em;
   margin-bottom: 10em;
+  margin-top: 15rem;
 }
 
 .navigation-link {
@@ -462,6 +484,14 @@ nav {
   .page-wrapper p, .page-wrapper span {
     font-size: 1em;
   }
+
+  #job-title-cover {
+  color:white;
+  margin-top: 5%;
+  font-size: 42px;
+  line-height: 70px;
+  font-weight: 600;
+}
 
   .horizontal-padding {
     padding: 0 11em;

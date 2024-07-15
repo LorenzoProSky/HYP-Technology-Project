@@ -293,7 +293,7 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
   #manager-subtitle {
     color: white;
-    /*margin-top: 0.5em;*/
+    margin-top: 0.5em;
     font-size: 24px;
     font-weight: 600;
   }

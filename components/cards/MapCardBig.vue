@@ -67,7 +67,7 @@ export default defineComponent({
         <!-- Card content -->
         <div class="card-content">
           <!-- Centre name -->
-          <h3 class="card-name">{{ name }}</h3>
+          <h2 class="card-name">{{ name }}</h2>
           <!-- Address description -->
           <p class="card-address">{{ address }}</p>
           <div class="card-contact">

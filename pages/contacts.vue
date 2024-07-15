@@ -1,9 +1,23 @@
 <script lang="ts" setup>
 import MapCardBig from '~/components/cards/MapCardBig.vue';
+
+useHead({
+  title: "Contact Us | Get in contact with Centro MiLA for more information",
+  meta: [
+    {
+      name: 'description',
+      content: 'Contact Centro MiLA for support services including legal counselling, psychological counselling, and more. Call our crisis line at 0521 248886 or email us at centromila@gmail.com.'
+    },
+    {
+      name: 'keywords',
+      content: 'Centro MiLA, support for women, support for children, domestic violence support, legal counselling, psychological counselling, volunteer opportunities, supporto alle donne, supporto per l\'infanzia, sostegno contro la violenza domestica, consulenza legale, consulenza psicologica, opportunità di volontariato',
+    }
+  ]
+});
 </script>
 
 <template>
-  <div id="contacts-cover">
+  <div id="contacts-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Contact_us.png)'}">
     <h1 class="page-title">Contact <br>Centro MiLA</h1>
   </div>
 
@@ -32,7 +46,7 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
   </div>
 
   <div id="contacts-services" >
-    <h4 style="margin-bottom: 58px;">The Services We Offer</h4>
+    <h2 style="margin-bottom: 58px;">The Services We Offer</h2>
     <div class="offers-container" >
       <div> <Icon name="HeartIcon" color=var(--purple) size="24" style="margin-top: 18px;" /> <p>Welcome Interviews</p> </div>
       <div> <Icon name="HeartIcon" color=var(--purple) size="24" style="margin-top: 18px;" /> <p>Hospitality in Shelters</p> </div>
@@ -46,8 +60,8 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
   </div>
 
   <div id="contacts-form">
-    <h4>Send us a message, <br>
-      we will get in touch soon!</h4>
+    <h2>Send us a message, <br>
+      we will get in touch soon!</h2>
     <!--Cambiare action-->  
     <form action="/" style="width: 800px; margin-top: 92px;">
       <input id="name-field" type="text" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
@@ -68,6 +82,12 @@ import MapCardBig from '~/components/cards/MapCardBig.vue';
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 42px;
 }
 
 #contacts-help{

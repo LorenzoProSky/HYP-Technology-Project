@@ -52,15 +52,14 @@
   filter: brightness(0.95);
 }
 
-@media only screen and (max-width: 1050px){
+@media screen and (max-width: 1050px) {
   .chatbot-button{
     height: 84px;
     width: 84px;
     border-radius: 100%;
+    top: auto;
     bottom: 170px;
     right: 72px;
-    top: auto;
-    box-shadow: none;
   } 
   .chatbot-button span{
     display: none;
@@ -72,7 +71,7 @@
   }
 }
 
-@media only screen and (max-device-width: 430px){
+@media screen and (max-width: 430px) {
   .chatbot-button{
     height: 64px;
     width: 64px;

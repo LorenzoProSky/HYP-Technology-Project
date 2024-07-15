@@ -2,13 +2,8 @@
 
 <script lang="ts" setup>
 
-const emit = defineEmits(['openSubmenu', 'closeSubmenu']);
+const emit = defineEmits(['toggleSubmenu']);
 const props = defineProps({
-    index: {
-        type : Number,
-        required: true
-    },
-
     controlsId: String,
 });
 
@@ -22,7 +17,7 @@ function buttonClicked() {
     iconName.value = iconName.value === 'MobilePlusIcon' ? 'MobileMinusIcon' : 'MobilePlusIcon';
 
     /* Emit event to the parent with the value of the index for the current button */
-    iconName.value === 'MobilePlusIcon' ? emit('closeSubmenu', props.index) : emit('openSubmenu', props.index);
+    emit('toggleSubmenu');
 
     /* Change the value of the expanded data to compute ARIA attributes */
     subMenuExpanded.value = subMenuExpanded.value === false ? true : false;

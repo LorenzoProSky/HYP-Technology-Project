@@ -1,9 +1,23 @@
 <script lang="ts" setup>
   import BackwardButton from '~/components/buttons/BackwardButton.vue';
+
+  useHead({
+  title: 'About Us | Discover Centro MiLA history and values',
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover Centro MiLA\'s two locations in Milan: Centro MiLA Farini at Via Valtellina 20, and Centro MiLA Bovisa at Via Candiani 72. Learn about our services including psychological counseling, legal counseling, hospitality in shelters, and intercultural mediation. Contact us via phone or email, and access crisis support 24/7.',
+    },
+    {
+      name: 'keywords',
+      content: 'Centro MiLA, Centro MiLA Farini, Centro MiLA Bovisa, domestic violence support Milan, women\'s shelter Milan, crisis support Milan, psychological counseling Milan, legal counseling Milan, Centro anti-violenza Milano, rifugio per donne Milano, supporto violenza domestica Milano, assistenza psicologica Milano, assistenza legale Milano',
+    }
+  ]
+});
 </script>
 
 <template>
-  <div id="locations-cover">
+  <div id="locations-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_Location.png)'}">
     <backward-button-wrapper>
       <BackwardButton buttonText="About Us" to="/about-us" />
     </backward-button-wrapper>
@@ -137,7 +151,6 @@
 }
 
 #locations-cover{
-  background-image: url('/assets/images/cover-our-location.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);

@@ -7,6 +7,21 @@ import { useRuntimeConfig } from 'nuxt/app';
 // Import custom types to handle person data
 import type { Person } from '~/types/types'
 
+useHead({
+  title: 'People at centro MiLA',
+  meta: [
+    {
+      name: 'description',
+      content: 'The staff at Centro MiLA is going to support women and children victims of any type of violence towards a better and brighter future.' + 
+      'Discover here the specialist that can provide you all the help you need for a better life.',
+    },
+    {
+      name: 'keywords',
+      content: 'MiLa team, anti-violence centre Milan staff, MiLa counselors, legal experts MiLa, social workers MiLa, MiLa volunteers, domestic violence support team, Milan women\'s shelter staff, MiLa team profiles, MiLa staff details, support for abuse victims Milan, MiLa team members, MiLa\'s compassionate team, Milan domestic violence support, MiLa mission team, women\'s aid team Milan, MiLa\'s people, MiLa staff contact' +
+      'personale centro anti-violenza Milano, consulenti MiLa, esperti legali MiLa, assistenti sociali MiLa, volontari MiLa, supporto violenza domestica, personale rifugio per donne Milano, profili team MiLa, dettagli personale MiLa',
+    }
+  ]
+});
 
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
@@ -82,7 +97,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   <div id="people-page">
 
     <!-- Cover section with image, title, back button -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_People.png)'}">
       <backward-button-wrapper>
         <BackwardButton buttonText="About Us" to="/about-us" />
       </backward-button-wrapper>
@@ -144,7 +159,6 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 }
 
 #page-title {
-  background-image: url('/assets/images/our-people-cover.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -214,6 +228,7 @@ h2 {
 @media (max-width: 1050px) {
   #page-cards {
     grid-template-columns: repeat(1, 1fr);
+    row-gap: 3.5rem;
   }
 }
 

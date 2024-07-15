@@ -1,17 +1,32 @@
 <script lang="ts" setup>
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
+
+useHead({
+  title: "Volunteer for Centro MiLA | Help us supporting women victims of violence",
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover how you can become a volunteer at MiLA and contribute to the fight against violence against women and for women\'s rights. Learn about our volunteer roles, training courses, and submit your application to join our community.'
+    },
+    {
+      name: 'keywords',
+      content: 'volunteer at MiLA, volunteer roles, domestic violence support, women\'s rights volunteer, volunteer training courses, submit volunteer application, support women in need' + 
+      'volontariato presso MiLA, ruoli per volontari, supporto violenza domestica, volontariato per i diritti delle donne, corsi di formazione per volontari, invio candidatura volontari, supporto donne in difficoltà',
+    }
+  ]
+});
 </script>
 
 <template>
-  <div id="volunteering-cover">
+  <div id="volunteering-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Volunteering.png)'}">
     <backward-button-wrapper>
       <BackwardButton buttonText="What You Can Do" to="/what-you-can-do" />
     </backward-button-wrapper>
-    <h1 class="page-title">Become a <br> volunteer at MiLA</h1>
+    <h1 class="page-title" >Become a <br> volunteer at MiLA</h1>
   </div>
   
-  <div id="volunteering-intro">
-    <h3>Volunteer With Us!</h3>
+  <div class="volunteering-intro">
+    <h2>Volunteer With Us!</h2>
     <p class="dynamic-p">Contribute to the fight against violence against women
       and for rights by becoming a volunteer in our centre.</p>
   </div>
@@ -31,7 +46,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   <div id="volunteer-role" style="z-index: 1; position: relative;">
     <img src="/assets/images/volunteer-pic2.jpeg" alt="volunteer-pic2" id="volunteer-pic2">
     <div>
-      <h4>Who We Are Looking For</h4>
+      <h3>Who We Are Looking For</h3>
       <p>We seek compassionate, reliable individuals eager to support women and children affected by domestic violence. Our ideal volunteer is empathetic, 
         maintains confidentiality, and is dedicated to making a positive impact. We welcome diverse backgrounds and experiences, believing that varied perspectives 
         strengthen our community. Whether you have previous social services experience or simply a heartfelt desire to help, your commitment and willingness to 
@@ -51,13 +66,13 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
         effective communication, crisis intervention, and confidentiality protocols. These sessions equip you with the knowledge and tools necessary to provide compassionate 
         and effective support. Completing this training prepares you to make a meaningful impact and contribute to the healing and empowerment of those we serve. Join us to 
         learn, grow, and make a difference together.</p>
-        <p class="boldText" style="margin-top: 64px;" >Seminar 1 - On site</p>
+        <p class="boldText" >Seminar 1 - On site</p>
         <p>Sat 01 June <br>
           18 pm - 20 pm</p>
-        <p class="boldText" style="margin-top: 48px;" >Seminar 2 - Online</p>
+        <p class="boldText">Seminar 2 - Online</p>
         <p>Wed 05 June - Wed 15 June <br>
           18 pm - 20 pm</p>
-        <p class="boldText" style="margin-top: 48px;" >Seminar 3 - On site</p>
+        <p class="boldText"  >Seminar 3 - On site</p>
         <p>Sat 22 June - Sat 29 June <br>
           18 pm - 20 pm</p>
     </div>
@@ -69,7 +84,7 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
     <!--Cambiare action-->  
-    <form action="/" style="width: 800px; margin-top: 92px;">
+    <form action="/">
       <input type="text" name="name" placeholder="Name and Surname" required>
       <input type="text" name="age" placeholder="Your age" required>
       <input type="text" name="e-mail" placeholder="E-mail address" required>
@@ -86,28 +101,38 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 
 <style scoped>
 #volunteering-cover{
-  background-image: url('/assets/images/cover-volunteering.png');
   background-size: cover;
-  width: 100%;
-  height: calc(100vw / 2);
+  min-height: 50vw;
+  position: relative;
+}
+
+.page-title {
+  position: absolute;
+  bottom: 1em;
 }
 
 /**Introductive section */
-#volunteering-intro{
-  width: 100%;
+.volunteering-intro{
+  margin: 160px 0;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 160px 0;
+}
+.volunteering-intro p{
+  width: 50%;
   text-align: center;
 }
-#volunteering-intro p{
-  width: 41%;
-  text-align: center;
-  padding: 20px;
+
+h2 {
+  font-size: 40px;
+  line-height: 44px; 
+  font-weight: 900;
 }
-#volunteering-intro a{
-  text-decoration: underline;
+h3 {
+  font-size: 32px;
+  line-height: 34px; 
+  font-weight: 900;
 }
 
 #volunteer-quote{
@@ -115,12 +140,11 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   background-image: url(/assets/images/volunteer-quote.svg);
   background-repeat: no-repeat;
   background-position: right;
-  min-height: calc(100vw*678/1920);
 }
 #quote-container{
   display: flex;
   flex-direction: row;
-  padding: 145px 0 139px 170px;
+  padding: 6em 0 10em 8em;
 }
 #quote-container div{
   width: 30.5vw;
@@ -129,138 +153,144 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 }
 
 #volunteer-role{
-  margin: 300px 0 370px 0;
+  margin: 15em 0 18em 0;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  padding-right: 4em;
+  overflow-x: hidden;
 }
 #volunteer-pic2{
-  width: 64.8vw;
-  height: auto;
-  margin-left: -20vw;
+  flex: 1 1 auto;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
 }
 #volunteer-role div{
   margin-left: 7.9vw;
-  width: 32.2vw;
+  width: 50%;
   font-size: var(--body3);
   line-height: var(--l-height3);
 }
 
 #volunteer-training{
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: end;
-  overflow-x: hidden
+  overflow-x: hidden;
+  padding-left: 4em;
+  gap: 4em;
 }
 #volunteer-training div{
-  margin-right: 10.4vw;
-  width: 30vw;
+  width: 40%;
   font-size: var(--body3);
   line-height: var(--l-height3);
 }
 #volunteer-pic1{
-  width: 59.8vw;
-  height: auto;
-  margin-right: -12vw;
+  width: 60%;
+  margin-right: -20vw;
 }
 
 #volunteering-form{
-  margin: 300px 0 511px 0;
+  padding: 0 3%;
+  margin: 12em 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
+#volunteering-form form {
+  width: 80%;
+  max-width: 750px;
+  margin-top: 30px;
+}
 #volunteering-form p{
-  max-width: 38.2vw;
+  width: 80%;
+  max-width: 600px;
 }
 
-@media (max-width: 1700px){
-  #quote-container{
-    padding-left: 10vw;
+@media screen and (max-width: 1150px) {
+  #quote-container div{
+  width: 60%;
+  font-size: 28px;
+  line-height: 40px;
+}
+
+#volunteer-role{
+  flex-direction: column;
+  gap: 3em;
+  padding: 0;
+  margin-bottom: 12em;
+}
+#volunteer-role img {
+  width: 80%;
+}
+#volunteer-role div {
+  margin: 0;
+  width: 60%;
+}
+
+#volunteer-training{
+  flex-direction: column;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+#volunteer-training div{
+  width: 60%;
+  font-size: var(--body3);
+  line-height: var(--l-height3);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+#volunteer-pic1{
+  width: 80%;
+  margin: 0;
+  order: -1;
+}
+.boldText {
+  margin-bottom: 0;
+}
+
+}
+
+@media screen and (max-width: 800px){
+  #quote-container {
+    padding: 6em 0 6em 5em;
   }
   #quote-container div{
-    width: 80vw;
-    font-size: 2.7vw;
-    line-height: 2.8vw;
-  }
-  #quote-author {
-    font-size: 2.2vw!important;
-    line-height: 2.5vw!important;
-  }
+  width: 70%;
+  font-size: 24px;
+  line-height: 33px;
+}
 }
 
-@media (max-width:1300px){
-  #volunteer-role div{
-    font-size: var(--body2);
-    width: 40vw;
-    margin-left: 20px;
-  }
-  #volunteer-training div{
-    font-size: var(--body2);
-    width: 40vw;
-    margin-right: 20px;
-  }
-}
-
-@media(max-width:900px){
-  .dynamic-p{
-    width: 80vw !important;
-    max-width: 80vw !important;
-  }
-
-  #quote-container{
-    padding-left: 20px;
+@media screen and (max-width: 500px) {
+  #quote-container {
+    padding: 6em 0 6em 2em;
   }
   #quote-container div{
-    width: 80vw;
-  }
-
-  #volunteer-role{
-    flex-direction: column;
-  }
-  #volunteer-pic1{
-    width: 100vw;
-    margin: 0;
-  }
-  #volunteer-role div{
-    width: 80vw;
-    margin: 0;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-  #volunteer-training{
-    flex-direction: column;
-  }
-  #volunteer-pic2{
-    width: 100vw;
-    margin: 0;
-  }
-  #volunteer-training div{
-    width: 80vw;
-    margin: 0;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-
-  form{
-    width: 90vw !important;
-  }
+  width: 80%;
+  font-size: 20px;
+  line-height: 28px;
 }
 
-@media (max-width: 500px){
-  #quote-container{
-    padding-left: 10vw;
-  }
-  #quote-container div{
-    width: 80vw;
-    font-size: var(--body1);
-    line-height: var(--l-height1);
-  }
-  #quote-author {
-    font-size: var(--body1)!important;
-    line-height: var(--l-height1)!important;
-  }
+#volunteer-role div{
+  width: 78%;
+  font-size: 18px;
+
 }
+
+#volunteer-training div{
+  width: 78%;
+  font-size: 18px;
+  line-height: var(--l-height3);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+}
+
+
 </style>

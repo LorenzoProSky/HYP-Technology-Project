@@ -2,10 +2,25 @@
   import DiscoverCard from '~/components/cards/DiscoverCard.vue';
   import MainButton from '~/components/buttons/MainButton.vue';
   import MapCardSmall from '~/components/cards/MapCardSmall.vue';
+
+  useHead({
+  title: 'About Us | Discover Centro MiLA history and values',
+  meta: [
+    {
+      name: 'description',
+      content: 'Welcome to Centro MiLA, a beacon of hope and support for women and children facing domestic violence in Milan since 2004. Discover our mission, vision, history, and commitment to empowering survivors through counseling, legal assistance, safe housing, and impactful projects. Visit us at our two locations in Bovisa and Zona Farini.',
+    },
+    {
+      name: 'keywords',
+      content: 'Centro MiLA, anti-violence centre Milan, domestic violence support Milan, women\'s shelter Milan, support for abuse victims Milan, MiLA mission, MiLA vision, MiLA history, MiLA commitment, MiLA services, MiLA projects, Centro anti-violenza Milano, supporto violenza domestica Milano, rifugio per donne Milano, assistenza vittime di abuso Milano, mission MiLA, visione MiLA, storia MiLA, impegno MiLA, servizi MiLA, progetti MiLA',
+    }
+  ]
+});
+
 </script>
 
 <template>
-  <div id="about-cover">
+  <div id="about-cover" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_About_Us.png)'}">
     <h1 class="page-title">About Us</h1>
   </div>
 
@@ -37,7 +52,6 @@
 
     <div id="history">
       <img src="/assets/images/Group.jpg" alt="" id="image-group">
-      <div>
         <h3>MiLA's History</h3>
         <p>Centro MiLA’s roots run deep. Initially, we operated from a single location in Milan, a safe haven for a handful of women 
           seeking refuge. Those early days were marked by determination, empathy, and a shared commitment to making a difference. As the 
@@ -48,7 +62,6 @@
           and learned from every step along the way.
           Each survivor who has walked through our doors has left an indelible mark on our journey, reminding us of the urgency and 
           importance of our work</p>
-      </div>
       <div id="history-flex">
         <div>
           <h2>+ 60</h2>
@@ -103,8 +116,14 @@
 
 
 <style scoped>
+
+*,
+* ::before,
+* ::after {
+  box-sizing: border-box;
+}
+
 #about-cover{
-  background-image: url('/assets/images/cover-about-us.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -123,6 +142,7 @@ h2 {
 #intro{
   margin: 100px 15%;
   width: 60vw;
+  padding: 2rem;
 }
 
 /**Our Mission section */
@@ -153,6 +173,7 @@ h2 {
 #history{
   margin: 100px 15%;
   width: 60vw;
+  padding: 2rem;
 }
 #image-group{
   margin-top: -50px;
@@ -288,6 +309,7 @@ h2 {
 
   #locations{
     text-align: center;
+    margin-top: 200px;
   }
   #locations-p{
     width: 80vw;
@@ -295,7 +317,10 @@ h2 {
   }
 
   #people{
-    margin-left: 10px;
+    margin-left: 0px;
+    padding: 2rem;
+    margin-bottom: 200px;
+    margin-top: 200px;
   }
   #people img{
     display: none;

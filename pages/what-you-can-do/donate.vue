@@ -1,84 +1,100 @@
 <script lang="ts" setup>
 // Import the BackwardButton component
 import BackwardButton from '~/components/buttons/BackwardButton.vue';
+
+useHead({
+  title: "Donate to Centro MiLA | Against Women Violence Centre",
+  meta: [
+    {
+      name: 'description',
+      content: 'Support Centro MiLA\'s activities by making a donation. Your contribution helps provide women with a safe pathway out of violence through services like psychological support, legal counseling, job orientation, and access to safe housing.'
+    },
+    {
+      name: 'keywords',
+      content: 'donate to Centro MiLA, support women\'s shelter, domestic violence support, donate 5x1000, bank transfer donation, psychological support, legal counseling, job orientation' + 
+      'donazione Centro MiLA, sostegno rifugio per donne, supporto violenza domestica, donazione 5x1000, bonifico bancario, supporto psicologico, consulenza legale, orientamento professionale',
+    }
+  ]
+});
+
 </script>
 
-<template>
-  <div id="activities-page">
-    <!-- Wrapper for the backward navigation button -->
-    <backward-button-wrapper>
-      <!-- Button to navigate back to the "What You Can Do" page -->
-      <BackwardButton buttonText="What You Can Do" to="/what-you-can-do" />
-    </backward-button-wrapper>
+  <template>
+    <div id="activities-page">
+      <!-- Wrapper for the backward navigation button -->
+      <backward-button-wrapper>
+        <!-- Button to navigate back to the "What You Can Do" page -->
+        <BackwardButton buttonText="What You Can Do" to="/what-you-can-do" />
+      </backward-button-wrapper>
 
-    <!-- Page title section -->
-    <div id="page-title">
-      <h1 class="page-title">Donate to<br />Centro MiLA</h1>
-    </div>
-
-    <!-- Description section -->
-    <div id="page-section">
-      <h3 id="section-title">Your support can make a difference</h3>
-      <div id="section-description">
-        You can contribute to the realisation of our activities with a <br> donation, thus supporting women in their pathways out of violence.
+      <!-- Page title section -->
+      <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Donate.png)'}">
+        <h1 class="page-title">Donate to<br />Centro MiLA</h1>
       </div>
-    </div>
 
-    <!-- Container for donation cards -->
-    <div id="cards-container">
-      <div id="page-cards">
-        <!-- Bank transfer donation card -->
-        <div class="DonateCard">
-          <h3 class="donateTitle">BANK TRANSFER</h3>
-          <p class="donateIBAN">IBAN</p>
-          <p class="donateText">IT89 I030 6912 7650 0000 0034 400</p>
-          <p class="donateHEADING">Heading</p>
-          <p class="donateText">Centro MiLA</p>
-          <div class="iconDonate">
-            <!-- Icon for bank transfer -->
-            <Icon id="bank-icon" name="BankIcon" size=3vw />
-          </div>
-        </div>
-
-        <!-- 5x1000 donation card -->
-        <div class="DonateCard">
-          <h3 class="donateTitle">DONATE 5X1000</h3>
-          <p class="donateSubtitle">Codice Fiscale</p>
-          <p class="donateText">94205400193</p>
-          <p class="donateGreyText">Write this code in the box for voluntary work and non-profit organisations in your tax return.</p>
-          <div class="iconDonate">
-            <!-- Icon for 5x1000 donation -->
-            <Icon id="hand-heart-icon" name="HandHeartIcon" size=3vw />
-          </div>
+      <!-- Description section -->
+      <div id="page-section">
+        <h2 id="section-title">Your support can make a difference</h2>
+        <div id="section-description">
+          You can contribute to the realisation of our activities with a <br> donation, thus supporting women in their pathways out of violence.
         </div>
       </div>
-    </div>
 
-    <!-- Quote section -->
-    <div id="quote-section">
-      <div id="quote-container">
-        <div id="quote-content">
-          <div class="quote-title">
-            <h2>Your Impact</h2>
+      <!-- Container for donation cards -->
+      <div id="cards-container">
+        <div id="page-cards">
+          <!-- Bank transfer donation card -->
+          <div class="DonateCard">
+            <h3 class="donateTitle">BANK TRANSFER</h3>
+            <p class="donateIBAN">IBAN</p>
+            <p class="donateText">IT89 I030 6912 7650 0000 0034 400</p>
+            <p class="donateHEADING">Heading</p>
+            <p class="donateText">Centro MiLA</p>
+            <div class="iconDonate">
+              <!-- Icon for bank transfer -->
+              <Icon id="bank-icon" name="BankIcon" size=3vw />
+            </div>
           </div>
-          <!-- Text describing the impact of donations -->
-          <div id="quote-text">
-            By supporting our projects you guarantee many women a welcoming reception, individual psychological support, legal counselling and support for autonomy, job orientation, professional retraining and support in accessing safe housing services.
+
+          <!-- 5x1000 donation card -->
+          <div class="DonateCard">
+            <h3 class="donateTitle">DONATE 5X1000</h3>
+            <p class="donateSubtitle">Codice Fiscale</p>
+            <p class="donateText">94205400193</p>
+            <p class="donateGreyText">Write this code in the box for voluntary work and non-profit organisations in your tax return.</p>
+            <div class="iconDonate">
+              <!-- Icon for 5x1000 donation -->
+              <Icon id="hand-heart-icon" name="HandHeartIcon" size=3vw />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Icon and text at the bottom of the page -->
-    <div class="heart-container">
-      <!-- Heart icon -->
-      <Icon id="heart-icon" name="HeartIcon" size=3vw />
+      <!-- Quote section -->
+      <div id="quote-section">
+        <div id="quote-container">
+          <div id="quote-content">
+            <div class="quote-title">
+              <h2>Your Impact</h2>
+            </div>
+            <!-- Text describing the impact of donations -->
+            
+              <p id="quote-text">By supporting our projects you guarantee many women a welcoming reception, individual psychological support, legal counselling and support for autonomy, job orientation, professional retraining and support in accessing safe housing services.</p>
+           
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon and text at the bottom of the page -->
+      <div class="heart-container">
+        <!-- Heart icon -->
+        <Icon id="heart-icon" name="HeartIcon" size=3vw />
+      </div>
+      <div class="heart-text">
+        <p id="motivational-text">All this is possible thanks to all the people who <br> believe in and fight for a fairer and more just world. </p>
+      </div>
     </div>
-    <div class="heart-text">
-      <h4>All this is possible thanks to all the people who <br> believe in and fight for a fairer and more just world. </h4>
-    </div>
-  </div>
-</template>
+  </template>
 
 <style scoped>
 /* Style for the quote title */
@@ -119,7 +135,6 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 
 /* Style for the page title section */
 #page-title {
-  background-image: url('/assets/images/cover-donate.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -138,6 +153,8 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   font-family: var(--font-playfair);
   font-weight: var(--bold);
   font-size: 42px;
+  font-weight: 700;
+  line-height: 44px;
 }
 #section-description {
   text-align: center;
@@ -233,6 +250,16 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
   font-family: var(--font-montserrat);
   font-weight: var(--regular);
   font-size: var(--h4);
+  line-height: 40px;
+}
+
+#motivational-text {
+  font-size: 32px;
+  margin: 0;
+  font-weight: 700;
+  font-family: var(--font-playfair);
+  line-height: 40px;
+
 }
 
 /* Media queries for responsive design */

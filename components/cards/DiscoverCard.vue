@@ -45,7 +45,7 @@ export default defineComponent({
         <!-- Card content -->
         <div class="card-content">
           <!-- Activity title -->
-          <h4 class="card-name">{{ title }}</h4>
+          <h1 class="card-name">{{ title }}</h1>
           <!-- Activity description -->
           <p class="card-text">{{ text }}</p>
           <!-- Forward arrow icon -->
@@ -105,6 +105,8 @@ export default defineComponent({
 /* Content styling */
 .card-content {
   padding: 0px;
+  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -120,9 +122,10 @@ export default defineComponent({
   font-size: var(--h4);
   color: var(--black);
   font-weight: var(--semibold);
-  margin-top: 64px;
+  margin-top: 2rem;
   margin-bottom: 9px;
   text-align: left;
+  line-height: 80px;
 }
 
 /* Text styling */
@@ -138,21 +141,25 @@ export default defineComponent({
 
 /* Icon styling */
 .icon {
-  align-self: center;
-  margin-top: 44px;
-  margin-left: 496px;
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
 }
+
 
 
 
 @media (max-width: 650px){  
   .card{
     width: 80vw;
-    height: auto;
+    height: 330px;
+  }
+  .card-name {
+    font-size: 30px;
+    line-height: 47px;
   }
   .card .icon{
     margin-left: 80%;
-    margin-bottom: 30px;
   }
   .card-text{
     font-size: var(--body1);
@@ -160,6 +167,13 @@ export default defineComponent({
   }
   .card-content{
     padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card{
+    width: 80vw;
+    height: 410px;
   }
 }
 </style>

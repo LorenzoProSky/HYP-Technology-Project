@@ -5,7 +5,22 @@ import BackwardButton from '~/components/buttons/BackwardButton.vue';
 import { useRuntimeConfig } from 'nuxt/app';
 
 
-import type { Service, ServiceOfferingInfo } from '~/types/types';
+import type { Service } from '~/types/types';
+
+useHead({
+  title: "Discover Services Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: 'Discover the compassionate services offered by MiLA to support women and children facing domestic violence. Our services include psychological counseling, job placement assistance, cultural mediation, and shelter homes. With locations in two areas, we ensure accessibility and support for all. Explore how MiLA can help you build a safer, independent life.'
+    },
+    {
+      name: 'keywords',
+      content: 'MiLA services, domestic violence support, psychological counseling, job placement, cultural mediation, shelter homes, women empowerment, children support, Milan support services, community impact, healing services, independent life, support for victims' + 
+      'servizi MiLA, supporto violenza domestica, consulenza psicologica, assistenza al collocamento, mediazione culturale, case rifugio, supporto donne, supporto bambini, servizi supporto Milano, impatto sulla comunità, servizi di guarigione, vita indipendente, supporto per vittime',
+    }
+  ]
+});
 
 // Import the server public URL
 const runtimeConfig = useRuntimeConfig();
@@ -57,7 +72,8 @@ function showLess() {
       }
       scrollToTarget();
 }
-    // Smooth scroll to the target section when pagination changes
+
+// Smooth scroll to the target section when pagination changes
 function scrollToTarget() {
   const targetElement = targetSection.value as HTMLElement | null;
   if (targetElement) {
@@ -74,6 +90,17 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   return true;
 }
 
+function retrieveCoverImageURL (serviceIndex: number): string {
+  let imageList = services.value[serviceIndex].image;
+  const regex = new RegExp("Cover");
+  for(let image of imageList) {
+    if(regex.test(image.image_id as string)) {
+      return image.image_url;
+    }
+  }
+  return "Image not found";
+}
+
 </script>
 
 <!-- Template for the service page -->
@@ -81,16 +108,16 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
   <div id="service-page">
 
     <!-- Cover section with image, title, back button -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_Services.png)'}">
       <backward-button-wrapper>
         <BackwardButton buttonText="Our Activities" to="/activities" />
       </backward-button-wrapper>
-      <h1 class="page-title">Discover<br />Our Service</h1>
+      <h1 class="page-title">Discover<br/>Our Service</h1>
     </div>
 
     <!-- Section content -->
     <div id="page-section" ref="targetSection"> <!-- Target section for smooth scroll -->
-      <h3 id="section-title">What We Can Do for You</h3>
+      <h2 id="section-title">What We Can Do for You</h2>
       <div id="section-description">
         At MiLA, we offer a wide range of compassionate services designed to support and empower women and children
         facing domestic violence. From psychological counseling and job placement assistance to cultural mediation and
@@ -104,7 +131,7 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
     <div id="cards-container">
       <div id="page-cards">
         <!-- Loop through visibleServices to render ServiceCard components -->
-        <ServiceCard v-for="service in visibleServices" :key="service.service_id" :imageSrc="service.image[0].image_url"
+        <ServiceCard v-for="(service, index) in visibleServices" :key="service.service_id" :imageSrc="retrieveCoverImageURL(index)"
           :title="service.service_name" :text="service.short_description" :when="[service.service_offering_info[0].schedule, service.service_offering_info[1].schedule ]" :where="[service.service_offering_info[0].location.name, service.service_offering_info[1].location.name ]" :to="`/activities/services/${service.service_id}`" />
       </div>
       <div id="bottom-space" v-if="totalPages == 1" /> <!-- Add space at the bottom if there is only one page -->
@@ -145,7 +172,6 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 }
 
 #page-title {
-  background-image: url('/assets/images/our-services-cover.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
@@ -175,6 +201,8 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 #section-title {
   text-align: left;
   margin-top: 0px;
+  font-size: 40px;
+  font-weight: 900;
 }
 
 #section-description {

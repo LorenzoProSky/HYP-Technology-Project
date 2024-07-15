@@ -1,13 +1,28 @@
 <script lang="ts" setup>
 // Import necessary components
 import DiscoverCard from '~/components/cards/DiscoverCard.vue';
+
+useHead({
+  title: "Services & Projects Centro MiLA",
+  meta: [
+    {
+      name: 'description',
+      content: 'Explore MiLA\'s activities dedicated to helping women and children affected by domestic violence. Discover our supportive services like counseling and legal assistance, as well as impactful projects promoting children\'s well-being and advocating for women\'s rights.'
+    },
+    {
+      name: 'keywords',
+      content: 'MiLA activities, domestic violence support, women empowerment, children well-being, counseling services, legal assistance, safe housing, advocacy projects, awareness campaigns, community impact, women\'s rights, empowerment programs' + 
+      'attività MiLA, supporto violenza domestica, supporto donne, benessere bambini, servizi di consulenza, assistenza legale, alloggi sicuri, progetti di advocacy, campagne di sensibilizzazione, impatto sulla comunità, diritti delle donne, programmi di empowerment',
+    }
+  ]
+});
 </script>
 
 <!-- Template for the activities page -->
 <template>
   <div id="activities-page">
     <!-- Cover section with image and title -->
-    <div id="page-title">
+    <div id="page-title" :style="{ backgroundImage: 'url(https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/cover_image/Cover_Our_Activities.png)'}">
       <h1 class="page-title">Explore<br />Our Activities</h1>
     </div>
 
@@ -61,7 +76,6 @@ import DiscoverCard from '~/components/cards/DiscoverCard.vue';
 }
 
 #page-title {
-  background-image: url('/assets/images/our-activities-index-cover.png');
   background-size: cover;
   width: 100%;
   height: calc(100vw / 2);
