@@ -63,7 +63,7 @@ export default defineComponent({
       <!-- Card -->
       <div class="card">
         <!-- Map image -->
-        <img :src="imageSrc" alt="${imageSrc}" class="card-image">
+        <img :src="imageSrc" :alt="`${imageSrc}`" class="card-image">
         <!-- Card content -->
         <div class="card-content">
           <!-- Centre name -->
