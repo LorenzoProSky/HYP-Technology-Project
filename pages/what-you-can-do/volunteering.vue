@@ -16,7 +16,7 @@ useHead({
   ]
 });
 
-/** Show a confirmation message when data are submitted */
+/* Form submission action */
 function submit(event:Event){
   event.preventDefault();  
   const form = document.getElementById("volunteering-form");
@@ -90,10 +90,11 @@ function submit(event:Event){
     <img src="/assets/images/volunteer-pic1.jpeg" alt="" id="volunteer-pic1">
   </div>
 
-  <div id="volunteering-form">
+  <div id="volunteering-form" aria-live="assertive">
     <h4>Submit Your Application!</h4>
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
+    <!--Cambiare action-->  
     <form @submit="submit">
       <input type="text" pattern="[A-Za-z\s]+" name="name" placeholder="Name and Surname" required>
       <input type="text" pattern="\d+" name="age" placeholder="Your age" required>
@@ -105,7 +106,7 @@ function submit(event:Event){
        font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px; cursor: pointer;"> Send</button>
     </form>
   </div>
-  <div id="volunteering-thanks">
+  <div id="volunteering-thanks" aria-live="assertive">
     <h2>
       Thank you! <br> We will contact you soon
     </h2>
@@ -155,7 +156,6 @@ h3 {
   font-weight: 900;
 }
 
-/** quote section */
 #volunteer-quote{
   background-color: var(--lilac);
   background-image: url(/assets/images/volunteer-quote.svg);
@@ -173,7 +173,6 @@ h3 {
   line-height: 40px;
 }
 
-/** 'your role' section */
 #volunteer-role{
   margin: 15em 0 18em 0;
   display: flex;
@@ -194,7 +193,6 @@ h3 {
   line-height: var(--l-height3);
 }
 
-/** 'training' section */
 #volunteer-training{
   display: flex;
   align-items: center;
@@ -212,7 +210,6 @@ h3 {
   margin-right: -20vw;
 }
 
-/** Form */
 #volunteering-form{
   padding: 0 3%;
   margin: 12em 0;
@@ -291,8 +288,8 @@ h3 {
 .boldText {
   margin-bottom: 0;
 }
-}
 
+}
 
 @media screen and (max-width: 800px){
   #quote-container {

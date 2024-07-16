@@ -72,7 +72,7 @@ function submit(event:Event){
     </div>
   </div>
 
-  <div id="contacts-form">
+  <div id="contacts-form" aria-live="assertive">
     <h2>Send us a message, <br>
       we will get in touch soon!</h2>
     <form style="width: 800px; margin-top: 92px;" @submit="submit">
@@ -86,7 +86,7 @@ function submit(event:Event){
        font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px; cursor: pointer"> Send</button>
     </form>
   </div>
-  <div id="contacts-thanks">
+  <div id="contacts-thanks" aria-live="assertive">
     <h2>
       Thank you! <br> We will contact you soon
     </h2>
