@@ -41,7 +41,7 @@
         <p class="semiboldText" style="margin-bottom: 16px;" >Opening Hours</p>
         <p class="semiboldText" style=" font-size: var(--body3);">07:00 - 19:00 daily</p>
       </div>
-      <img src="/assets/images/location-farini.png" alt="location-farini" style="border-radius: 12px; width: 600px; height: auto;">
+      <img src="/assets/images/location-farini.png" alt="location Farini" style="border-radius: 12px; width: 600px; height: auto;">
     </div>
     <div class="flex-purple">
       <div>
@@ -89,7 +89,7 @@
         <p class="semiboldText" style="margin-bottom: 16px;" >Opening Hours</p>
         <p class="semiboldText" style=" font-size: var(--body3);">07:00 - 19:00 daily</p>
       </div>
-      <img src="/assets/images/location-bovisa.png" alt="location-bovisa" style="border-radius: 12px; width: 600px; height: auto;">
+      <img src="/assets/images/location-bovisa.png" alt="location Bovisa" style="border-radius: 12px; width: 600px; height: auto;">
     </div>
     <div class="flex-purple">
       <div>

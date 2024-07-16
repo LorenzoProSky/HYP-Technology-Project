@@ -28,6 +28,7 @@ const baseBackendURL = runtimeConfig.public.baseBackendURL;
 
 const fetchProjectsURL = baseBackendURL + "projects";
 
+// Internal data of the page 
 const allProjects = ref([]) as Ref<Project[]>;
 const projectsPerPage = ref(6);
 const startCount = ref(0);
@@ -35,8 +36,7 @@ const endCount = ref(6);
 const viewMode = ref('present');
 const targetSection = ref(null);
 
-
-
+// Fetch data from url
 const { data } = await useFetch(fetchProjectsURL);
 if (data.value) {
   allProjects.value = data.value as Project[];

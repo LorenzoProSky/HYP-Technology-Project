@@ -74,12 +74,11 @@ function submit(event:Event){
   <div id="contacts-form">
     <h2>Send us a message, <br>
       we will get in touch soon!</h2>
-    <!--Cambiare action-->  
     <form style="width: 800px; margin-top: 92px;" @submit="submit">
-      <input id="name-field" type="text" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
-      <input id="age-field" type="text" name="age" placeholder="Your age" required aria-label="Type here your age" aria-required="true">
-      <input id="email-field" type="text" name="e-mail" placeholder="E-mail address" required aria-label="Type here your email" aria-required="true">
-      <input type="text" name="phone" placeholder="Phone number" required aria-label="Type here your phone number" aria-required="true">
+      <input id="name-field" type="text" pattern="[A-Za-z\s]+" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
+      <input id="age-field" type="text" pattern="\d+" name="age" placeholder="Your age" required aria-label="Type here your age" aria-required="true">
+      <input id="email-field" type="email" name="e-mail" placeholder="E-mail address" required aria-label="Type here your email" aria-required="true">
+      <input type="text" name="phone" pattern="\+?[0-9\s]+" placeholder="Phone number" required aria-label="Type here your phone number" aria-required="true">
       <textarea name="comment" placeholder="Write us a message." style="height: 282px;" required aria-required="true" aria-label="Type here your message for us"></textarea>
       <button type="submit" id="submit-button"
       style="width: 163px; height: 64px; background-color: var(--purple); border: 0; border-radius: 12px; font-size: var(--body4); color: white;

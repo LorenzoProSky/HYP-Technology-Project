@@ -8,6 +8,7 @@ const visibilitySubmenus = ref([false, false, false]) as Ref<boolean[]>;
 const submenuIcons = ref(['MobilePlusIcon','MobilePlusIcon', 'MobilePlusIcon']) as Ref<string[]>;
 const openCloseIcon = ref('MenuIcon');
 
+/* Function to toggle the visibility of the mobile header component and reset internal state */
 function toggleMobileHeader () {
     visibilityMobileHeader.value = visibilityMobileHeader.value === true ? false : true;
     /* Closing mobile header and resetting visibility states */
@@ -22,6 +23,7 @@ function toggleMobileHeader () {
     }
 }
 
+/* Function to toggle the visibility of the submenus inside the mobile header */
 function toggleSubMenu (index: number) {
     visibilitySubmenus.value[index] = visibilitySubmenus.value[index] === true ? false : true;
 }
@@ -64,7 +66,7 @@ function toggleSubMenu (index: number) {
         </div>
 
         <SecondaryButton buttonText="Contact Us" buttonLength="tablet" to="/contacts" id="contact-us-button-mobile"
-            style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px;" @click="toggleMobileHeader"/>
+            style="font-size: var(--body1); line-height: var(--l-height-header); font-weight: var(--semibold); height: 50px; margin-bottom: 25px" @click="toggleMobileHeader"/>
 
     </nav>
 

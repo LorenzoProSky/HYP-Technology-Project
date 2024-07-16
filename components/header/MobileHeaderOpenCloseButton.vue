@@ -8,7 +8,9 @@
 <script lang="ts" setup>
 
 const props = defineProps({
+    /* accessibility enhancement */
     controlsId: String,
+    /* Parent component controls the icon displayed for the button */
     iconName: {
         type: String,
         validator: (value: string) => value === 'MenuIcon' || value === 'MobileExitIcon',

@@ -16,6 +16,7 @@ useHead({
   ]
 });
 
+/* Form submission action */
 function submit(event:Event){
   event.preventDefault();  
   const form = document.getElementById("volunteering-form");
@@ -54,7 +55,7 @@ function submit(event:Event){
 
   <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; transform: scaleX(-1); opacity: 0.25;">
   <div id="volunteer-role" style="z-index: 1; position: relative;">
-    <img src="/assets/images/volunteer-pic2.jpeg" alt="volunteer-pic2" id="volunteer-pic2">
+    <img src="/assets/images/volunteer-pic2.jpeg" alt="" id="volunteer-pic2">
     <div>
       <h3>Who We Are Looking For</h3>
       <p>We seek compassionate, reliable individuals eager to support women and children affected by domestic violence. Our ideal volunteer is empathetic, 
@@ -86,7 +87,7 @@ function submit(event:Event){
         <p>Sat 22 June - Sat 29 June <br>
           18 pm - 20 pm</p>
     </div>
-    <img src="/assets/images/volunteer-pic1.jpeg" alt="volunteer-pic1" id="volunteer-pic1">
+    <img src="/assets/images/volunteer-pic1.jpeg" alt="" id="volunteer-pic1">
   </div>
 
   <div id="volunteering-form">
@@ -95,10 +96,10 @@ function submit(event:Event){
       For any doubts contact: centromila@gmail.com</p>
     <!--Cambiare action-->  
     <form @submit="submit">
-      <input type="text" name="name" placeholder="Name and Surname" required>
-      <input type="text" name="age" placeholder="Your age" required>
-      <input type="text" name="e-mail" placeholder="E-mail address" required>
-      <input type="text" name="phone" placeholder="Phone number" required>
+      <input type="text" pattern="[A-Za-z\s]+" name="name" placeholder="Name and Surname" required>
+      <input type="text" pattern="\d+" name="age" placeholder="Your age" required>
+      <input type="email" name="e-mail" placeholder="E-mail address" required>
+      <input type="text" pattern="\+?[0-9\s]+" name="phone" placeholder="Phone number" required>
       <textarea name="comment" placeholder="Why would you want to become a volunteer?" style="height: 282px;" required></textarea>
       <button type="submit" id="submit-button"
       style="width: 163px; height: 64px; background-color: var(--purple); border: 0; border-radius: 12px; font-size: var(--body4); color: white;

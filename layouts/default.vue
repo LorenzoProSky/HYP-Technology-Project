@@ -42,7 +42,6 @@ const focusStatusHeaderLinks = ref([false, false, false]) as Ref<boolean[]>;
 const focusStatusDropDownMenus = ref([false, false, false]) as Ref<boolean[]>;
 
 /* Show dropdown when the high-level link in the header is focused or hovered on */
-
 function blurHeaderLink (id: number) {
   setTimeout(() => {
     focusStatusHeaderLinks.value[id] = false;
@@ -55,6 +54,7 @@ function blurDropDownMenu (id: number) {
   }, 100);
 }
 
+/* Toggle visibility of the chatbot */
 function toggleChatbotDialogue() {
   isChatbotDialogOpened.value = isChatbotDialogOpened.value === true ? false : true;
 }
@@ -71,7 +71,7 @@ function toggleChatbotDialogue() {
       <Icon name="CentreLogoIcon" size="180" />
     </NuxtLink>
     
-    <!-- Navigation bar top-left -->
+    <!-- Navigation bar top-right -->
     <nav class="desktop-nav" v-if="!isMobile">
 
       <div class="menu-container">
@@ -123,7 +123,7 @@ function toggleChatbotDialogue() {
     </nav>
 
 
-    <!-- MOBILE HEADER -->
+    <!-- MOBILE HEADER (only for devices with touch screen support) -->
     <MobileHeader v-if="isMobile"></MobileHeader>
 
     <ExitButton v-if="isMobile" aria-label="Exit from the website"/>
@@ -134,10 +134,12 @@ function toggleChatbotDialogue() {
   <ChatbotButton id="chatbot-button" @chatbot-button-clicked="toggleChatbotDialogue" aria-controls="chat" :aria-expanded="isChatbotDialogOpened" aria-label="Open chatbot"/>
   <Chat v-if="isChatbotDialogOpened" @close-chatbot="toggleChatbotDialogue" id="chat"></Chat>
 
+  <!-- Main page content-->
   <main>
     <slot></slot>
   </main>
 
+  <!-- Footer element at the bottom -->
   <footer>
     <div id="info">
       <Icon class="footer-logo" aria-label="Centro MiLA logo" name="CentreLogoIcon" size="283" />

@@ -92,7 +92,8 @@ function shouldDisplaySeparator(pageNumber: number): boolean {
 
 </script>
 
-<!-- Template for the people page -->
+
+
 <template>
   <div id="people-page">
 

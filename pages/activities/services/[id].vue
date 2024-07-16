@@ -128,7 +128,7 @@ useHead({
   
   <img src="/assets/images/fiori-e-cuori.svg" alt="" style="position: absolute; opacity: 0.25; right: 0px; margin-top: -200px; z-index: 0;">
   <div id="service-images" >
-    <img v-for="(url, index) in descriptionImages" :key="index" :src="url" >
+    <img v-for="(url, index) in descriptionImages" :key="index" :src="url" alt="Descriptive image of the service" >
   </div>
 
   <div id="service-voices" >

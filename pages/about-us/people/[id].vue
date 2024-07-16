@@ -19,7 +19,6 @@ const baseBackendURL = runtimeConfig.public.baseBackendURL;
 const route = useRoute();
 let id = ref(Number(route.params.id)); 
 
-const countPeopleURL = `${baseBackendURL}count-people`;
 const personDataURL = `${baseBackendURL}people/${id.value}`;
 
 // Variable ref<Person> holding all the data for the person with the specified id
@@ -52,18 +51,8 @@ useHead({
   ]
 });
 
-watch(id, async () =>  {
-  try {
-    const { data: fetchPersonData } = await useFetch<Person[]>(personDataURL);  
-    console.log("id value: "+  id);
-    if(fetchPersonData.value){
-      personData.value = fetchPersonData.value[0];
-    }
-  } catch (error) {
-    console.error('Error while fetching data for person ${id}', error);
-  }
-});
 
+/* Computed data from the fetched person data */
 const completeName = computed(()=>{return personData.value.name + " " + personData.value.surname});
 
 const managesProjects = computed(() => {
@@ -92,7 +81,7 @@ const nextLink = computed(() => {
 });
 
 
-// Build the arrays necessary to create the ManagerCards
+/* Build the arrays necessary to create the ManagerCards */
 let managedProjects = personData.value.project;
 let managedServices = personData.value.responsible_service;
 let managedProjectNames = [] as string[];

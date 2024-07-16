@@ -22,11 +22,11 @@ export default defineComponent({
     data() {
         return {
             userInput: '',
-            chat: [] as Message[] ,   // Array of messages
+            chat: [] as Message[] ,   // Array of messages to be displayed
             isWaitingForReply: false,
             threadId: '',
-            openai: new OpenAI( {apiKey: this.$config.public.openaiApiKey, dangerouslyAllowBrowser: true }),
-            assistantId: 'asst_1zbW4JTNBND59Max3CW5YvM5',
+            openai: new OpenAI( {apiKey: this.$config.public.openaiApiKey, dangerouslyAllowBrowser: true }),   
+            assistantId: 'asst_1zbW4JTNBND59Max3CW5YvM5',   // id of the assistant on OpenAI platform
             conversationRef: null as any,
             showLeftPanel: false,
         }
@@ -36,7 +36,7 @@ export default defineComponent({
         this.conversationRef = this.$refs.chatContainerRef;
         console.log(this.$config.public.openaiApiKey);
 
-        /* Verify conditions to show the left panel or not */
+        /* Verify conditions to show the left panel or not for responsiveness*/
         this.showLeftPanel = window.innerWidth >= 1150;
         window.addEventListener('resize', () => {
             this.showLeftPanel = window.innerWidth >= 1150;
@@ -44,6 +44,7 @@ export default defineComponent({
 
     },
     methods: {
+        /* Create a new thread for the conversation whenever the user opens the chat */
         async createThread() {
             try {
                 const thread = await this.openai.beta.threads.create();
@@ -53,6 +54,7 @@ export default defineComponent({
                 console.error('Error creating thread:', error);
             }
         },
+        /* Send user message to the assistant, retrieve response and update the chat array with the new message */
         async handleConversation() {
             if(this.userInput){
                 console.log("Sending user input to openai");
@@ -62,15 +64,15 @@ export default defineComponent({
                 this.scrollToBottom();
                 this.userInput = '';
                 
-                // Fetch response from the server here
+                /* Create a new message to be sent to the assistant */
                 const message = await this.openai.beta.threads.messages.create(
                     this.threadId,
                     {
                         role: "user",
                         content: userMessage
                     }
-                )
-
+                );
+                /* Send the message to the assistant and retrieve response with streaming api */    
                 const run = this.openai.beta.threads.runs.stream(this.threadId, {
                     assistant_id: this.assistantId, stream: true
                 }).on('textCreated', (text) => {
@@ -87,6 +89,7 @@ export default defineComponent({
                 this.isWaitingForReply = false;
             }
         },
+        /* Scroll chat to the bottom of the conversation when the length doesn't fit into the available height */
         scrollToBottom() {
             console.log("the ref is ", this.conversationRef);
             this.$nextTick(() => {
