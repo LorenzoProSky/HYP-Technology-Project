@@ -630,16 +630,16 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     }
 
     .illustrative-images-container-div {
-      margin-top: 13em;
+      margin-top: 15em;
       gap: 4em;
       padding: 0 10em;
     }
 
     /*-----------------------------------------Navigation section------------------------------*/
     .page-wrapper nav {
-      margin-bottom: 14em;
+      margin-bottom: 16em;
       gap: 3em;
-      margin-top: 11em
+      margin-top: 20em
     }
   }
 
