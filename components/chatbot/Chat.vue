@@ -117,7 +117,7 @@ export default defineComponent({
     <div class="chatbot-dialogue" @click.stop @wheel="handleChatScroll">   
           
         <div class="chat-left" v-if="showLeftPanel">
-            <SecondaryButton button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" />
+            <button  @click="clearChat" class="clear-chat-button-left" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" > Clear Chat </button>
             <div class="chatbot-text-div">
                 <h4>We are here to <br> help you.</h4>
                 <p>This space is here to guide you on what to do and who to reach out to if you're experiencing or have experienced violence from men. 
@@ -127,7 +127,7 @@ export default defineComponent({
 
         <div class="chat-right" >
             <div class="chat-close">
-                <SecondaryButton v-if="!showLeftPanel" button-text="Clear Chat" button-length="short" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px" />
+                <button v-if="!showLeftPanel" class="clear-chat-button-right" @click="clearChat" style="font-size: var(--body1); line-height: var(--l-height1); width: 120px; height: 40px; min-height: 40px"> Clear Chat</button>
                 <button type="button" class="close-chat-button" aria-label="Close the chat" @click="$emit('closeChatbot')">
                     <Icon name="MobileExitIcon" color="var(--purple)" size="32" />
                 </button>
@@ -190,6 +190,43 @@ export default defineComponent({
   gap: 1.5rem;
   overflow-y: hidden;
 }
+
+.clear-chat-button-left {
+  height: 64px;
+  padding: 0 10px;
+  border-radius: var(--border-radius-bottom);
+  background-color: var(--white);
+  font-family: var(--font-montserrat);
+  color: var(--purple);
+  font-size: var(--body4);
+  font-weight: var(--medium);
+  cursor: pointer;
+  border: thin solid var(--purple);
+  transition: background-color var(--transition);
+}
+.clear-chat-button-left:hover:not(.is-disabled) {
+  color: var(--purple-hover);
+  border: thin solid var(--purple-hover);
+}
+.clear-chat-button-left:active:not(.is-disabled) {
+  color: var(--purple-active);
+  border: thin solid var(--purple-active);
+}
+
+.clear-chat-button-right {
+    height: 64px;
+  padding: 0 10px;
+  border-radius: var(--border-radius-bottom);
+  background-color: white;
+  font-family: var(--font-montserrat);
+  color: var(--purple);
+  font-size: var(--body4);
+  font-weight: var(--medium);
+  cursor: pointer;
+  border: thin solid var(--purple);
+  transition: background-color var(--transition);
+}
+
 
 .chatbot-text-div {
   display: flex;

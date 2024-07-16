@@ -63,7 +63,7 @@ export default defineComponent({
   </button>
 </template>
 
-/* Styles for the Secondary button */
+
 <style scoped>
 /* Default style for the button */
 .secondary-button {
