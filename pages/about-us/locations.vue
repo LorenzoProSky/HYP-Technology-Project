@@ -112,7 +112,8 @@
         <p class="semiboldText" style="margin-top: 70px;" >Job Counter</p>        
         <hr style="width: 100%; border-top: 2px solid var(--black); border-bottom: 0px;">
         <p style=" font-size: var(--body3);">Tuesday - Thursday - Friday</p>
-        <p style=" font-size: var(--body3);">10:00 - 16:00</p></div>
+        <p style=" font-size: var(--body3);">10:00 - 16:00</p>
+      </div>
       <div>
         <p class="semiboldText">Legal Counselling</p>        
         <hr style="width: 100%; border-top: 2px solid var(--black); border-bottom: 0px;">

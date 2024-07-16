@@ -17,6 +17,7 @@ useHead({
   ]
 });
 
+/** show a confirmation message when data are submitted */
 function submit(event:Event){
   event.preventDefault();
   const form = document.getElementById("contacts-form");
@@ -74,7 +75,6 @@ function submit(event:Event){
   <div id="contacts-form">
     <h2>Send us a message, <br>
       we will get in touch soon!</h2>
-    <!--Cambiare action-->  
     <form style="width: 800px; margin-top: 92px;" @submit="submit">
       <input id="name-field" type="text" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
       <input id="age-field" type="text" name="age" placeholder="Your age" required aria-label="Type here your age" aria-required="true">
@@ -107,6 +107,7 @@ h2 {
   line-height: 42px;
 }
 
+/** 'need help' section */
 #contacts-help{
   display: flex;
   flex-direction: row;
@@ -116,6 +117,7 @@ h2 {
   z-index: 1;
 }
 
+/** location */
 #contacts-maps{
   display: flex;
   flex-direction: row;
@@ -124,6 +126,7 @@ h2 {
   z-index: 1;
 }
 
+/** 'offered services' section */
 #contacts-services{
   margin: 260px 0;
   padding: 30px;
@@ -149,6 +152,7 @@ h2 {
   gap: 5px;
 }
 
+/** Form */
 #contacts-form{
   margin: 260px 0 400px 0;
   display: flex;
