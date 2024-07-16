@@ -15,6 +15,16 @@ useHead({
     }
   ]
 });
+
+function submit(event:Event){
+  event.preventDefault();  
+  const form = document.getElementById("volunteering-form");
+  const thanks = document.getElementById("volunteering-thanks");
+  if(form)
+    form.style.display = 'none';
+  if(thanks)
+    thanks.style.display = 'block';
+}
 </script>
 
 <template>
@@ -84,16 +94,21 @@ useHead({
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
     <!--Cambiare action-->  
-    <form action="/">
+    <form @submit="submit">
       <input type="text" name="name" placeholder="Name and Surname" required>
       <input type="text" name="age" placeholder="Your age" required>
       <input type="text" name="e-mail" placeholder="E-mail address" required>
       <input type="text" name="phone" placeholder="Phone number" required>
       <textarea name="comment" placeholder="Why would you want to become a volunteer?" style="height: 282px;" required></textarea>
-      <button type="submit" 
+      <button type="submit" id="submit-button"
       style="width: 163px; height: 64px; background-color: var(--purple); border: 0; border-radius: 12px; font-size: var(--body4); color: white;
-       font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px"> Send</button>
+       font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px; cursor: pointer;"> Send</button>
     </form>
+  </div>
+  <div id="volunteering-thanks">
+    <h2>
+      Thank you! <br> We will contact you soon
+    </h2>
   </div>
 
 </template>
@@ -211,6 +226,21 @@ h3 {
   width: 80%;
   max-width: 600px;
 }
+
+#volunteering-thanks{
+  display: none;
+  margin: 260px 0 400px 10vw;
+  color: var(--purple);
+  width: 80vw;
+  text-align: center;
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+}
+
+#volunteering-thanks h2{
+  padding: 50px 10px;
+}
+
 
 @media screen and (max-width: 1150px) {
   #quote-container div{

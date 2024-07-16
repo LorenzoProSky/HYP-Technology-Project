@@ -14,6 +14,16 @@ useHead({
     }
   ]
 });
+
+function submit(event:Event){
+  event.preventDefault();
+  const form = document.getElementById("contacts-form");
+  const thanks = document.getElementById("contacts-thanks");
+  if(form)
+    form.style.display = 'none';
+  if(thanks)
+    thanks.style.display = 'block';
+}
 </script>
 
 <template>
@@ -63,16 +73,21 @@ useHead({
     <h2>Send us a message, <br>
       we will get in touch soon!</h2>
     <!--Cambiare action-->  
-    <form action="/" style="width: 800px; margin-top: 92px;">
+    <form style="width: 800px; margin-top: 92px;" @submit="submit">
       <input id="name-field" type="text" name="name" placeholder="ex. Mario Rossi" required aria-label="Type here youre name and surname" aria-required="true">
       <input id="age-field" type="text" name="age" placeholder="Your age" required aria-label="Type here your age" aria-required="true">
       <input id="email-field" type="text" name="e-mail" placeholder="E-mail address" required aria-label="Type here your email" aria-required="true">
       <input type="text" name="phone" placeholder="Phone number" required aria-label="Type here your phone number" aria-required="true">
       <textarea name="comment" placeholder="Write us a message." style="height: 282px;" required aria-required="true" aria-label="Type here your message for us"></textarea>
-      <button type="submit" 
+      <button type="submit" id="submit-button"
       style="width: 163px; height: 64px; background-color: var(--purple); border: 0; border-radius: 12px; font-size: var(--body4); color: white;
-       font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px"> Send</button>
+       font-family: 'Montserrat', serif; font-weight: var(--regular); margin-top: 92px; cursor: pointer"> Send</button>
     </form>
+  </div>
+  <div id="contacts-thanks">
+    <h2>
+      Thank you! <br> We will contact you soon
+    </h2>
   </div>
 </template>
 
@@ -140,6 +155,20 @@ h2 {
   text-align: center;
 }
 
+#contacts-thanks{
+  display: none;
+  margin: 260px 0 400px 10vw;
+  color: var(--purple);
+  width: 80vw;
+  text-align: center;
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+}
+
+#contacts-thanks h2{
+  padding: 50px 10px;
+}
+
 @media(max-width:1250px){
   #contacts-maps{
     flex-direction: column;
@@ -157,6 +186,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    margin: 100px 0;
   }
   .dynamic-help{
     font-size: var(--body3) !important; 
@@ -165,8 +195,20 @@ h2 {
   
   .offers-container{
     width: 90vw;
-  font-size: var(--body1);
-  line-height: var(--l-height1);
+    font-size: var(--body1);
+    line-height: var(--l-height1);
+  }
+
+  .offers-container .icon{
+    margin-top: 12px !important;
+  }
+
+  #contacts-services{
+    margin: 100px 0;
+  }
+
+  #contacts-form{
+    margin: 100px 0 200px 0;
   }
 
   form{
