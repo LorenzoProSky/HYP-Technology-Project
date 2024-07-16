@@ -17,11 +17,13 @@ const fetchOngoingProjectsURL = baseBackendURL + "projects?status=ongoing";
 const services = ref([]) as Ref<Service[]>;
 const projects = ref([]) as Ref<Project[]>;
 
+// Fetch services from the DB
 const { data:serviceData } = await useFetch(fetchServicesURL);
 if(serviceData.value){
   services.value = serviceData.value as Service[];
 }
 
+// Fetch ongoing projects from the DB
 const { data: projectData } = await useFetch(fetchOngoingProjectsURL);
 if(projectData.value){
   projects.value = projectData.value as Project[];
@@ -31,6 +33,7 @@ const visibleProjects = computed(() => {
   return projects.value.slice(0, 3);
 });
 
+// Retrieve the cover image for the services
 function retrieveCoverImageURL (serviceIndex: number): string {
   let imageList = services.value[serviceIndex].image;
   const regex = new RegExp("Cover");

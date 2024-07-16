@@ -258,6 +258,7 @@ useHead({
   max-width: 29vw;
 }
 
+/** behaviour of the navigation buttons */
 #service-navigation{
   margin-top: 260px;
   margin-bottom: 340px;

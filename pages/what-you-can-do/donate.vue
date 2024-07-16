@@ -105,9 +105,7 @@ useHead({
 /* Styles for donation card titles and text */
 .donateTitle {
   margin: 50px 64px;
-  font-size: 40px;
   font-weight: 600;
-  line-height: unset;
 }
 .donateSubtitle, .donateIBAN, .donateHEADING {
   margin: 10px 64px;
@@ -274,7 +272,6 @@ useHead({
   #quote-section {
     margin-bottom: 110px;
     margin-top: 110px;
-    /*height: 110vw;*/
   }
   
   /* Adjust icon sizes for medium screens */
@@ -284,9 +281,6 @@ useHead({
   }
   
   #quote-container {
-    /*margin-top: 40vw;
-    padding: 15px;
-    height: 30vh;*/
     width: 80vw;
   }
   
@@ -294,7 +288,6 @@ useHead({
     font-size: 2.8vw;
     line-height: 3vw;
     width: 100%;
-    /*margin: 30px;*/
   }
 
   .quote-title h2{
@@ -337,9 +330,24 @@ useHead({
   .DonateCard {
     width: 300px;
   }
+
+  #quote-content{
+    margin-top: 5vw;
+  }
+
+  #quote-text {
+    font-size: 3.4vw;
+    line-height: 4vw;
+    width: 100%;
+  }
+  
+  .quote-title h2{
+    font-size: 6.4vw;
+    line-height: 7vw;
+  }
   
   .quote-title {
-    margin-bottom: 24px;
+    margin-bottom: 14px;
   }
 
   .donateTitle, .donateSubtitle, .donateIBAN, .donateHEADING, .donateText, .donateGreyText {
