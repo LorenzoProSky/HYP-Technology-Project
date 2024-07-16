@@ -24,9 +24,7 @@ const projectURL = baseBackendURL + "projects/" + projectID;
 const { data, error } = await useFetch(projectURL);
 if(data.value){
   const projects = data.value as Project[];
-  console.log(projects);
   projectData.value = projects[0];
-  console.log(projectData.value)
 } else {
   console.log(error);
 }
@@ -368,15 +366,18 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     color: white;
     border: none;
     border-radius: 0.7cap;
+    cursor: pointer;
 
     font-family: var(--font-montserrat);
     font-size: inherit;
 
     margin-top: 3em;
-    
-
-
-
+  }
+  .contact-us-button:hover {
+    background-color: var(--purple-hover);
+  }
+  .contact-us-button:active {
+    background-color: var(--purple-active);
   }
 
 
@@ -417,6 +418,7 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
   .illustrative-images-container-div img {
     object-fit: cover;
+    height:100%;
   }
 
 

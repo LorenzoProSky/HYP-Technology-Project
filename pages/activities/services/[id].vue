@@ -273,6 +273,7 @@ useHead({
   flex-direction: row;
   align-items: center;
   gap: 6px;
+  color: black;
 }
 #service-navigation a:hover {
   color: var(--purple-hover) !important;
@@ -330,19 +331,44 @@ useHead({
   }
 }
 @media(max-width: 430px){
+  #service-intro{
+    margin: 90px 20px 140px;
+  }
+  .centre-container h3 {
+    font-size: 32px;
+  }
+  .semiboldText {
+    margin-top: 20px !important;
+  }
+
+  #service-additional {
+    margin: 7em 0;
+  }
+
   #service-location{
     font-size: var(--body1);
     line-height: var(--l-height1);
+    gap: 3em;
   }
   #service-location .centre-container{
     padding: 32px;
   }
+
+   #service-voices {
+    margin-top: 10em;
+   }
+
+   #quotes {
+    width: 90%;
+   }
+
   .quote-container{
     max-width: 95%;
   }
   #service-navigation{
     font-size: var(--body1);
     gap: 20px;
+    margin: 10em 0;
   }
 }
 </style>
