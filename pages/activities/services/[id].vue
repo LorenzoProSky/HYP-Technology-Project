@@ -273,7 +273,7 @@ useHead({
   flex-direction: row;
   align-items: center;
   gap: 6px;
-  color: black;
+  color: var(--purple);
 }
 #service-navigation a:hover {
   color: var(--purple-hover) !important;

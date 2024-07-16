@@ -201,7 +201,7 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
         </button>
 
       <!-- Even if the link is static here, a button is used to have consistency in layout -->
-      <button class="navigation-link" @click="navigateTo('/activities/projects')">
+      <button class="central-nav-link" @click="navigateTo('/activities/projects')">
         <span> All Projects </span>
       </button>
 
@@ -445,7 +445,7 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    color: var(--purple);
+    color: black;
     cursor: pointer;
     font-size: inherit;
     font-family: var(--font-montserrat);
@@ -458,6 +458,24 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
     color: var(--purple-hover);
   }
   .navigation-link:active:not(:disabled) {
+    color: var(--purple-active);
+  }
+
+  .central-nav-link {
+    border: none;
+    background-color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    color: var(--purple);
+    cursor: pointer;
+    font-size: inherit;
+    font-family: var(--font-montserrat);
+  }
+  .central-nav-link:hover:not(:disabled) {
+    color: var(--purple-hover);
+  }
+  .central-nav-link:active:not(:disabled) {
     color: var(--purple-active);
   }
 
