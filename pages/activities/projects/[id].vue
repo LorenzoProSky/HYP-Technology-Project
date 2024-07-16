@@ -186,7 +186,8 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
 
     <!-- Final section with descriptive images -->
     <div class="illustrative-images-container-div vertical-spacing">
-      <img v-for="(image, index) in projectData.image.slice(1)" :key="index" :src="image.image_url" :alt="'Descriptive project image number ' + index" >
+      <div v-for="(image, index) in projectData.image.slice(1)" :key="index" :style="{ backgroundImage: `url(${image.image_url})`}">
+      </div>
     </div>
 
 
@@ -408,17 +409,21 @@ const managerFullName = computed(() => { return projectData.value.person?.name +
   .illustrative-images-container-div {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 60% 40%;
     gap: 0.7em;
     padding: 0 1.5em; 
+    min-height: 80vw;
   }
 
-  .illustrative-images-container-div img:first-child{
+  .illustrative-images-container-div div:first-child{
     grid-column: span 2;
   }
 
-  .illustrative-images-container-div img {
-    object-fit: cover;
-    height:100%;
+  .illustrative-images-container-div div {
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+
   }
 
 
