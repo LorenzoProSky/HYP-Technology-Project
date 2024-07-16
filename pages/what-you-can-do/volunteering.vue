@@ -16,6 +16,7 @@ useHead({
   ]
 });
 
+/** show a confirmation message when data are submitted */
 function submit(event:Event){
   event.preventDefault();  
   const form = document.getElementById("volunteering-form");
@@ -93,7 +94,6 @@ function submit(event:Event){
     <h4>Submit Your Application!</h4>
     <p class="dynamic-p">By submitting your application you will be contacted by our staff and invited to the first collective appointment of the training course. 
       For any doubts contact: centromila@gmail.com</p>
-    <!--Cambiare action-->  
     <form @submit="submit">
       <input type="text" name="name" placeholder="Name and Surname" required>
       <input type="text" name="age" placeholder="Your age" required>
@@ -150,6 +150,7 @@ h3 {
   font-weight: 900;
 }
 
+/** quote section */
 #volunteer-quote{
   background-color: var(--lilac);
   background-image: url(/assets/images/volunteer-quote.svg);
@@ -167,6 +168,7 @@ h3 {
   line-height: 40px;
 }
 
+/** 'your role' section */
 #volunteer-role{
   margin: 15em 0 18em 0;
   display: flex;
@@ -187,6 +189,7 @@ h3 {
   line-height: var(--l-height3);
 }
 
+/** 'training' section */
 #volunteer-training{
   display: flex;
   align-items: center;
@@ -204,6 +207,7 @@ h3 {
   margin-right: -20vw;
 }
 
+/** Form */
 #volunteering-form{
   padding: 0 3%;
   margin: 12em 0;
@@ -282,8 +286,8 @@ h3 {
 .boldText {
   margin-bottom: 0;
 }
-
 }
+
 
 @media screen and (max-width: 800px){
   #quote-container {
