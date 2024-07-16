@@ -181,7 +181,8 @@ useHead({
   border-radius: 24px;
   border: 2px solid var(--purple);
   width: 600px;
-  height: 380px;
+  min-height: 380px;
+  height: auto;
   line-height: 29px!important;
 }
 .iconDonate {
@@ -254,7 +255,7 @@ useHead({
 }
 
 #motivational-text {
-  font-size: 32px;
+  font-size: var(--h4);
   margin: 0;
   font-weight: 700;
   font-family: var(--font-playfair);
@@ -263,18 +264,17 @@ useHead({
 }
 
 /* Media queries for responsive design */
-@media (min-width: 951px) and (max-width: 1500px) {
+@media (max-width: 1500px) {
   /* Adjust DonateCard size for medium screens */
   .DonateCard {
     width: 400px;
-    height: 450px;
   }
   
   /* Adjust quote section for medium screens */
   #quote-section {
     margin-bottom: 110px;
     margin-top: 110px;
-    height: 110vw;
+    /*height: 110vw;*/
   }
   
   /* Adjust icon sizes for medium screens */
@@ -284,20 +284,36 @@ useHead({
   }
   
   #quote-container {
-    margin-top: 40vw;
+    /*margin-top: 40vw;
     padding: 15px;
-    width: 80%;
-    height: 30vh;
+    height: 30vh;*/
+    width: 80vw;
   }
   
   #quote-text {
     font-size: 2.8vw;
     line-height: 3vw;
-    margin: 30px;
+    width: 100%;
+    /*margin: 30px;*/
+  }
+
+  .quote-title h2{
+    font-size: 5.6vw;
+    line-height: 6vw;
   }
 }
 
 @media (max-width: 950px) {
+  #page-section{
+    width: 80vw;
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  #cards-container{
+    margin-top: 80px;
+  }
+
   /* Adjust DonateCard layout for small screens */
   #page-cards {
     flex-direction: column;
@@ -320,7 +336,6 @@ useHead({
 
   .DonateCard {
     width: 300px;
-    height: 300px;
   }
   
   .quote-title {
@@ -329,6 +344,12 @@ useHead({
 
   .donateTitle, .donateSubtitle, .donateIBAN, .donateHEADING, .donateText, .donateGreyText {
     margin: 20px
+  }
+
+  #motivational-text{
+    font-size: var(--body4);
+    line-height: var(--l-height4);
+    width: 80vw;
   }
 }
 </style>

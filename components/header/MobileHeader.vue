@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import MobileHeaderPlusMinusButton from './MobileHeaderPlusMinusButton.vue';
 import MobileHeaderOpenCloseButton from './MobileHeaderOpenCloseButton.vue';
+import SecondaryButton from '../buttons/SecondaryButton.vue';
 
 const visibilityMobileHeader = ref(false) as Ref<boolean>;
 const visibilitySubmenus = ref([false, false, false]) as Ref<boolean[]>;
