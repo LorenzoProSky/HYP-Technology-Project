@@ -1,6 +1,8 @@
 **---- DISCLAIMER ----**
 
-This repository contains the final project for the MSc course *Hypermedia Applications (Web and Multimedia)* a.y. 2023/2024 at *Politecnico di Milano*.
+This repository contains the final project for the MSc course *Hypermedia Applications (Web and Multimedia)* a.y. 2023/2024 at *Politecnico di Milano*. View the reports:
+1. Design Report
+2. Technology Report
 
 **Note**: MiLA is a *fictional* support centre created solely for this project. The MiLA website was initially deployed on Vercel with backend server on Vercel and database on Supabase. However, the website is no longer live (for obvious reasons). To explore the website, you can:
 - View the design report, which includes commented screenshots of the website pages, or
