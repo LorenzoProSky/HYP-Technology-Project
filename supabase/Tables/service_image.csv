@@ -1,0 +1,19 @@
+service_id,image_id
+service_1,Welcome_Interviews Cover
+service_1,Welcome_Interviews image_1
+service_1,Welcome_Interviews image_2
+service_2,Shelter_Home Cover
+service_2,Shelter_Home image_1
+service_2,Shelter_Home image_2
+service_3,Legal_Couns Cover
+service_3,Legal_Couns image_1
+service_3,Legal_Couns image_2
+service_4,Psycho_Couns Cover
+service_4,Psycho_Couns image_1
+service_4,Psycho_Couns image_2
+service_5,Job_Counter Cover
+service_5,Job_Counter image_1
+service_5,Job_Counter image_2
+service_6,Intercultural_Mediation Cover
+service_6,Intercultural_Mediation image_1
+service_6,Intercultural_Mediation image_2

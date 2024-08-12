@@ -1,0 +1,3 @@
+location_id,telephone_number,email,city,cap,province,address,opening_hours,name,map_url
+1,+39 344677462,centromila.farini@gmail.com,Milan,20159,MI,Via Valtellina 20,07:00 - 19:00 Daily,Centro MiLA Farini,https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/location_image/Map_Farini.png?t=2024-06-22T11%3A46%3A24.385Z
+2,+39 345697365,centromila.bovisa@gmail.com,Milan,20158,MI,Via Candiani 72,07:00 - 19:00 Daily,Centro MiLA Bovisa,https://pbvaepwwamyykdrwmqui.supabase.co/storage/v1/object/public/HYP-Images/location_image/Map_Bovisa.png?t=2024-06-22T11%3A46%3A04.006Z
