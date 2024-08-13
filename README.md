@@ -10,7 +10,7 @@ This repository contains the final project for the MSc course *Hypermedia Applic
 
 # MiLA Website Repository
 
-MiLA is a support centre for women and children victim of violence basesd in Milan. It offers comprehensive range of services and initiatives, with the goal of improving women’ situations and empowering them for a better future.
+MiLA is a support centre for women and children victim of violence based in Milan. It offers comprehensive range of services and initiatives, with the goal of improving women’ situations and empowering them for a better future.
 
 ## Objectives
 MiLA's primary objectives are:
